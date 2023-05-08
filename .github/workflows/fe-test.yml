@@ -1,0 +1,33 @@
+name: 프론트엔드 빌드 테스트
+
+on:
+  pull_request:
+    branches: #target
+      - dev
+      - main
+    paths:
+      - "client/**"
+  workflow_dispatch:
+
+env:
+  NODE_ENV: development
+
+jobs:
+  test-fe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: client/yarn.lock
+      - name: install dependencies
+        run: |
+          cd client
+          corepack enable
+          yarn install
+      - name: build
+        run: |
+          cd client
+          yarn build
