@@ -4,4 +4,4 @@
 cd client
 
 echo ">> Picnic-map pre-commit hook: Checking eslint..."
-yarn lint
+yarn lint-staged
