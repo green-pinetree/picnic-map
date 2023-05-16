@@ -2,4 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd client
-yarn lint
+
+echo ">> Picnic-map pre-commit hook: Checking eslint..."
+yarn lint-staged
