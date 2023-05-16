@@ -16,11 +16,12 @@
     "next": "13.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-query": "^3.39.3",
     "typescript": "5.0.4"
   },
   "lint-staged": {
     "src/*.{ts,tsx}": [
-      "prettier --config ./.prettierrc --write -u",
+      "prettier --config ./.prettierrc --write",
       "eslint --config ./.eslintrc.json --fix"
     ]
   },
