@@ -11,6 +11,9 @@
     "prepare": "chmod ug+x .husky/* && cd .. && husky install client/.husky"
   },
   "dependencies": {
+    "@chwh/cds": "^1.1.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
