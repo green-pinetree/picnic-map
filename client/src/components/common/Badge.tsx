@@ -7,7 +7,11 @@ interface BadgeProps {
 }
 
 export default function Badge({ children }: BadgeProps) {
-  return <Wrapper>{children}</Wrapper>;
+  return (
+    <Wrapper role="button" aria-label="search-filter">
+      {children}
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.div`

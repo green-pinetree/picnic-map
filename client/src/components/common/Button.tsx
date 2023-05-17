@@ -10,7 +10,7 @@ interface ButtonProps {
 
 export default function Button({ size, children, label }: ButtonProps) {
   return (
-    <Wrapper aria-label={label} {...{ size }}>
+    <Wrapper role="button" aria-label={label} {...{ size }}>
       {children}
     </Wrapper>
   );
