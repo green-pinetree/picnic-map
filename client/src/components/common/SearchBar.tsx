@@ -10,10 +10,10 @@ export default function SearchBar() {
   const { color: themeColor } = useTheme();
   const { gray200 } = themeColor;
   return (
-    <Wrapper>
+    <Wrapper role="searchbox" aria-label="search">
       <CiSearch size={26} />
       <Input onChange={({ target }) => setValue(target.value)} {...{ value }} />
-      <Cancel type="button" onClick={() => setValue('')} disabled={!value}>
+      <Cancel aria-label="cancel" type="button" onClick={() => setValue('')} disabled={!value}>
         <MdCancel color={gray200} opacity={value ? 1 : 0} size={15} />
       </Cancel>
     </Wrapper>
