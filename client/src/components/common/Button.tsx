@@ -5,10 +5,15 @@ import styled from '@emotion/styled';
 interface ButtonProps {
   size: 'middle' | 'small';
   children: ReactNode;
+  label: string;
 }
 
-export default function Button({ size, children }: ButtonProps) {
-  return <Wrapper {...{ size }}>{children}</Wrapper>;
+export default function Button({ size, children, label }: ButtonProps) {
+  return (
+    <Wrapper aria-label={label} {...{ size }}>
+      {children}
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.button<Pick<ButtonProps, 'size'>>`
