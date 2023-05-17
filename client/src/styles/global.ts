@@ -1,6 +1,12 @@
 import { css } from '@emotion/react';
 
 const globalStyle = css`
+  @font-face {
+    font-family: 'ImcreSoojin';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
   html,
   body,
   div,

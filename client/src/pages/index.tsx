@@ -1,18 +1,12 @@
+import Button from '@/components/common/Button';
 import SearchBar from '@/components/common/SearchBar';
-import { Button } from '@chwh/cds';
-import { css } from '@emotion/react';
 
 export default function Home() {
   return (
     <div>
       <SearchBar />
-      <Button
-        css={css`
-          width: 300px;
-        `}
-      >
-        click
-      </Button>
+      <Button size="small">검색</Button>
+      <div style={{ fontFamily: 'ImcreSoojin' }}>dddd</div>
     </div>
   );
 }
