@@ -2,6 +2,7 @@ package app.seok.picnicmap.place.park;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,18 +17,19 @@ public class Park {
 
     private String pIdx;
     private String pPark;
-    @Column(length = 2000)
+    @Type(type = "text")
     private String pListContent;
+    @Type(type = "text")
     private String area;
     private String openDt;
-    @Column(length = 2000)
+    @Type(type = "text")
     private String mainEquip;
-    @Column(length = 2000)
+    @Type(type = "text")
     private String mainPlants;
     private String guidance;
-    @Column(length = 2000)
+    @Type(type = "text")
     private String visitRoad;
-    @Column(length = 2000)
+    @Type(type = "text")
     private String useRefer;
     private String pImg;
     private String pZone;
