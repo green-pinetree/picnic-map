@@ -1,11 +1,11 @@
-import Image from 'next/image';
 import React from 'react';
 import Button from './Button';
 import DateInfo from './DateInfo';
 import Header from './Header';
+import PlaceInfo from './PlaceInfo';
 import SearchBar from './SearchBar';
 import BREAK_POINT from '@/styles/breakpoint';
-import { body1, subtitle1, subtitle2 } from '@/styles/font';
+import { subtitle1 } from '@/styles/font';
 import styled from '@emotion/styled';
 
 export default function SideBar() {
@@ -24,70 +24,24 @@ export default function SideBar() {
       <PlaceContainer>
         <Title>주변 장소</Title>
         <Contents>
-          <Place>
-            <ImageBox>
-              <Image src="/dummyimg.png" alt="Logo" width={360} height={180} priority />
-              <div>서울숲</div>
-            </ImageBox>
-            <Description>
-              <div>
-                <span>공원 주소: </span>
-                <span>설명설명</span>
-              </div>
-              <div>
-                <span>공원 개요: </span>
-                <span>설명설명</span>
-              </div>
-            </Description>
-          </Place>
-          <Place>
-            <ImageBox>
-              <Image src="/dummyimg.png" alt="Logo" width={360} height={180} priority />
-              <div>서울숲</div>
-            </ImageBox>
-            <Description>
-              <div>
-                <span>공원 주소: </span>
-                <span>설명설명</span>
-              </div>
-              <div>
-                <span>공원 개요: </span>
-                <span>설명설명</span>
-              </div>
-            </Description>
-          </Place>
-          <Place>
-            <ImageBox>
-              <Image src="/dummyimg.png" alt="Logo" width={360} height={180} priority />
-              <div>서울숲</div>
-            </ImageBox>
-            <Description>
-              <div>
-                <span>공원 주소: </span>
-                <span>설명설명</span>
-              </div>
-              <div>
-                <span>공원 개요: </span>
-                <span>설명설명</span>
-              </div>
-            </Description>
-          </Place>
-          <Place>
-            <ImageBox>
-              <Image src="/dummyimg.png" alt="Logo" width={360} height={180} priority />
-              <div>서울숲</div>
-            </ImageBox>
-            <Description>
-              <div>
-                <span>공원 주소: </span>
-                <span>설명설명</span>
-              </div>
-              <div>
-                <span>공원 개요: </span>
-                <span>설명설명</span>
-              </div>
-            </Description>
-          </Place>
+          <PlaceInfo
+            imgSrc="/dummyimg.png"
+            name="서울숲"
+            address="설명설명"
+            description="설명설명"
+          />
+          <PlaceInfo
+            imgSrc="/dummyimg.png"
+            name="서울숲"
+            address="설명설명"
+            description="설명설명"
+          />
+          <PlaceInfo
+            imgSrc="/dummyimg.png"
+            name="서울숲"
+            address="설명설명"
+            description="설명설명"
+          />
         </Contents>
       </PlaceContainer>
     </Wrapper>
@@ -142,36 +96,4 @@ const Contents = styled.div`
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-`;
-
-const Place = styled.div`
-  width: 96%;
-  margin-top: 16px;
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
-  &:last-of-type {
-    border-bottom: 0px;
-  }
-`;
-
-const ImageBox = styled.div`
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  div {
-    ${subtitle2}
-    height: 40px;
-    line-height: 40px;
-  }
-`;
-
-const Description = styled.div`
-  width: 100%;
-  padding: 10px;
-  div {
-    width: 100%;
-    height: 30px;
-    ${body1}
-  }
 `;
