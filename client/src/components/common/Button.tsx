@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { button1, button2 } from '@/styles/font';
+import { buttonStyle } from '@/styles/mixin';
 import styled from '@emotion/styled';
 
 interface ButtonProps {
@@ -24,17 +25,5 @@ const Wrapper = styled.button<Pick<ButtonProps, 'size'>>`
   border-radius: 10px;
   border: 0;
   background-color: ${({ theme }) => theme.color.primary};
-  cursor: pointer;
-  @media (hover: hover) {
-    &:hover {
-      filter: brightness(0.9);
-    }
-  }
-  &:active {
-    filter: brightness(0.7);
-  }
-  &:disabled {
-    opacity: 0;
-    cursor: inherit;
-  }
+  ${buttonStyle}
 `;

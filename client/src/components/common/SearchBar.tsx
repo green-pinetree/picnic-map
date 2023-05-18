@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { MdCancel } from 'react-icons/md';
 import { subtitle } from '@/styles/font';
+import { buttonStyle } from '@/styles/mixin';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -55,17 +56,5 @@ const Cancel = styled.button`
   margin-right: 5px;
   border-radius: 50px;
   pointer-events: all;
-  cursor: pointer;
-  @media (hover: hover) {
-    &:hover {
-      filter: brightness(0.9);
-    }
-  }
-  &:active {
-    filter: brightness(0.7);
-  }
-  &:disabled {
-    opacity: 0;
-    cursor: inherit;
-  }
+  ${buttonStyle}
 `;

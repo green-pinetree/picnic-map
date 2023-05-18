@@ -3,7 +3,8 @@ import { css } from '@emotion/react';
 const globalStyle = css`
   @font-face {
     font-family: 'ImcreSoojin';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff')
+      format('woff');
     font-weight: normal;
     font-style: normal;
   }
@@ -154,6 +155,12 @@ const globalStyle = css`
 
   a:hover {
     color: #333;
+  }
+  li {
+    list-style-type: none;
+  }
+  button {
+    border: 0px;
   }
 `;
 
