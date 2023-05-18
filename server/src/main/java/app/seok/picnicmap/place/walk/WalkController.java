@@ -17,8 +17,17 @@ public class WalkController {
     @GetMapping("/update/walk")
     @ResponseBody
     String walk() throws IOException {
-        String walkApiResult = seoulApiExplorer.API("walkDulaeInfo",1,500);
-        walkService.saveWalkFromJson(walkApiResult);
+        int callCount = 0;
+        int indexSize = 1000;
+        int total_count = 0;
+        int endIndex = 0;
+        while ((callCount++) == 0 || total_count > endIndex) {
+            int startIndex = indexSize * (callCount - 1) + 1;
+            endIndex = indexSize * callCount;
+            String walkApiResult = seoulApiExplorer.API("SeoulGilWalkCourse", startIndex, endIndex);
+            total_count = walkService.saveWalkFromJson("SeoulGilWalkCourse", walkApiResult);
+            System.out.println(total_count+" "+endIndex+" "+callCount);
+        }
         return "api walk";
     }
 }

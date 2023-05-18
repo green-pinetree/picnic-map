@@ -15,26 +15,31 @@ public class Walk {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double rnum;
+    private Integer courseCategory;
+    private String courseCategoryNm;
+    private Integer southNorthDiv;
+    private String southNorthDivNm;
     private String areaGu;
     private String distance;
     private String leadTime;
-    private Double voteCount;
+    private String courseLevel;
+    private Integer voteCnt;
     private String relateSubway;
-    private String relateCourse;
-    private String relatePark;
     @Type(type = "text")
     private String trafficInfo;
     @Type(type = "text")
-    private String detailCourse;
-    @Type(type = "text")
     private String content;
     private String courseName;
-    private String pdfFilePath;
-    private String pdfFileName;
-    private String codeName;
-    private String southNorthDiv;
-    private String courseLevel;
+    @Type(type = "text")
+    private String detailCourse;
+    private Double x;
+    private Double y;
+    private Double lat;
+    private Double lng;
+    private Integer cpiIdx;
+    private String cpiName;
+    @Type(type = "text")
+    private String cpiContent;
 
     @Column(name = "create_at")
     private LocalDateTime createdAt;
