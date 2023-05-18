@@ -107,6 +107,7 @@ const SearchContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 67px;
   padding: 12px;
 `;
 
@@ -114,6 +115,7 @@ const DateContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
+  height: 50px;
   padding: 5px;
 `;
 
@@ -122,30 +124,33 @@ const PlaceContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  height: calc(100vh - 78px - 67px - 40px);
 `;
 
 const Title = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
   ${subtitle1}
   height: 30px;
-  width: 94%;
+  width: 100%;
   padding: 0px 10px;
 `;
 
 const Contents = styled.div`
-  width: 94%;
+  width: 100%;
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
-  margin-top: 16px;
   overflow-y: auto;
 `;
 
 const Place = styled.div`
-  width: 100%;
+  width: 96%;
+  margin-top: 16px;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
+  &:last-of-type {
+    border-bottom: 0px;
+  }
 `;
 
 const ImageBox = styled.div`

@@ -16,5 +16,5 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const AppStyle = styled.div`
-  min-height: 100%;
+  height: 100%;
 `;
