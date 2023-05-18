@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
 import { useEffect, useRef } from 'react';
+import BREAK_POINT from '@/styles/breakpoint';
 import styled from '@emotion/styled';
 
 export default function Home() {
@@ -34,6 +35,9 @@ export default function Home() {
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    margin-top: 4px;
+  }
 `;
 
 const MapContainer = styled.div`
