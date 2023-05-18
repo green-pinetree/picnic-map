@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { MdCancel } from 'react-icons/md';
-import { subtitle } from '@/styles/font';
+import { subtitle1 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -43,7 +43,7 @@ const Input = styled.input`
   border-radius: 10px;
   outline: none;
   padding: 0 5px;
-  ${subtitle}
+  ${subtitle1}
 `;
 
 const Cancel = styled.button`

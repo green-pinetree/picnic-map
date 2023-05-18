@@ -12,13 +12,23 @@ export const title = css`
   }
 `;
 
-export const subtitle = css`
+export const subtitle1 = css`
   font-family: sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: ${COLOR.black};
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     font-size: 18px;
+  }
+`;
+
+export const subtitle2 = css`
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: ${COLOR.black};
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    font-size: 16px;
   }
 `;
 

@@ -19,41 +19,48 @@ export default function DateDropDown() {
         2023/04/26
       </Date>
       {isOpen && (
-        <Menu aria-labelledby="date-trigger" id="date-dropdown">
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-          <button onClick={() => setIsOpen(false)} type="button">
-            2023/04/26
-          </button>
-        </Menu>
+        <MenuList aria-labelledby="date-trigger" id="date-dropdown">
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+          <Menu onClick={() => setIsOpen(false)} type="button">
+            <div>2023/04/26</div>
+            <div>날씨: 맑음 미세먼지: 좋음</div>
+          </Menu>
+        </MenuList>
       )}
     </Wrapper>
   );
@@ -76,7 +83,7 @@ const Date = styled.button`
   ${buttonStyle}
 `;
 
-const Menu = styled.div`
+const MenuList = styled.div`
   position: absolute;
   z-index: 999;
   top: 25px;
@@ -84,18 +91,25 @@ const Menu = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.primary};
   border-radius: 10px;
-  button {
-    padding: 10px 20px;
-    border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
-    background-color: ${({ theme }) => theme.color.white};
-    ${body2}
-    ${buttonStyle}
-  }
-  button:first-of-type {
+`;
+
+const Menu = styled.button`
+  padding: 10px 20px;
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
+  background-color: ${({ theme }) => theme.color.white};
+  ${body2}
+  ${buttonStyle}
+  &:first-of-type {
     border-radius: 10px 10px 0 0;
   }
-  button:last-of-type {
+  &:last-of-type {
     border-bottom: 0px;
     border-radius: 0 0 10px 10px;
+  }
+  div {
+    width: 100%;
+    text-align: left;
+    height: 20px;
+    white-space: nowrap;
   }
 `;
