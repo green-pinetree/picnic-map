@@ -1,3 +1,4 @@
+import BREAK_POINT from './breakpoint';
 import { css } from '@emotion/react';
 
 const globalStyle = css`
@@ -185,6 +186,19 @@ const globalStyle = css`
   }
   button {
     border: 0px;
+  }
+  .mobile-layout {
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: ${BREAK_POINT.mobile}px) {
+      display: none;
+    }
+  }
+  .desktop-layout {
+    display: flex;
+    @media screen and (max-width: ${BREAK_POINT.mobile}px) {
+      display: none;
+    }
   }
 `;
 

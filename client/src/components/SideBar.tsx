@@ -4,7 +4,6 @@ import DateInfo from './common/DateInfo';
 import Header from './common/Header';
 import PlaceInfo from './common/PlaceInfo';
 import SearchBar from './common/SearchBar';
-import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1 } from '@/styles/font';
 import styled from '@emotion/styled';
 
@@ -52,9 +51,6 @@ const Wrapper = styled.aside`
   width: 390px;
   border-right: 1px solid ${({ theme }) => theme.color.gray200};
   height: 100vh;
-  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
-    display: none;
-  }
 `;
 
 const SearchContainer = styled.div`

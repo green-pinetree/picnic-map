@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import Script from 'next/script';
 
 export default function Document() {
   return (
@@ -9,6 +10,11 @@ export default function Document() {
         <meta property="og:title" content="picnic-map" />
         <meta charSet="UTF-8" />
         <link rel="icon" href="/favicon.svg" />
+        <Script
+          type="text/javascript"
+          strategy="beforeInteractive"
+          src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=q37yd8578a"
+        />
       </Head>
       <body>
         <Main />

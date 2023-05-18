@@ -6,23 +6,23 @@ import { title } from '@/styles/font';
 import styled from '@emotion/styled';
 
 interface HeaderProps {
-  isMobile?: boolean;
+  mobile?: boolean;
 }
 
-export default function Header({ isMobile = false }: HeaderProps) {
+export default function Header({ mobile = false }: HeaderProps) {
   return (
     <Wrapper>
       <Logo>
         <Image
           src="/Icon.svg"
           alt="Logo"
-          width={isMobile ? 44 : 50}
-          height={isMobile ? 44 : 50}
+          width={mobile ? 44 : 50}
+          height={mobile ? 44 : 50}
           priority
         />
         <Title>나들이 갈까?</Title>
       </Logo>
-      {isMobile && <DateInfo />}
+      {mobile && <DateInfo />}
     </Wrapper>
   );
 }
@@ -46,6 +46,9 @@ const Wrapper = styled.header`
 const Logo = styled.div`
   width: fit-content;
   height: 54px;
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    height: 44px;
+  }
 `;
 
 const Title = styled.span`
