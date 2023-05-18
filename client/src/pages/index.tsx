@@ -1,12 +1,19 @@
-import PlaceInfo from '@/components/common/PlaceInfo';
+import Header from '@/components/common/Header';
+import DesktopSection from '@/components/DesktopSection';
+import MobileSection from '@/components/MobileSection';
 import SideBar from '@/components/SideBar';
 
 export default function Home() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <SideBar />
-      <PlaceInfo imgSrc="/dummyimg.png" name="서울숲" address="설명설명" description="설명설명" />
-      <PlaceInfo imgSrc="/dummyimg.png" name="서울숲" address="설명설명" description="설명설명" />
+    <div>
+      <div className="mobile-layout">
+        <Header mobile />
+        <MobileSection />
+      </div>
+      <div className="desktop-layout">
+        <SideBar />
+        <DesktopSection />
+      </div>
     </div>
   );
 }

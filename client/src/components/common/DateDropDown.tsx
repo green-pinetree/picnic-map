@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import BREAK_POINT from '@/styles/breakpoint';
 import { body1, body2 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
 import styled from '@emotion/styled';
@@ -111,5 +112,8 @@ const Menu = styled.button`
     text-align: left;
     height: 20px;
     white-space: nowrap;
+    @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+      height: 14px;
+    }
   }
 `;
