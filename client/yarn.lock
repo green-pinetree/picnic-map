@@ -417,6 +417,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/geojson@npm:*":
+  version: 7946.0.10
+  resolution: "@types/geojson@npm:7946.0.10"
+  checksum: 12c407c2dc93ecb26c08af533ee732f1506a9b29456616ba7ba1d525df96206c28ddf44a528f6a5415d7d22893e9d967420940a9c095ee5e539c1eba5fefc1f4
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.9":
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
@@ -428,6 +435,15 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
+  languageName: node
+  linkType: hard
+
+"@types/navermaps@npm:^3.6.5":
+  version: 3.6.5
+  resolution: "@types/navermaps@npm:3.6.5"
+  dependencies:
+    "@types/geojson": "*"
+  checksum: 2f01fb53e371a84d8b9b5725e9cc356c6118feb8389c394e5d02d99b24979475fac33abcb41c9b905826ee2d4bd71f5e01a928256b9f02ce9032ecca34cec99a
   languageName: node
   linkType: hard
 
@@ -927,6 +943,7 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.11.0
     "@emotion/styled": ^11.11.0
+    "@types/navermaps": ^3.6.5
     "@types/node": 20.1.5
     "@types/react": 18.2.6
     "@types/react-dom": 18.2.4
