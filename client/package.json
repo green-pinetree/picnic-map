@@ -10,20 +10,14 @@
     "prepare": "chmod ug+x .husky/* && cd .. && husky install client/.husky"
   },
   "dependencies": {
-    "@chwh/cds": "^1.1.1",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "next": "13.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
     "react-query": "^3.39.3",
     "typescript": "5.0.4"
-  },
-  "lint-staged": {
-    "src/*.{ts,tsx}": [
-      "prettier --config ./.prettierrc --write",
-      "eslint --config ./.eslintrc.json --fix"
-    ]
   },
   "packageManager": "yarn@3.5.1",
   "devDependencies": {
@@ -39,7 +33,6 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-import-order": "^2.1.4",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.2"
+    "husky": "^8.0.3"
   }
 }
