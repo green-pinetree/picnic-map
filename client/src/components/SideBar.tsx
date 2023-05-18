@@ -1,9 +1,9 @@
 import React from 'react';
-import Button from './Button';
-import DateInfo from './DateInfo';
-import Header from './Header';
-import PlaceInfo from './PlaceInfo';
-import SearchBar from './SearchBar';
+import Button from './common/Button';
+import DateInfo from './common/DateInfo';
+import Header from './common/Header';
+import PlaceInfo from './common/PlaceInfo';
+import SearchBar from './common/SearchBar';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1 } from '@/styles/font';
 import styled from '@emotion/styled';

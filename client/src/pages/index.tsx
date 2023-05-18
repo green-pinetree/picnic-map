@@ -1,5 +1,5 @@
 import PlaceInfo from '@/components/common/PlaceInfo';
-import SideBar from '@/components/common/SideBar';
+import SideBar from '@/components/SideBar';
 
 export default function Home() {
   return (
