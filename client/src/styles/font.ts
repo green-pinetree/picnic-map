@@ -4,8 +4,8 @@ import { css } from '@emotion/react';
 export const title = css`
   font-family: 'ImcreSoojin';
   font-size: 24px;
-  font-weight: 900;
-  color: ${COLOR.black};
+  font-weight: 500;
+  color: ${COLOR.primary};
 `;
 
 export const subtitle = css`
@@ -15,9 +15,16 @@ export const subtitle = css`
   color: ${COLOR.black};
 `;
 
-export const body = css`
+export const body1 = css`
   font-family: sans-serif;
   font-size: 16px;
+  font-weight: 500;
+  color: ${COLOR.black};
+`;
+
+export const body2 = css`
+  font-family: sans-serif;
+  font-size: 14px;
   font-weight: 500;
   color: ${COLOR.black};
 `;
