@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class SeoulApiExplorer {
@@ -35,9 +36,9 @@ public class SeoulApiExplorer {
 
         // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), StandardCharsets.UTF_8));
         }
         StringBuilder sb = new StringBuilder();
         String line;
