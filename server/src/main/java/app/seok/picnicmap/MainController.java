@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MainController {
-    @GetMapping("*")
+    @GetMapping("/")
     @ResponseBody
     String picnic(){
         return "picnic server";

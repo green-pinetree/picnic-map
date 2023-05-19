@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	implementation 'org.bouncycastle:bcprov-jdk15on:1.68'
+	implementation 'org.locationtech.proj4j:proj4j:1.1.4'
 }
 
 tasks.named('test') {
