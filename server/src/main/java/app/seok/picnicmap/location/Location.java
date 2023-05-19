@@ -3,6 +3,7 @@ package app.seok.picnicmap.location;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,7 +11,6 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
-@ToString
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

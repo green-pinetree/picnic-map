@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class LocationService {
         try {
             String url = "http://"+request.getServerName()+":"+request.getServerPort()+"/json/district.json";
             URL jsonUrl = new URL(url);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(jsonUrl.openStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(jsonUrl.openStream(), StandardCharsets.UTF_8));
             StringBuilder jsonData = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -52,14 +53,26 @@ public class LocationService {
                 Double lat = (Double) district.get("lat");
                 location.setLat(lat);
                 locationRepository.save(location);
+                System.out.println(location);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Location findNearestLocation(Double targetLatitude, Double targetLongitude) {
-        return locationRepository.findNearestLocation(targetLatitude, targetLongitude);
+    /*
+     * 지역확인
+     * */
+    public LocationDTO findNearestLocation(Double targetLatitude, Double targetLongitude) {
+        return locationToLocationDTO(locationRepository.findNearestLocation(targetLatitude, targetLongitude));
     }
 
+    public LocationDTO locationToLocationDTO(Location location){
+        LocationDTO locationDTO = new LocationDTO();
+        locationDTO.setCode(location.getCode());
+        locationDTO.setDistrict(location.getDong());
+        locationDTO.setLng(location.getLng());
+        locationDTO.setLat(location.getLat());
+        return locationDTO;
+    }
 }
