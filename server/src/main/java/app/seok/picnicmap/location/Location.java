@@ -15,11 +15,12 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Integer code;
-    private Integer districtCode;
-    private String gu;
-    private String dong;
+    private String r1;
+    private String r2;
+    private String r3;
+    private Integer x;
+    private Integer y;
     private Double lng;
     private Double lat;
 

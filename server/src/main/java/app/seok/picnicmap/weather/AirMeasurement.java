@@ -1,5 +1,6 @@
 package app.seok.picnicmap.weather;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,20 +10,23 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
-public class Weather {
+public class AirMeasurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String MSRDT;
+    private String MSRRGN_NM;
+    private String MSRSTE_NM;
+    private double PM10;
+    private double PM25;
+    private double O3;
+    private double NO2;
+    private double CO;
+    private double SO2;
+    private String IDEX_NM;
+    private double IDEX_MVL;
+    private String ARPLT_MAIN;
 
-    private String district;
-    private String date;
-    private Integer sky;
-    private String skyMsg;
-    private Integer pty;
-    private String ptyMsg;
-    private Integer airMaxIndex;
-    private Integer airGrade;
-    private String airGradeMsg;
 
     @Column(name = "create_at")
     private LocalDateTime createdAt;
