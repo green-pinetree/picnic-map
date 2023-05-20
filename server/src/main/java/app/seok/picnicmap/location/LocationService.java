@@ -42,18 +42,22 @@ public class LocationService {
                 Location location = new Location();
                 Integer code = (Integer) district.get("code");
                 location.setCode(code);
-                Integer districtCode = (Integer) district.get("district_code");
-                location.setDistrictCode(districtCode);
-                String gu = (String) district.get("gu");
-                location.setGu(gu);
-                String dong = (String) district.get("dong");
-                location.setDong(dong);
+                String r1 = (String) district.get("r1");
+                location.setR1(r1);
+                String r2 = (String) district.get("r2");
+                location.setR2(r2);
+                String r3 = (String) district.get("r3");
+                location.setR3(r3);
                 Double lng = (Double) district.get("lng");
                 location.setLng(lng);
                 Double lat = (Double) district.get("lat");
                 location.setLat(lat);
+                Integer x = (Integer) district.get("x");
+                location.setX(x);
+                Integer y = (Integer) district.get("y");
+                location.setY(y);
                 locationRepository.save(location);
-                System.out.println(location);
+//                System.out.println(location);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +74,7 @@ public class LocationService {
     public LocationDTO locationToLocationDTO(Location location){
         LocationDTO locationDTO = new LocationDTO();
         locationDTO.setCode(location.getCode());
-        locationDTO.setDistrict(location.getDong());
+        locationDTO.setDistrict(location.getR2());
         locationDTO.setLng(location.getLng());
         locationDTO.setLat(location.getLat());
         return locationDTO;
