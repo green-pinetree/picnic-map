@@ -35,6 +35,8 @@ dependencies {
     implementation group: 'org.orbisgis', name: 'h2gis', version: '1.5.0'
 
     implementation 'org.locationtech.proj4j:proj4j:1.1.4'
+
+	  implementation 'org.bouncycastle:bcprov-jdk15on:1.68'
 }
 
 tasks.named('test') {
