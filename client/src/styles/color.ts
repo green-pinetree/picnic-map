@@ -5,8 +5,6 @@ export const COLOR = {
   primaryLight: '#B4E197',
   primaryDark: '#4E944F',
 
-  boxShadow: '#9EA8B3',
-
   alert: '#333333',
   info: '#1493FF',
   success: '#36B37E',

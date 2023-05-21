@@ -39,7 +39,7 @@ const Wrapper = styled.header`
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     width: 100%;
     height: 56px;
-    box-shadow: 0px 1px 3px 1px ${({ theme }) => theme.color.boxShadow};
+    box-shadow: 0px 1px 3px 1px ${({ theme }) => theme.color.gray300};
   }
 `;
 

@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import BREAK_POINT from '@/styles/breakpoint';
 import styled from '@emotion/styled';
 
-export default function Home() {
+export default function Map() {
   const mapElement = useRef(null);
 
   useEffect(() => {
