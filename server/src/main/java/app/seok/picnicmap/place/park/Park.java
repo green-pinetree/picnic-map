@@ -1,5 +1,6 @@
 package app.seok.picnicmap.place.park;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
@@ -7,14 +8,13 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 @Entity
+@Data
 public class Park {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "p_idx")
     private String pIdx;
     private String pPark;
     @Type(type = "text")
@@ -41,6 +41,8 @@ public class Park {
     private Double longitude;
     private Double latitude;
     private String templateUrl;
+    @Column(name = "near")
+    private Double near;
 
     @Column(name = "create_at")
     private LocalDateTime createdAt;
@@ -48,14 +50,17 @@ public class Park {
     private LocalDateTime updatedAt;
     @Column(name = "delete_at")
     private LocalDateTime deletedAt;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
+
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
+
     public void delete() {
         this.deletedAt = LocalDateTime.now();
     }
