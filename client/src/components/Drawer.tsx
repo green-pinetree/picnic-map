@@ -54,10 +54,10 @@ const PlaceContainer = styled.div<{ drawerHeight: number }>`
   position: absolute;
   bottom: 0;
   height: ${({ drawerHeight }) => `${drawerHeight}px`};
-  max-height: 100vh;
+  max-height: calc(100vh - 58px);
   width: 100%;
   overflow-y: hidden;
-  border-radius: 40px 40px 0px 0px;
+  border-radius: 30px 30px 0px 0px;
 `;
 
 const Header = styled.div`
