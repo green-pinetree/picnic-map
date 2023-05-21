@@ -19,6 +19,7 @@ public class Culture {
     private Integer num;
     @Column(nullable = false)
     private String subjCode;
+    private Integer subjNumber;
     @Column(nullable = false)
     private String facName;
     private String addr;
@@ -46,6 +47,8 @@ public class Culture {
     private String blue;
     private String red;
     private String airport;
+    @Column(name = "near")
+    private Double near;
 
     @Column(name = "create_at")
     private LocalDateTime createdAt;

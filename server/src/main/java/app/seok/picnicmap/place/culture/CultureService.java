@@ -4,23 +4,40 @@ import app.seok.picnicmap.util.CoordinateConversion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CultureService {
+    private static final String[] typeCodes = {"공원", "둘레길", "미술관", "공연장", "도서관", "박물관/기념관", "문화원", "기타"};
     private final CultureRepository cultureRepository;
     private final ObjectMapper objectMapper;
     private final CoordinateConversion coordinateConversion;
 
-    public CultureService(CultureRepository cultureRepository, ObjectMapper objectMapper, CoordinateConversion coordinateConversion) {
-        this.cultureRepository = cultureRepository;
-        this.objectMapper = objectMapper;
-        this.coordinateConversion = coordinateConversion;
+    public Culture getCultureById(long id) {
+        Optional<Culture> optionalCulture = cultureRepository.findById(id);
+        if (optionalCulture.isPresent()) {
+            return optionalCulture.get();
+        }
+        return new Culture();
+    }
+
+    public List<CultureDTO> getSearchCulture(String search, double lat, double lng, int size, int offset) {
+        System.out.println("service >> " + search + " " + lng + " " + lat + " " + size + " " + offset);
+        return cultureRepository.findByQueryNearestLocation(search, lat, lng, size, offset);
+    }
+
+    public List<CultureDTO> getListCulture(int[] type, double lat, double lng, int size, int offset) {
+        System.out.println("service >> " + " " + lng + " " + lat + " " + size + " " + offset);
+        return cultureRepository.findNearestLocation(type, lat, lng, size, offset);
     }
 
     public int saveCultureFromJson(String aipServiceName, String cultureJsonString) throws JsonProcessingException {
@@ -32,15 +49,18 @@ public class CultureService {
         for (Map<String, Object> cultureObject : rowList) {
             Culture culture = new Culture();
             culture.setNum(Integer.parseInt((String) cultureObject.get("NUM")));
-            String longitudeStr = (String) cultureObject.get("X_COORD");
+            String longitudeStr = (String) cultureObject.get("Y_COORD");
             if (!longitudeStr.isEmpty()) {
                 culture.setLng(Double.parseDouble(longitudeStr));
             }
-            String latitudeStr = (String) cultureObject.get("Y_COORD");
+            String latitudeStr = (String) cultureObject.get("X_COORD");
             if (!longitudeStr.isEmpty()) {
                 culture.setLat(Double.parseDouble(latitudeStr));
             }
-            culture.setSubjCode((String) cultureObject.get("SUBJCODE"));
+            String subjCode = (String) cultureObject.get("SUBJCODE");
+            int subjNumber = Arrays.asList(typeCodes).indexOf(subjCode);
+            culture.setSubjNumber(subjNumber);
+            culture.setSubjCode(subjCode);
             culture.setFacName((String) cultureObject.get("FAC_NAME"));
             culture.setAddr((String) cultureObject.get("ADDR"));
             culture.setPhne((String) cultureObject.get("PHNE"));
