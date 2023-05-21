@@ -20,9 +20,27 @@ export default function Drawer() {
         <Title>주변 장소</Title>
       </Header>
       <Contents>
-        <PlaceInfo imgSrc="/dummyimg.png" name="서울숲" address="설명설명" description="설명설명" />
-        <PlaceInfo imgSrc="/dummyimg.png" name="서울숲" address="설명설명" description="설명설명" />
-        <PlaceInfo imgSrc="/dummyimg.png" name="서울숲" address="설명설명" description="설명설명" />
+        <PlaceInfo
+          mobile
+          imgSrc="/dummyimg.png"
+          name="서울숲"
+          address="설명설명"
+          description="설명설명"
+        />
+        <PlaceInfo
+          mobile
+          imgSrc="/dummyimg.png"
+          name="서울숲"
+          address="설명설명"
+          description="설명설명"
+        />
+        <PlaceInfo
+          mobile
+          imgSrc="/dummyimg.png"
+          name="서울숲"
+          address="설명설명"
+          description="설명설명"
+        />
       </Contents>
     </PlaceContainer>
   );
@@ -68,6 +86,7 @@ const Contents = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  align-items: center;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;

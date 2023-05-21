@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle2, body1 } from '@/styles/font';
 import styled from '@emotion/styled';
 
@@ -8,24 +9,38 @@ interface PlaceInfoProps {
   name: string;
   address: string;
   description: string;
+  mobile?: boolean;
 }
 
-export default function PlaceInfo({ imgSrc, name, address, description }: PlaceInfoProps) {
+export default function PlaceInfo({
+  imgSrc,
+  name,
+  address,
+  description,
+  mobile = false,
+}: PlaceInfoProps) {
   return (
     <Place>
       <ImageBox>
-        <Image src={imgSrc} alt="place-image" width={360} height={180} priority />
-        <div>{name}</div>
+        <Image
+          src={imgSrc}
+          alt="place-image"
+          width={mobile ? 180 : 360}
+          height={mobile ? 90 : 180}
+          priority
+        />
+        {!mobile && <Title>{name}</Title>}
       </ImageBox>
       <Description>
-        <div>
+        {mobile && <Title>{name}</Title>}
+        <Content>
           <span>공원 주소: </span>
           <span>{address}</span>
-        </div>
-        <div>
+        </Content>
+        <Content>
           <span>공원 개요: </span>
           <span>{description}</span>
-        </div>
+        </Content>
       </Description>
     </Place>
   );
@@ -38,6 +53,9 @@ const Place = styled.div`
   &:last-of-type {
     border-bottom: 0px;
   }
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    display: flex;
+  }
 `;
 
 const ImageBox = styled.div`
@@ -46,19 +64,26 @@ const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  div {
-    ${subtitle2}
-    height: 40px;
-    line-height: 40px;
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    width: 50%;
   }
 `;
 
 const Description = styled.div`
   width: 100%;
   padding: 10px;
-  div {
-    width: 100%;
-    height: 30px;
-    ${body1}
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    width: 50%;
   }
+`;
+
+const Title = styled.div`
+  ${subtitle2}
+  height: 40px;
+  line-height: 40px;
+`;
+const Content = styled.div`
+  width: 100%;
+  height: 25px;
+  ${body1}
 `;
