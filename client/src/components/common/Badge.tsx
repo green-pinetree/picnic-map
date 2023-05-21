@@ -15,8 +15,9 @@ export default function Badge({ children }: BadgeProps) {
 }
 
 const Wrapper = styled.div`
-  width: 83px;
+  min-width: 83px;
   height: 36px;
+  white-space: nowrap;
   ${body1}
   border-radius: 100px;
   box-shadow: 0px 1px 1px 1px ${({ theme }) => theme.color.gray400};

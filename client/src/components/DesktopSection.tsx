@@ -25,10 +25,16 @@ const Wrapper = styled.section`
   flex: 1;
 `;
 const Filter = styled.div`
+  width: 100vw;
   display: flex;
   position: absolute;
   z-index: ${BADGE};
+  overflow-x: auto;
   div {
     margin: 10px;
+  }
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
