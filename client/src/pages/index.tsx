@@ -1,19 +1,31 @@
+import Filter from '@/components/common/Filter';
 import Header from '@/components/common/Header';
-import DesktopSection from '@/components/DesktopSection';
-import MobileSection from '@/components/MobileSection';
+import Map from '@/components/common/Map';
+import SearchContainer from '@/components/common/SearchContainer';
 import SideBar from '@/components/SideBar';
+import styled from '@emotion/styled';
 
 export default function Home() {
   return (
     <div>
       <div className="mobile-layout">
         <Header mobile />
-        <MobileSection />
+        <Section>
+          <SearchContainer />
+          <Filter />
+          <Map />
+        </Section>
       </div>
       <div className="desktop-layout">
         <SideBar />
-        <DesktopSection />
+        <Section>
+          <Filter />
+          <Map />
+        </Section>
       </div>
     </div>
   );
 }
+const Section = styled.section`
+  flex: 1;
+`;
