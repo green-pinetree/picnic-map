@@ -3,25 +3,42 @@ package app.seok.picnicmap.place.park;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ParkService {
     private final ParkRepository parkRepository;
     private final ObjectMapper objectMapper;
 
-    public ParkService(ParkRepository parkRepository, ObjectMapper objectMapper) {
-        this.parkRepository = parkRepository;
-        this.objectMapper = objectMapper;
+    public Park getParkById(long id) {
+        Optional<Park> optionalPark = parkRepository.findById(id);
+        if (optionalPark.isPresent()) {
+            return optionalPark.get();
+        }
+        return new Park();
+    }
+
+    public List<ParkDTO> getSearchPark(String search, double lat, double lng, int size, int offset) {
+        System.out.println("service >> " + search + " " + lng + " " + lat + " " + size + " " + offset);
+        return parkRepository.findByQueryNearestLocation(search, lat, lng, size, offset);
+    }
+
+    public List<ParkDTO> getListPark(double lat, double lng, int size, int offset) {
+        System.out.println("service >> " + " " + lng + " " + lat + " " + size + " " + offset);
+        return parkRepository.findNearestLocation(lat, lng, size, offset);
     }
 
     public void saveParkFromJson(String parkJsonString) throws JsonProcessingException {
-        Map<String, Object> parkMap = objectMapper.readValue(parkJsonString, new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> parkMap = objectMapper.readValue(parkJsonString, new TypeReference<Map<String, Object>>() {
+        });
         Map<String, Object> searchParkInfoService = (Map<String, Object>) parkMap.get("SearchParkInfoService");
         List<Map<String, Object>> rowList = (List<Map<String, Object>>) searchParkInfoService.get("row");
 
@@ -54,11 +71,11 @@ public class ParkService {
             }
             String gLongitudeStr = (String) parkObject.get("G_LONGITUDE");
             if (!gLongitudeStr.isEmpty()) {
-                park.setLongitude(Double.parseDouble(gLongitudeStr));
+                park.setGLongitude(Double.parseDouble(gLongitudeStr));
             }
             String gLatitudeStr = (String) parkObject.get("G_LATITUDE");
             if (!gLatitudeStr.isEmpty()) {
-                park.setLatitude(Double.parseDouble(gLatitudeStr));
+                park.setGLatitude(Double.parseDouble(gLatitudeStr));
             }
             park.setTemplateUrl((String) parkObject.get("TEMPLATE_URL"));
 
