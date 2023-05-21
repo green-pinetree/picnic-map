@@ -38,6 +38,8 @@ public class Walk {
     private Double lng;
     private Integer cpiIdx;
     private String cpiName;
+    private Double near;
+
     @Type(type = "text")
     private String cpiContent;
 

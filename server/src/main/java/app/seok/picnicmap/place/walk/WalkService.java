@@ -4,26 +4,58 @@ import app.seok.picnicmap.util.CoordinateConversion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class WalkService {
     private final WalkRepository walkRepository;
     private final ObjectMapper objectMapper;
     private final CoordinateConversion coordinateConversion;
 
-    public WalkService(WalkRepository walkRepository, ObjectMapper objectMapper, CoordinateConversion coordinateConversion) {
-        this.walkRepository = walkRepository;
-        this.objectMapper = objectMapper;
-        this.coordinateConversion = coordinateConversion;
+
+    public Walk getWalkById(long id) {
+        Optional<Walk> optionalWalk = walkRepository.findById(id);
+        if (optionalWalk.isPresent()) {
+            Walk walk = optionalWalk.get();
+            return walk;
+        }
+        return new Walk();
     }
 
-    public int saveWalkFromJson(String aipServiceName,String walkJsonString) throws JsonProcessingException {
+    public List<Point> getWalkPathById(long id) {
+        List<Map<String, Double>> pointList = walkRepository.getPathById(id);
+        List<Point> path = new ArrayList<>();
+        System.out.println(path);
+        for (Map<String, Double> dot : pointList) {
+            Point point = new Point();
+            point.setLng(dot.get("lng"));
+            point.setLat(dot.get("lat"));
+            path.add(point);
+        }
+        System.out.println(path);
+        return path;
+    }
+
+    public List<WalkDTO> getSearchWalk(String search, double lat, double lng, int size, int offset) {
+        System.out.println("service >> " + search + " " + lng + " " + lat + " " + size + " " + offset);
+        return walkRepository.findByQueryNearestLocation(search, lat, lng, size, offset);
+    }
+
+    public List<WalkDTO> getListWalk(double lat, double lng, int size, int offset) {
+        System.out.println("service >> " + lng + " " + lat + " " + size + " " + offset);
+        return walkRepository.findNearestLocation(lat, lng, size, offset);
+    }
+
+    public int saveWalkFromJson(String aipServiceName, String walkJsonString) throws JsonProcessingException {
         Map<String, Object> walkMap = objectMapper.readValue(walkJsonString, new TypeReference<Map<String, Object>>() {
         });
         Map<String, Object> walkDulaeInfo = (Map<String, Object>) walkMap.get(aipServiceName);
@@ -50,7 +82,7 @@ public class WalkService {
             walk.setCpiContent((String) walkObject.get("CPI_CONTENT"));
             walk.setX(Double.parseDouble((String) walkObject.get("X")));
             walk.setY(Double.parseDouble((String) walkObject.get("Y")));
-            double[] wgs = coordinateConversion.convertGRS80TMToWGS84(walk.getX(),walk.getY());
+            double[] wgs = coordinateConversion.convertGRS80TMToWGS84(walk.getX(), walk.getY());
             walk.setLat(wgs[0]);
             walk.setLng(wgs[1]);
             walkRepository.save(walk);
