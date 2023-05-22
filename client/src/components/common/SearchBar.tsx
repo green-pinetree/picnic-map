@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { MdCancel } from 'react-icons/md';
+import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
 import { useTheme } from '@emotion/react';
@@ -29,6 +30,7 @@ const Wrapper = styled.div`
   pointer-events: none;
   padding: 0 5px;
   border: 1px solid ${({ theme }) => theme.color.gray300};
+  background-color: ${({ theme }) => theme.color.white};
   border-radius: 10px;
   &:focus-within {
     outline: none;
@@ -44,6 +46,9 @@ const Input = styled.input`
   outline: none;
   padding: 0 5px;
   ${subtitle1}
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    padding: 0 20px;
+  }
 `;
 
 const Cancel = styled.button`
@@ -57,4 +62,7 @@ const Cancel = styled.button`
   border-radius: 50px;
   pointer-events: all;
   ${buttonStyle}
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    display: none;
+  }
 `;

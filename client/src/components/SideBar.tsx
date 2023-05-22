@@ -1,9 +1,8 @@
 import React from 'react';
-import Button from './common/Button';
 import DateInfo from './common/DateInfo';
 import Header from './common/Header';
 import PlaceInfo from './common/PlaceInfo';
-import SearchBar from './common/SearchBar';
+import SearchContainer from './common/SearchContainer';
 import { subtitle1 } from '@/styles/font';
 import styled from '@emotion/styled';
 
@@ -11,12 +10,7 @@ export default function SideBar() {
   return (
     <Wrapper>
       <Header />
-      <SearchContainer>
-        <SearchBar />
-        <Button label="search" size="middle">
-          검색
-        </Button>
-      </SearchContainer>
+      <SearchContainer />
       <DateContainer>
         <DateInfo />
       </DateContainer>
@@ -51,14 +45,6 @@ const Wrapper = styled.aside`
   width: 390px;
   border-right: 1px solid ${({ theme }) => theme.color.gray200};
   height: 100vh;
-`;
-
-const SearchContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 67px;
-  padding: 12px;
 `;
 
 const DateContainer = styled.div`

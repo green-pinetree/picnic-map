@@ -15,20 +15,23 @@ export default function Badge({ children }: BadgeProps) {
 }
 
 const Wrapper = styled.div`
-  width: 83px;
+  min-width: 83px;
   height: 36px;
+  white-space: nowrap;
   ${body1}
   border-radius: 100px;
-  box-shadow: 0px 1px 1px 1px ${({ theme }) => theme.color.boxShadow};
+  box-shadow: 0px 1px 1px 1px ${({ theme }) => theme.color.gray400};
   line-height: 36px;
   text-align: center;
+  background-color: ${({ theme }) => theme.color.white};
   cursor: pointer;
   @media (hover: hover) {
     &:hover {
-      background-color: ${({ theme }) => theme.color.gray100};
+      background-color: ${({ theme }) => theme.color.primary};
+      color: ${({ theme }) => theme.color.white};
     }
   }
   &:active {
-    filter: brightness(0.9);
+    filter: brightness(0.7);
   }
 `;

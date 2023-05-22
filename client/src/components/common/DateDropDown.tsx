@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BREAK_POINT from '@/styles/breakpoint';
 import { body1, body2 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
+import { DROP_DOWN } from '@/styles/zIndex';
 import styled from '@emotion/styled';
 
 export default function DateDropDown() {
@@ -86,7 +87,7 @@ const Date = styled.button`
 
 const MenuList = styled.div`
   position: absolute;
-  z-index: 999;
+  z-index: ${DROP_DOWN};
   top: 25px;
   right: 5px;
   background-color: ${({ theme }) => theme.color.white};
