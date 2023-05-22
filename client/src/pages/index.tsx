@@ -1,18 +1,30 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Header from '@/components/common/Header';
 import Map from '@/components/common/Map';
 import Drawer from '@/components/Drawer';
 import Filter from '@/components/Filter';
 import SearchContainer from '@/components/SearchContainer';
 import SideBar from '@/components/SideBar';
-import { httpGet } from '@/utils/http';
+import { fetchPlaceList } from '@/store/placeList';
+// import { ReducerType } from '@/store/rootReducer';
 import styled from '@emotion/styled';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
 
 export default function Home() {
-  // const { data, isLoading, isError } = useQuery(['placelist'], () =>
-  //   httpGet('/api/place/list?type=1,7&lng=126.922027&lat=37.564501&page=1&size=5')
-  // );
-  // console.log(data);
+  const dispatch = useDispatch();
+  // const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      dispatch(
+        fetchPlaceList({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          type: [1, 7, 0],
+          page: 1,
+        })
+      );
+    });
+  }, []);
   return (
     <>
       <div className="mobile-layout">
@@ -33,21 +45,6 @@ export default function Home() {
       </div>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ['placelist'],
-    queryFn: () => httpGet('/api/place/list?type=1,7&lng=126.922027&lat=37.564501&page=1&size=5'),
-  });
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
 }
 
 const Section = styled.section`

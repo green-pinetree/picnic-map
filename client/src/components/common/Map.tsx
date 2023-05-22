@@ -1,29 +1,41 @@
 /* eslint-disable no-new */
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { UserLocation, addLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import styled from '@emotion/styled';
 
 export default function Map() {
+  const dispatch = useDispatch();
   const mapElement = useRef(null);
 
-  useEffect(() => {
-    const { naver } = window;
-    if (!mapElement.current || !naver) return;
+  const drawMap = useCallback(
+    ({ longitude, latitude }: UserLocation) => {
+      const { naver } = window;
+      if (!mapElement.current || !naver) return;
+      const location = new naver.maps.LatLng(latitude, longitude);
+      const mapOptions: naver.maps.MapOptions = {
+        center: location,
+        zoom: 17,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: naver.maps.Position.TOP_RIGHT,
+        },
+      };
+      const map = new naver.maps.Map(mapElement.current, mapOptions);
+      new naver.maps.Marker({
+        position: location,
+        map,
+      });
+    },
+    [mapElement]
+  );
 
-    // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
-    const location = new naver.maps.LatLng(37.5656, 126.9769);
-    const mapOptions: naver.maps.MapOptions = {
-      center: location,
-      zoom: 17,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT,
-      },
-    };
-    const map = new naver.maps.Map(mapElement.current, mapOptions);
-    new naver.maps.Marker({
-      position: location,
-      map,
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const location = { latitude: position.coords.latitude, longitude: position.coords.longitude };
+      dispatch(addLocation({ ...location }));
+      drawMap({ ...location });
     });
   }, []);
   return (

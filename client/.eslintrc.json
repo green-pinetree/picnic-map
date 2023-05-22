@@ -1,12 +1,18 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "extends": ["next/core-web-vitals", "airbnb", "prettier", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
     "no-use-before-define": "off",
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
     "@typescript-eslint/no-empty-interface": "off",
+    "import/no-named-as-default": "off",
     "react/jsx-filename-extension": [
       1,
       {
