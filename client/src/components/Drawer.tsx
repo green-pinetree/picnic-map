@@ -59,6 +59,7 @@ const PlaceContainer = styled.div<{ drawerHeight: number }>`
   width: 100%;
   overflow-y: hidden;
   border-radius: 30px 30px 0px 0px;
+  border-top: 1px solid ${({ theme }) => theme.color.gray400};
 `;
 
 const Header = styled.div`

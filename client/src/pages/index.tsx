@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '@/components/common/Header';
 import Map from '@/components/common/Map';
 import Drawer from '@/components/Drawer';
 import Filter from '@/components/Filter';
 import SearchContainer from '@/components/SearchContainer';
 import SideBar from '@/components/SideBar';
-import { fetchPlaceList } from '@/store/placeList';
-// import { ReducerType } from '@/store/rootReducer';
+import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
+import { ReducerType } from '@/store/rootReducer';
 import styled from '@emotion/styled';
 
 export default function Home() {
   const dispatch = useDispatch();
-  // const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
+  const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
+    (state) => state.placeList
+  );
+  console.log(placeList, loading);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       dispatch(
@@ -33,8 +36,8 @@ export default function Home() {
           <SearchContainer />
           <Filter />
           <Map />
-          <Drawer />
         </Section>
+        <Drawer />
       </div>
       <div className="desktop-layout">
         <SideBar />
