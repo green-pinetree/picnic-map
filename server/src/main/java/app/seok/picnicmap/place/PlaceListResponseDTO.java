@@ -94,7 +94,7 @@ public class PlaceListResponseDTO {
 
     List<String> image = new ArrayList<>();
     if (park.getPImg() != null) {
-      Collections.addAll(image, park.getPImg().split("/?/"));
+      Collections.addAll(image, park.getPImg().split("~split~"));
     }
     data.setImage(image);
 
@@ -303,7 +303,7 @@ public class PlaceListResponseDTO {
 
     List<String> image = new ArrayList<>();
     if (culture.getMainImg() != null) {
-      Collections.addAll(image, culture.getMainImg().split("/?/"));
+      Collections.addAll(image, culture.getMainImg().split("~split~"));
     }
     data.setImage(image);
 
