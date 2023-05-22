@@ -23,7 +23,8 @@ public class LocationService {
 
   public void saveLocation() throws JsonProcessingException {
     try {
-      String url = "http://" + request.getServerName() + ":" + request.getServerPort()
+      String protocol = request.getScheme();
+      String url = protocol + request.getServerName() + ":" + request.getServerPort()
           + "/json/district.json";
       URL jsonUrl = new URL(url);
       BufferedReader reader = new BufferedReader(
