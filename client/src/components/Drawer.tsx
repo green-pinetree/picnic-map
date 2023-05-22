@@ -8,7 +8,7 @@ export default function Drawer() {
   const [drawerHeight, setDrawerHeight] = useState(300);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
-    let changeHeight = window.innerHeight - e.targetTouches[0].clientY + 18;
+    let changeHeight = window.innerHeight - e.targetTouches[0].clientY + 30;
     if (changeHeight < 35) {
       changeHeight = 33;
     }
