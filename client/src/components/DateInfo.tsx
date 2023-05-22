@@ -1,5 +1,5 @@
 import React from 'react';
-import DateDropDown from './DateDropDown';
+import DateDropDown from './common/DateDropDown';
 import { body2 } from '@/styles/font';
 import styled from '@emotion/styled';
 

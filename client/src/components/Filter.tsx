@@ -1,5 +1,5 @@
 import React from 'react';
-import Badge from './Badge';
+import Badge from './common/Badge';
 import BREAK_POINT from '@/styles/breakpoint';
 import { BADGE } from '@/styles/zIndex';
 import styled from '@emotion/styled';

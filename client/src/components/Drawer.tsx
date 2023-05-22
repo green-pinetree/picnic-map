@@ -1,5 +1,5 @@
 import React, { useState, TouchEvent } from 'react';
-import PlaceInfo from './common/PlaceInfo';
+import PlaceInfo from './PlaceInfo';
 import { subtitle1 } from '@/styles/font';
 import { DRAWER } from '@/styles/zIndex';
 import styled from '@emotion/styled';

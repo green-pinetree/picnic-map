@@ -1,8 +1,8 @@
 import React from 'react';
-import DateInfo from './common/DateInfo';
 import Header from './common/Header';
-import PlaceInfo from './common/PlaceInfo';
-import SearchContainer from './common/SearchContainer';
+import DateInfo from './DateInfo';
+import PlaceInfo from './PlaceInfo';
+import SearchContainer from './SearchContainer';
 import { subtitle1 } from '@/styles/font';
 import styled from '@emotion/styled';
 
