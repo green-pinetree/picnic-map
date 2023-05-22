@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class WeatherRequestDTO {
-    private String lat;
-    private String lng;
-    private String district;
+
+  private String lat;
+  private String lng;
+  private String district;
 }
