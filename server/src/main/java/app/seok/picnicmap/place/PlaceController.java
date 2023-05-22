@@ -12,6 +12,7 @@ import app.seok.picnicmap.place.walk.WalkDTO;
 import app.seok.picnicmap.place.walk.WalkService;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,28 @@ public class PlaceController {
     }
     System.out.println("controller >> " + " " + lng + " " + lat + " " + size + " " + offset);
     try {
-      List<ParkDTO> parks = parkService.getListPark(lat, lng, size, offset);
-      List<WalkDTO> walks = walkService.getListWalk(lat, lng, size, offset);
+      boolean containsZero = false;
+      boolean containsone = false;
+      for (int value : type) {
+        if (value == 0) {
+          containsZero = true;
+        }
+        if (value == 1) {
+          containsone = true;
+        }
+      }
+      List<ParkDTO> parks;
+      if (containsZero) {
+        parks = parkService.getListPark(lat, lng, size, offset);
+      } else {
+        parks = new ArrayList<>();
+      }
+      List<WalkDTO> walks;
+      if (containsone) {
+        walks = walkService.getListWalk(lat, lng, size, offset);
+      } else {
+        walks = new ArrayList<>();
+      }
       List<CultureDTO> cultures = cultureService.getListCulture(type, lat, lng, size, offset);
       System.out.println(parks.size() + " " + walks.size() + " " + cultures.size());
       response = PlaceListResponseDTO.status200(parks, walks, cultures);
