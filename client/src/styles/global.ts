@@ -140,7 +140,8 @@ const globalStyle = css`
   body {
     height: 100%;
     padding: 0;
-    overflow-y: hidden;
+    overscroll-behavior: contain;
+    overflow: hidden;
   }
 
   * {
@@ -172,6 +173,7 @@ const globalStyle = css`
 
   #__next {
     height: 100%;
+    overflow: hidden;
   }
 
   *:link {
@@ -190,6 +192,11 @@ const globalStyle = css`
   .mobile-layout {
     display: flex;
     flex-direction: column;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    height: -webkit-fill-available;
+    height: fill-available;
     @media screen and (min-width: ${BREAK_POINT.mobile}px) {
       display: none;
     }

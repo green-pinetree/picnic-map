@@ -7,7 +7,8 @@ import styled from '@emotion/styled';
 export default function Drawer() {
   const [drawerHeight, setDrawerHeight] = useState(300);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
-    let changeHeight = window.innerHeight - e.targetTouches[0].clientY;
+    e.preventDefault();
+    let changeHeight = window.innerHeight - e.targetTouches[0].clientY + 18;
     if (changeHeight < 35) {
       changeHeight = 33;
     }
