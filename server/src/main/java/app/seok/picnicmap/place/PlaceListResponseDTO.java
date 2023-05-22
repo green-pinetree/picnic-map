@@ -203,6 +203,14 @@ public class PlaceListResponseDTO {
       // lat이 null인 경우에 대한 처리 로직
     }
 
+    List<String> image = new ArrayList<>();
+    if (walk.getImage() != null) {
+      Collections.addAll(image, walk.getImage().split("~split~"));
+    } else {
+      // lat이 null인 경우에 대한 처리 로직
+    }
+    data.setImage(image);
+
     Detail detail = new Detail();
 
     // distance 설정

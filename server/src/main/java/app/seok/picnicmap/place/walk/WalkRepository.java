@@ -16,7 +16,7 @@ public interface WalkRepository extends JpaRepository<Walk, Long> {
   @Query(value =
       "SELECT w.id AS id, w.course_name AS courseName, w.content AS content, ROUND(w.lng, 5) AS lng"
           + ", ROUND(w.lat, 5) AS lat, w.distance AS distance, w.lead_time AS leadTime"
-          + ", w.relate_subway AS relateSubway"
+          + ", w.relate_subway AS relateSubway, w.image AS image"
           + ", ROUND(ST_DISTANCE(POINT(:lat, :lng), POINT(w.lat, w.lng)), 5) AS near"
           + ", (SELECT GROUP_CONCAT(ROUND(lng, 5)) FROM walk a "
           + "   WHERE a.course_name = w.course_name GROUP BY course_name) AS lngs"
@@ -34,7 +34,7 @@ public interface WalkRepository extends JpaRepository<Walk, Long> {
   @Query(value =
       "SELECT w.id AS id, w.course_name AS courseName, w.content AS content, ROUND(w.lng, 5) AS lng"
           + ", ROUND(w.lat, 5) AS lat, w.distance AS distance, w.lead_time AS leadTime"
-          + ", w.relate_subway AS relateSubway"
+          + ", w.relate_subway AS relateSubway, w.image AS image"
           + ", ROUND(ST_DISTANCE(POINT(:lat, :lng), POINT(w.lat, w.lng)), 5) AS near"
           + ", (SELECT GROUP_CONCAT(ROUND(lng, 5)) FROM walk a "
           + "   WHERE a.course_name = w.course_name GROUP BY course_name) AS lngs"

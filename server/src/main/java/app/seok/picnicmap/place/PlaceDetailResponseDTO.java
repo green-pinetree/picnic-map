@@ -31,7 +31,9 @@ public class PlaceDetailResponseDTO {
     data.setLng(park.getLongitude());
     data.setLat(park.getLatitude());
     List<String> image = new ArrayList<>();
-    Collections.addAll(image, park.getPImg().split("~split~"));
+    if (park.getPImg() != null) {
+      Collections.addAll(image, park.getPImg().split("~split~"));
+    }
     data.setImage(image);
     Detail detail = new Detail();
     detail.setArea(park.getArea());
@@ -61,7 +63,11 @@ public class PlaceDetailResponseDTO {
     data.setContent(walk.getContent());
     data.setLng(walk.getLng());
     data.setLat(data.getLat());
-//        data.setImage();
+    List<String> image = new ArrayList<>();
+    if (walk.getImage() != null) {
+      Collections.addAll(image, walk.getImage().split("~split~"));
+    }
+    data.setImage(image);
     Detail detail = new Detail();
     detail.setDistance(walk.getDistance());
     detail.setLeadTime(walk.getLeadTime());
@@ -88,7 +94,9 @@ public class PlaceDetailResponseDTO {
     data.setLng(culture.getLng());
     data.setLat(culture.getLat());
     List<String> image = new ArrayList<>();
-    Collections.addAll(image, culture.getMainImg().split("~split~"));
+    if (culture.getMainImg() != null) {
+      Collections.addAll(image, culture.getMainImg().split("~split~"));
+    }
     data.setImage(image);
     Detail detail = new Detail();
     detail.setAddress(culture.getAddr());
