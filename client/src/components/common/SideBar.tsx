@@ -1,12 +1,14 @@
-import React from 'react';
-import Header from './common/Header';
-import DateInfo from './DateInfo';
-import PlaceInfo from './PlaceInfo';
-import SearchContainer from './SearchContainer';
+import React, { ReactNode } from 'react';
+import Header from './Header';
+import DateInfo from '../DateInfo';
+import SearchContainer from '../SearchContainer';
 import { subtitle1 } from '@/styles/font';
 import styled from '@emotion/styled';
 
-export default function SideBar() {
+interface SideBarProps {
+  children: ReactNode;
+}
+export default function SideBar({ children }: SideBarProps) {
   return (
     <Wrapper>
       <Header />
@@ -16,26 +18,7 @@ export default function SideBar() {
       </DateContainer>
       <PlaceContainer>
         <Title>주변 장소</Title>
-        <Contents>
-          <PlaceInfo
-            imgSrc="/dummyimg.png"
-            name="서울숲"
-            address="설명설명"
-            description="설명설명"
-          />
-          <PlaceInfo
-            imgSrc="/dummyimg.png"
-            name="서울숲"
-            address="설명설명"
-            description="설명설명"
-          />
-          <PlaceInfo
-            imgSrc="/dummyimg.png"
-            name="서울숲"
-            address="설명설명"
-            description="설명설명"
-          />
-        </Contents>
+        <Contents>{children}</Contents>
       </PlaceContainer>
     </Wrapper>
   );

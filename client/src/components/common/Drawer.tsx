@@ -1,10 +1,13 @@
-import React, { useState, TouchEvent } from 'react';
-import PlaceInfo from './PlaceInfo';
+import React, { useState, TouchEvent, ReactNode } from 'react';
 import { subtitle1 } from '@/styles/font';
 import { DRAWER } from '@/styles/zIndex';
 import styled from '@emotion/styled';
 
-export default function Drawer() {
+interface DrawerProps {
+  children: ReactNode;
+}
+
+export default function Drawer({ children }: DrawerProps) {
   const [drawerHeight, setDrawerHeight] = useState(300);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -20,29 +23,7 @@ export default function Drawer() {
         <Bar />
         <Title>주변 장소</Title>
       </Header>
-      <Contents>
-        <PlaceInfo
-          mobile
-          imgSrc="/dummyimg.png"
-          name="서울숲"
-          address="설명설명"
-          description="설명설명"
-        />
-        <PlaceInfo
-          mobile
-          imgSrc="/dummyimg.png"
-          name="서울숲"
-          address="설명설명"
-          description="설명설명"
-        />
-        <PlaceInfo
-          mobile
-          imgSrc="/dummyimg.png"
-          name="서울숲"
-          address="설명설명"
-          description="설명설명"
-        />
-      </Contents>
+      <Contents>{children}</Contents>
     </PlaceContainer>
   );
 }

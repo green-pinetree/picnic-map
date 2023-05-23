@@ -8,6 +8,18 @@ const nextConfig = {
       destination: `${process.env.BE_URL}/api/:path*`,
     },
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

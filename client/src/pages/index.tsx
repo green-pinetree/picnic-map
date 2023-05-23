@@ -1,21 +1,17 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Header from '@/components/common/Header';
-import Map from '@/components/common/Map';
-import Drawer from '@/components/Drawer';
-import Filter from '@/components/Filter';
-import SearchContainer from '@/components/SearchContainer';
-import SideBar from '@/components/SideBar';
+import Loading from '@/components/common/Loading';
+import DesktopLayout from '@/components/Layout/DesktopLayout';
+import MobileLayout from '@/components/Layout/MobileLayout';
+import PlaceInfo from '@/components/PlaceInfo';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
-import styled from '@emotion/styled';
 
 export default function Home() {
   const dispatch = useDispatch();
   const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
     (state) => state.placeList
   );
-  console.log(placeList, loading);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       dispatch(
@@ -30,26 +26,34 @@ export default function Home() {
   }, []);
   return (
     <>
-      <div className="mobile-layout">
-        <Header mobile />
-        <Section>
-          <SearchContainer />
-          <Filter />
-          <Map />
-        </Section>
-        <Drawer />
-      </div>
-      <div className="desktop-layout">
-        <SideBar />
-        <Section>
-          <Filter />
-          <Map />
-        </Section>
-      </div>
+      <MobileLayout>
+        {loading ? (
+          <Loading />
+        ) : (
+          placeList.map((place) => (
+            <PlaceInfo
+              imgSrc={place.image.at(0) ? place.image[0] : ''}
+              name={place.name}
+              address={place.detail.address ? place.detail.address : ''}
+              description={place.content ? place.content : ''}
+            />
+          ))
+        )}
+      </MobileLayout>
+      <DesktopLayout>
+        {loading ? (
+          <Loading />
+        ) : (
+          placeList.map((place) => (
+            <PlaceInfo
+              imgSrc={place.image.at(0) ? place.image[0] : ''}
+              name={place.name}
+              address={place.detail.address ? place.detail.address : ''}
+              description={place.content ? place.content : ''}
+            />
+          ))
+        )}
+      </DesktopLayout>
     </>
   );
 }
-
-const Section = styled.section`
-  flex: 1;
-`;
