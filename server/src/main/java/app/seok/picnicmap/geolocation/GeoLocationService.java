@@ -21,24 +21,23 @@ public class GeoLocationService {
     Optional<GeoLocation> optionalGeoLocation = geoLocationRepository.findRecentRecordByIpAddress(
         ipAddress, startTime);
 
-    GeoLocation geoLocation;
-    if (optionalGeoLocation.isPresent()) {
-      geoLocation = optionalGeoLocation.get();
-    } else {
-      try {
+    GeoLocation geoLocation = new GeoLocation();
+    try {
+      if (optionalGeoLocation.isPresent()) {
+        geoLocation = optionalGeoLocation.get();
+      } else {
         geoLocation = callNcloudApiGeolocation(ipAddress);
         geoLocationRepository.save(geoLocation);
-      } catch (JsonProcessingException e) {
-        geoLocation = new GeoLocation();
-        throw new RuntimeException(e);
       }
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    } finally {
+      if ("서울특별시".equals(geoLocation.getR1())) {
+        return GeoLocationResponseDTO.OkFromGeoLocation(geoLocation);
+      }
+      return GeoLocationResponseDTO.Ok();
     }
 
-    if ("서울특별시".equals(geoLocation.getR1())) {
-      return GeoLocationResponseDTO.OkFromGeoLocation(geoLocation);
-    }
-
-    return GeoLocationResponseDTO.Ok();
   }
 
   private GeoLocation callNcloudApiGeolocation(String ipAddress) throws JsonProcessingException {
