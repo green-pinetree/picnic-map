@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Loading from './Loading';
+import { PlaceListSliceState } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
@@ -13,6 +14,7 @@ export default function Map() {
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
     (state) => state.userLocation
   );
+  const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
 
   const drawMap = useCallback(() => {
     setIsLoading(true);
@@ -32,6 +34,13 @@ export default function Map() {
     new naver.maps.Marker({
       position: location,
       map,
+    });
+    placeList.map((place) => {
+      const loc = new naver.maps.LatLng(place.lat, place.lng);
+      new naver.maps.Marker({
+        position: loc,
+        map,
+      });
     });
     setIsLoading(false);
   }, [mapElement, isLoading, latitude, longitude]);

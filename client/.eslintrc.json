@@ -13,6 +13,7 @@
     "react/require-default-props": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "import/no-named-as-default": "off",
+    "array-callback-return": "off",
     "react/jsx-filename-extension": [
       1,
       {
