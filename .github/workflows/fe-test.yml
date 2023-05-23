@@ -24,6 +24,7 @@ jobs:
           cache-dependency-path: client/yarn.lock
       - name: Generate Environment Variables File for Production
         run: |
+          cd client
           echo "BE_URL=$BE_URL" >> .env.production
         env:
           BE_URL: ${{ secrets.BE_URL }}
