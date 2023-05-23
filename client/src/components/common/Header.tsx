@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import DateInfo from './DateInfo';
+import DateInfo from '../DateInfo';
 import BREAK_POINT from '@/styles/breakpoint';
 import { title } from '@/styles/font';
 import styled from '@emotion/styled';

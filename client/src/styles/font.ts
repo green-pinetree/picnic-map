@@ -27,9 +27,6 @@ export const subtitle2 = css`
   font-size: 18px;
   font-weight: 700;
   color: ${COLOR.black};
-  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
-    font-size: 16px;
-  }
 `;
 
 export const body1 = css`
@@ -49,6 +46,16 @@ export const body2 = css`
   color: ${COLOR.black};
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     font-size: 12px;
+  }
+`;
+
+export const desc = css`
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: ${COLOR.gray300};
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    font-size: 14px;
   }
 `;
 
