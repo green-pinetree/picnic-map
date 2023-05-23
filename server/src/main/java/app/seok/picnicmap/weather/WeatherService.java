@@ -79,7 +79,7 @@ public class WeatherService {
     LocalDateTime now = LocalDateTime.now();
     String time = ApiTimeCalculator.apiVilageBaseTime();
     String date = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-    if (Integer.parseInt(now.format(DateTimeFormatter.ofPattern("HH00"))) > Integer.parseInt(
+    if (Integer.parseInt(now.format(DateTimeFormatter.ofPattern("HH00"))) < Integer.parseInt(
         time)) {
       LocalDateTime previousDate = now.minusDays(1);
       date = previousDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -98,7 +98,7 @@ public class WeatherService {
       } else {
         weather = new Weather();
         weather.setFcstDate(item.getFcstDate());
-        weather.setBaseDate(item.getBaseDate());
+        weather.setBaseDate(now.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
         weather.setNx(item.getNx());
         weather.setNy(item.getNy());
         weather.setDistrict("");
