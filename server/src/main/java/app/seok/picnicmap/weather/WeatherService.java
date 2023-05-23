@@ -117,9 +117,28 @@ public class WeatherService {
       }
     }
     for (String key : weatherMap.keySet()) {
-      weatherRepository.save(weatherMap.get(key));
+      saveOrUpdateWeather(weatherMap.get(key));
     }
     return dto;
+  }
+
+  public void saveOrUpdateWeather(Weather weather) {
+    List<Weather> existingWeatherList = weatherRepository.findByBaseDateAndFcstDate(
+        weather.getBaseDate(), weather.getFcstDate());
+
+    if (existingWeatherList.size() > 0) {
+      Weather existingWeather = existingWeatherList.get(0);
+
+      existingWeather.setSky(weather.getSky());
+      existingWeather.setSkyMsg(weather.getSkyMsg());
+      existingWeather.setPop(weather.getPop());
+      existingWeather.setPty(weather.getPty());
+      existingWeather.setPtyMsg(weather.getPtyMsg());
+
+      weatherRepository.save(existingWeather);
+    } else {
+      weatherRepository.save(weather);
+    }
   }
 
   /*

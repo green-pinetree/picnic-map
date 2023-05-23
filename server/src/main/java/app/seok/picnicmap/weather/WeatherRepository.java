@@ -13,4 +13,5 @@ public interface WeatherRepository extends JpaRepository<Weather, Long> {
   List<Weather> findByBaseDateOrderByFcstDateAscWithLatestCreateAt(
       @Param("baseDate") String baseDate);
 
+  List<Weather> findByBaseDateAndFcstDate(String baseDate, String fcstDate);
 }
