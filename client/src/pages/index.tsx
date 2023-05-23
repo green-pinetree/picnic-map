@@ -6,6 +6,7 @@ import MobileLayout from '@/components/Layout/MobileLayout';
 import PlaceInfo from '@/components/PlaceInfo';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
+import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import styled from '@emotion/styled';
 
@@ -14,17 +15,18 @@ export default function Home() {
   const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
     (state) => state.placeList
   );
+  const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
+    (state) => state.userLocation
+  );
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      dispatch(
-        fetchPlaceList({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          type: [1, 7, 0],
-          page: 1,
-        })
-      );
-    });
+    dispatch(
+      fetchPlaceList({
+        latitude,
+        longitude,
+        type: [1, 7, 0],
+        page: 1,
+      })
+    );
   }, []);
   return (
     <>
