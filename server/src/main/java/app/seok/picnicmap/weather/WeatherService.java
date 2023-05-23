@@ -159,9 +159,18 @@ public class WeatherService {
       weather.setSkyMsg(msg[i]);
       weather.setSky(weatherCode.skyNameToCode(msg[i]));
       weather.setFcstDate(DateUtils.calculateDate(date, 3 + i));
-      weatherRepository.save(weather);
+      saveOrNoneWeather(weather);
     }
     return dto;
+  }
+
+  public void saveOrNoneWeather(Weather weather) {
+    List<Weather> existingWeatherList = weatherRepository.findByBaseDateAndFcstDate(
+        weather.getBaseDate(), weather.getFcstDate());
+
+    if (existingWeatherList.size() == 0) {
+      weatherRepository.save(weather);
+    }
   }
 
   /*
