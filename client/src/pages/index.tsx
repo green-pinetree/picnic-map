@@ -6,6 +6,8 @@ import MobileLayout from '@/components/Layout/MobileLayout';
 import PlaceInfo from '@/components/PlaceInfo';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
+import BREAK_POINT from '@/styles/breakpoint';
+import styled from '@emotion/styled';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -28,28 +30,37 @@ export default function Home() {
     <>
       <MobileLayout>
         {loading ? (
-          <Loading />
+          <LoadingContainer>
+            <Loading />
+          </LoadingContainer>
         ) : (
           placeList.map((place) => (
             <PlaceInfo
-              imgSrc={place.image.at(0) ? place.image[0] : ''}
+              key={place.id}
+              imgSrc={place.image[0]}
               name={place.name}
-              address={place.detail.address ? place.detail.address : ''}
-              description={place.content ? place.content : ''}
+              address={place.detail.address || ''}
+              content={place.content || ''}
+              type={place.type}
+              mobile
             />
           ))
         )}
       </MobileLayout>
       <DesktopLayout>
         {loading ? (
-          <Loading />
+          <LoadingContainer>
+            <Loading />
+          </LoadingContainer>
         ) : (
           placeList.map((place) => (
             <PlaceInfo
-              imgSrc={place.image.at(0) ? place.image[0] : ''}
+              key={place.id}
+              imgSrc={place.image[0]}
               name={place.name}
-              address={place.detail.address ? place.detail.address : ''}
-              description={place.content ? place.content : ''}
+              address={place.detail.address || ''}
+              content={place.content || ''}
+              type={place.type}
             />
           ))
         )}
@@ -57,3 +68,13 @@ export default function Home() {
     </>
   );
 }
+const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    margin-top: 40px;
+  }
+`;
