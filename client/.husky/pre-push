@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo ">> Picnic-map pre-push hook: Checking branch name..."
+
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+PROTECTED_BRANCHES="^(main|dev)"
+
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
+then
+  echo "\n🚫 Cannot push to remote $BRANCH branch, please create your own branch and use PR." && exit 1
+fi
+
+echo ">> Finish checking branch name\n"
+
+exit 0
