@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '@/components/common/Loading';
 import DesktopLayout from '@/components/Layout/DesktopLayout';
@@ -6,32 +6,34 @@ import MobileLayout from '@/components/Layout/MobileLayout';
 import PlaceInfo from '@/components/PlaceInfo';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
-import { UserLocation } from '@/store/userLocation';
+import { addLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import styled from '@emotion/styled';
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
-    (state) => state.placeList
-  );
-  const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
-    (state) => state.userLocation
-  );
+  const [isGetLocation, setIsGetLocation] = useState(false);
+  const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
   useEffect(() => {
-    dispatch(
-      fetchPlaceList({
-        latitude,
-        longitude,
-        type: [1, 7, 0],
-        page: 1,
-      })
-    );
+    setIsGetLocation(true);
+    navigator.geolocation.getCurrentPosition((position) => {
+      const location = { latitude: position.coords.latitude, longitude: position.coords.longitude };
+      dispatch(addLocation({ ...location }));
+      dispatch(
+        fetchPlaceList({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          type: [1, 7, 0],
+          page: 1,
+        })
+      );
+      setIsGetLocation(false);
+    });
   }, []);
   return (
     <>
       <MobileLayout>
-        {loading ? (
+        {isGetLocation ? (
           <LoadingContainer>
             <Loading />
           </LoadingContainer>
@@ -50,7 +52,7 @@ export default function Home() {
         )}
       </MobileLayout>
       <DesktopLayout>
-        {loading ? (
+        {isGetLocation ? (
           <LoadingContainer>
             <Loading />
           </LoadingContainer>

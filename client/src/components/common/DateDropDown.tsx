@@ -35,7 +35,11 @@ export default function DateDropDown() {
       {isOpen && (
         <MenuList aria-labelledby="date-trigger" id="date-dropdown">
           {weatherList.map((weather) => (
-            <Menu key={weather.date} onClick={() => clickDateHandler(weather)} type="button">
+            <Menu
+              key={weather.date + weather.skyName}
+              onClick={() => clickDateHandler(weather)}
+              type="button"
+            >
               <div>{weather.date}</div>
               <div>
                 <div>날씨: {SKY[`${weather.skyCode}`] || weather.skyName}</div>

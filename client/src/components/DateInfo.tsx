@@ -15,8 +15,9 @@ export default function DateInfo() {
     (state) => state.userLocation
   );
   useEffect(() => {
+    if (!longitude || !latitude) return;
     dispatch(fetchWeatherList({ longitude, latitude }));
-  }, []);
+  }, [latitude, longitude]);
   return (
     <TodayInfo>
       <DateDropDown />

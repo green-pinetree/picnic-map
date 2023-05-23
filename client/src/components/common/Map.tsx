@@ -1,47 +1,44 @@
 /* eslint-disable no-new */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Loading from './Loading';
-import { UserLocation, addLocation } from '@/store/userLocation';
+import { ReducerType } from '@/store/rootReducer';
+import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import styled from '@emotion/styled';
 
 export default function Map() {
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
   const mapElement = useRef(null);
-
-  const drawMap = useCallback(
-    ({ longitude, latitude }: UserLocation) => {
-      const { naver } = window;
-      if (!mapElement.current || !naver) return;
-      const location = new naver.maps.LatLng(latitude, longitude);
-      const mapOptions: naver.maps.MapOptions = {
-        center: location,
-        zoom: 17,
-        zoomControl: true,
-        zoomControlOptions: {
-          position: naver.maps.Position.TOP_RIGHT,
-        },
-      };
-      const map = new naver.maps.Map(mapElement.current, mapOptions);
-      new naver.maps.Marker({
-        position: location,
-        map,
-      });
-    },
-    [mapElement, isLoading]
+  const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
+    (state) => state.userLocation
   );
 
-  useEffect(() => {
+  const drawMap = useCallback(() => {
     setIsLoading(true);
-    navigator.geolocation.getCurrentPosition((position) => {
-      const location = { latitude: position.coords.latitude, longitude: position.coords.longitude };
-      dispatch(addLocation({ ...location }));
-      drawMap({ ...location });
-      setIsLoading(false);
+    const { naver } = window;
+    if (!mapElement.current || !naver) return;
+    if (!latitude || !longitude) return;
+    const location = new naver.maps.LatLng(latitude, longitude);
+    const mapOptions: naver.maps.MapOptions = {
+      center: location,
+      zoom: 17,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: naver.maps.Position.TOP_RIGHT,
+      },
+    };
+    const map = new naver.maps.Map(mapElement.current, mapOptions);
+    new naver.maps.Marker({
+      position: location,
+      map,
     });
-  }, []);
+    setIsLoading(false);
+  }, [mapElement, isLoading, latitude, longitude]);
+
+  useEffect(() => {
+    drawMap();
+  }, [latitude, longitude]);
   return (
     <Wrapper>
       {isLoading && (
