@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import Map from '../common/Map';
@@ -9,11 +10,13 @@ interface DesktopLayoutProps {
 }
 
 export default function DesktopLayout({ children }: DesktopLayoutProps) {
+  const router = useRouter();
+  const { search } = router.query;
   return (
     <div className="desktop-layout">
       <SideBar>{children}</SideBar>
       <Section>
-        <Filter />
+        {!search && <Filter />}
         <Map />
       </Section>
     </div>

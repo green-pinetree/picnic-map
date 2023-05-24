@@ -7,7 +7,7 @@ import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { addRenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
 import { SearchListSliceState } from '@/store/searchList';
-import { AppDispatch } from '@/store/store';
+import { AppDispatch } from '@/store';
 import { TypeFilter } from '@/store/typeFilter';
 import { addLocation, UserLocation } from '@/store/userLocation';
 
