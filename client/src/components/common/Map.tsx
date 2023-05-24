@@ -43,11 +43,11 @@ export default function Map() {
       });
     });
     setIsLoading(false);
-  }, [mapElement, isLoading, latitude, longitude]);
+  }, [mapElement, isLoading, latitude, longitude, placeList.length]);
 
   useEffect(() => {
     drawMap();
-  }, [latitude, longitude]);
+  }, [latitude, longitude, placeList.length]);
   return (
     <Wrapper>
       {isLoading && (
