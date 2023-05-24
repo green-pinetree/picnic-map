@@ -22,10 +22,12 @@ export default function DateInfo() {
   return (
     <TodayInfo>
       <DateDropDown />
-      <TodayWeather>
-        <span>날씨: {SKY[`${current?.skyCode || 1}`] || current?.skyName}</span>
-        <span>미세먼지: {AIRGRADE[`${current?.airGradeCode || 1}`]}</span>
-      </TodayWeather>
+      {current && (
+        <TodayWeather>
+          <span>날씨: {SKY[`${current.skyCode}`] || current.skyName}</span>
+          <span>미세먼지: {AIRGRADE[`${current.airGradeCode}`]}</span>
+        </TodayWeather>
+      )}
     </TodayInfo>
   );
 }

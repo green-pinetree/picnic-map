@@ -36,7 +36,7 @@ export default function Home() {
       fetchPlaceList({
         latitude,
         longitude,
-        type: typeList.length === 0 ? [1, 7, 0] : typeList,
+        type: typeList,
         page: 1,
       })
     );

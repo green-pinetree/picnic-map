@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import BREAK_POINT from './breakpoint';
+import { COLOR } from './color';
 
 const globalStyle = css`
   @font-face {
@@ -205,6 +206,22 @@ const globalStyle = css`
     display: flex;
     @media screen and (max-width: ${BREAK_POINT.mobile}px) {
       display: none;
+    }
+  }
+  .user-position {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${COLOR.warning};
+    border-radius: 30px;
+    box-shadow: 0px 1px 1px 1px ${COLOR.gray400};
+    div {
+      width: 50%;
+      height: 50%;
+      border-radius: 100%;
+      background-color: ${COLOR.offWhite};
     }
   }
 `;

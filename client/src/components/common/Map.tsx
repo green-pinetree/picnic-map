@@ -34,6 +34,9 @@ export default function Map() {
     new naver.maps.Marker({
       position: location,
       map,
+      icon: {
+        content: `<div class="user-position"><div /></div>`,
+      },
     });
     placeList.map((place) => {
       const loc = new naver.maps.LatLng(place.lat, place.lng);
