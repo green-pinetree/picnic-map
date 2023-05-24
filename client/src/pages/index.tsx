@@ -8,29 +8,39 @@ import PlaceInfo from '@/components/PlaceInfo';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { AppDispatch } from '@/store/store';
-import { addLocation } from '@/store/userLocation';
+import { TypeFilter } from '@/store/typeFilter';
+import { addLocation, UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const [isGetLocation, setIsGetLocation] = useState(false);
   const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
+  const typeFilter = useSelector<ReducerType, TypeFilter>((state) => state.typeFilter);
+  const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
+    (state) => state.userLocation
+  );
   useEffect(() => {
     setIsGetLocation(true);
     navigator.geolocation.getCurrentPosition((position) => {
       const location = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       dispatch(addLocation({ ...location }));
-      dispatch(
-        fetchPlaceList({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          type: [1, 7, 0],
-          page: 1,
-        })
-      );
       setIsGetLocation(false);
     });
   }, []);
+  useEffect(() => {
+    if (!latitude || !longitude) return;
+    const typeList: number[] = [];
+    typeFilter.map((type, index) => type && typeList.push(index));
+    dispatch(
+      fetchPlaceList({
+        latitude,
+        longitude,
+        type: typeList.length === 0 ? [1, 7, 0] : typeList,
+        page: 1,
+      })
+    );
+  }, [latitude, longitude, typeFilter]);
   return (
     <>
       <MobileLayout>

@@ -7,13 +7,14 @@ import { BADGE } from '@/styles/zIndex';
 export default function Filter() {
   return (
     <Wrapper>
-      <Badge>공원</Badge>
-      <Badge>둘레길</Badge>
-      <Badge>미술관</Badge>
-      <Badge>공연장</Badge>
-      <Badge>도서관</Badge>
-      <Badge>박물관</Badge>
-      <Badge>기타</Badge>
+      <Badge code={0}>공원</Badge>
+      <Badge code={1}>둘레길</Badge>
+      <Badge code={2}>미술관</Badge>
+      <Badge code={3}>공연장</Badge>
+      <Badge code={4}>도서관</Badge>
+      <Badge code={5}>박물관/기념관</Badge>
+      <Badge code={6}>문화원</Badge>
+      <Badge code={7}>기타</Badge>
     </Wrapper>
   );
 }
