@@ -17,7 +17,7 @@ export default function RenderPlaceList({
   mobile = false,
 }: RenderPlaceListProps) {
   return (
-    <div>
+    <Wrapper>
       {isGetLocation ? (
         <LoadingContainer>
           <Loading />
@@ -35,9 +35,17 @@ export default function RenderPlaceList({
           />
         ))
       )}
-    </div>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
 const LoadingContainer = styled.div`
   width: 100%;
   height: 100%;

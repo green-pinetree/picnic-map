@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Loading from './Loading';
 import { PlaceListSliceState } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
+import { SearchListSliceState } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 
@@ -17,32 +18,42 @@ export default function Map() {
     (state) => state.userLocation
   );
   const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
-  const drawMap = useCallback(() => {
-    setIsLoading(true);
-    const { naver } = window;
-    if (!mapElement.current || !naver) return;
-    if (!latitude || !longitude) return;
-    const location = new naver.maps.LatLng(latitude, longitude);
-    const mapOptions: naver.maps.MapOptions = {
-      center: location,
-      zoom: 17,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT,
-      },
-    };
-    const newMap = new naver.maps.Map(mapElement.current, mapOptions);
-    new naver.maps.Marker({
-      position: location,
-      map: newMap,
-      icon: {
-        content: `<div class="user-position"><div /></div>`,
-      },
-    });
-    setMap(newMap);
-    drawPlaceMarker();
-    setIsLoading(false);
-  }, [latitude, longitude]);
+  const { searchList } = useSelector<ReducerType, SearchListSliceState>(
+    (state) => state.searchList
+  );
+
+  const drawMap = useCallback(
+    (center: { lat: number; lng: number } | undefined) => {
+      setIsLoading(true);
+      const { naver } = window;
+      if (!mapElement.current || !naver) return;
+      if (!latitude || !longitude) return;
+      const location = new naver.maps.LatLng(
+        center ? center.lat : latitude,
+        center ? center.lng : longitude
+      );
+      const mapOptions: naver.maps.MapOptions = {
+        center: location,
+        zoom: 17,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: naver.maps.Position.TOP_RIGHT,
+        },
+      };
+      const newMap = new naver.maps.Map(mapElement.current, mapOptions);
+      new naver.maps.Marker({
+        position: location,
+        map: newMap,
+        icon: {
+          content: `<div class="${center ? 'search' : 'user'}-position"><div /></div>`,
+        },
+      });
+      setMap(newMap);
+      drawPlaceMarker();
+      setIsLoading(false);
+    },
+    [latitude, longitude, searchList.length]
+  );
 
   const drawPlaceMarker = useCallback(() => {
     if (!map) return;
@@ -59,8 +70,12 @@ export default function Map() {
   }, [map, markers, placeList.length, latitude, longitude]);
 
   useEffect(() => {
-    drawMap();
-  }, [latitude, longitude]);
+    if (searchList.length !== 0) {
+      drawMap({ lat: searchList[0].lat, lng: searchList[0].lng });
+      return;
+    }
+    drawMap(undefined);
+  }, [latitude, longitude, searchList.length]);
 
   useEffect(() => {
     drawPlaceMarker();
