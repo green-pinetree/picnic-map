@@ -1,21 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from './common/Loading';
 import PlaceInfo from './PlaceInfo';
-import { Place } from '@/store/placeList';
+import { RenderList } from '@/store/renderList';
+import { ReducerType } from '@/store/rootReducer';
 import BREAK_POINT from '@/styles/breakpoint';
 
 interface RenderPlaceListProps {
   isGetLocation: boolean;
-  renderList: Place[];
   mobile?: boolean;
 }
 
-export default function RenderPlaceList({
-  isGetLocation,
-  renderList,
-  mobile = false,
-}: RenderPlaceListProps) {
+export default function RenderPlaceList({ isGetLocation, mobile = false }: RenderPlaceListProps) {
+  const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
   return (
     <Wrapper>
       {isGetLocation ? (

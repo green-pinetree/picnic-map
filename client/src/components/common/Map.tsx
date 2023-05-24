@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from './Loading';
-import { PlaceListSliceState } from '@/store/placeList';
+import { RenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
 import { SearchListSliceState } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
@@ -17,7 +17,7 @@ export default function Map() {
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
     (state) => state.userLocation
   );
-  const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
+  const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
   const { searchList } = useSelector<ReducerType, SearchListSliceState>(
     (state) => state.searchList
   );
@@ -42,14 +42,22 @@ export default function Map() {
       };
       const newMap = new naver.maps.Map(mapElement.current, mapOptions);
       new naver.maps.Marker({
-        position: location,
+        position: new naver.maps.LatLng(latitude, longitude),
         map: newMap,
         icon: {
-          content: `<div class="${center ? 'search' : 'user'}-position"><div /></div>`,
+          content: `<div class="user-position"><div /></div>`,
         },
       });
+      if (center) {
+        new naver.maps.Marker({
+          position: location,
+          map: newMap,
+          icon: {
+            content: `<div class="search-position"><div /></div>`,
+          },
+        });
+      }
       setMap(newMap);
-      drawPlaceMarker();
       setIsLoading(false);
     },
     [latitude, longitude, searchList.length]
@@ -59,7 +67,7 @@ export default function Map() {
     if (!map) return;
     setMarkers(markers.map((mark) => mark && mark.setMap(null)));
     setMarkers(
-      placeList.map((place) => {
+      renderList.map((place) => {
         const loc = new naver.maps.LatLng(place.lat, place.lng);
         return new naver.maps.Marker({
           position: loc,
@@ -67,7 +75,7 @@ export default function Map() {
         });
       })
     );
-  }, [map, markers, placeList.length, latitude, longitude]);
+  }, [map]);
 
   useEffect(() => {
     if (searchList.length !== 0) {
@@ -79,7 +87,7 @@ export default function Map() {
 
   useEffect(() => {
     drawPlaceMarker();
-  }, [placeList.length]);
+  }, [map]);
 
   return (
     <Wrapper>

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import DesktopLayout from '@/components/Layout/DesktopLayout';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import RenderPlaceList from '@/components/RenderPlaceList';
-import { Place, PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
+import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
+import { addRenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
 import { SearchListSliceState } from '@/store/searchList';
 import { AppDispatch } from '@/store/store';
@@ -13,7 +14,6 @@ import { addLocation, UserLocation } from '@/store/userLocation';
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const [isGetLocation, setIsGetLocation] = useState(false);
-  const [renderList, setRenderList] = useState<Place[]>([]);
   const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
   const { searchList } = useSelector<ReducerType, SearchListSliceState>(
     (state) => state.searchList
@@ -46,18 +46,18 @@ export default function Home() {
 
   useEffect(() => {
     if (searchList.length === 0) {
-      setRenderList(placeList);
+      dispatch(addRenderList(placeList));
       return;
     }
-    setRenderList(searchList);
+    dispatch(addRenderList(searchList));
   }, [placeList.length, searchList.length]);
   return (
     <>
       <MobileLayout>
-        <RenderPlaceList {...{ renderList, isGetLocation }} mobile />
+        <RenderPlaceList {...{ isGetLocation }} mobile />
       </MobileLayout>
       <DesktopLayout>
-        <RenderPlaceList {...{ renderList, isGetLocation }} />
+        <RenderPlaceList {...{ isGetLocation }} />
       </DesktopLayout>
     </>
   );

@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import placeList from './placeList';
+import renderList from './renderList';
 import searchList from './searchList';
 import typeFilter from './typeFilter';
 import userLocation from './userLocation';
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   weather,
   typeFilter,
   searchList,
+  renderList,
 });
 
 export type ReducerType = ReturnType<typeof reducer>;
