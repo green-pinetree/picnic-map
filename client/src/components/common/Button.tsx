@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { button1, button2 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
@@ -7,11 +7,12 @@ interface ButtonProps {
   size: 'middle' | 'small';
   children: ReactNode;
   label: string;
+  onClick: MouseEventHandler;
 }
 
-export default function Button({ size, children, label }: ButtonProps) {
+export default function Button({ size, children, label, onClick }: ButtonProps) {
   return (
-    <Wrapper role="button" aria-label={label} {...{ size }}>
+    <Wrapper role="button" aria-label={label} {...{ size, onClick }}>
       {children}
     </Wrapper>
   );

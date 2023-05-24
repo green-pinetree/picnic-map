@@ -1,15 +1,53 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState, KeyboardEvent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Button from './common/Button';
 import SearchBar from './common/SearchBar';
+import { ReducerType } from '@/store/rootReducer';
+import { fetchSearchList } from '@/store/searchList';
+import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import { BADGE } from '@/styles/zIndex';
 
 export default function SearchContainer() {
+  const router = useRouter();
+  const { search } = router.query as { search: string | undefined };
+  const [value, setValue] = useState(search || '');
+  const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
+    (state) => state.userLocation
+  );
+
+  useEffect(() => {
+    if (!search) return;
+    setValue(search);
+  }, [search]);
+
+  useEffect(() => {
+    if (!value || !longitude || !latitude) return;
+    dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
+  }, [value, longitude, latitude]);
+
+  const searchHandler = () => {
+    dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
+    router.push({
+      pathname: '/',
+      query: { search: value },
+    });
+  };
+
+  const keyDownHandler = (e: KeyboardEvent<Element>) => {
+    if (e.nativeEvent.isComposing) return;
+    const { key } = e;
+    if (key === 'Enter') {
+      searchHandler();
+    }
+  };
+  const dispatch = useDispatch();
   return (
     <Wrapper>
-      <SearchBar />
-      <Button label="search" size="middle">
+      <SearchBar {...{ value, setValue }} onKeyDown={(e) => keyDownHandler(e)} />
+      <Button label="search" size="middle" onClick={searchHandler}>
         검색
       </Button>
     </Wrapper>

@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import DateDropDown from './common/DateDropDown';
-import { SKY, AIRGRADE } from '@/constants/weather';
+import { AppDispatch } from '@/store';
 import { ReducerType } from '@/store/rootReducer';
-import { AppDispatch } from '@/store/store';
 import { UserLocation } from '@/store/userLocation';
 import { WeatherListSliceState, fetchWeatherList } from '@/store/weather';
+import { SKY, AIRGRADE } from '@/constants/weather';
 import { body2 } from '@/styles/font';
 
 export default function DateInfo() {
@@ -22,10 +22,12 @@ export default function DateInfo() {
   return (
     <TodayInfo>
       <DateDropDown />
-      <TodayWeather>
-        <span>날씨: {SKY[`${current?.skyCode || 1}`] || current?.skyName}</span>
-        <span>미세먼지: {AIRGRADE[`${current?.airGradeCode || 1}`]}</span>
-      </TodayWeather>
+      {current && (
+        <TodayWeather>
+          <span>날씨: {SKY[`${current.skyCode}`] || current.skyName}</span>
+          <span>미세먼지: {AIRGRADE[`${current.airGradeCode}`]}</span>
+        </TodayWeather>
+      )}
     </TodayInfo>
   );
 }

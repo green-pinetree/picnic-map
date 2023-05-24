@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import { SKY, AIRGRADE } from '@/constants/weather';
 import { ReducerType } from '@/store/rootReducer';
 import { WeatherListSliceState, Weather, addWeather } from '@/store/weather';
+import { SKY, AIRGRADE } from '@/constants/weather';
 import BREAK_POINT from '@/styles/breakpoint';
 import { body1, body2 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';

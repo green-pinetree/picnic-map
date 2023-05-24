@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import Drawer from '../common/Drawer';
@@ -11,12 +12,14 @@ interface MobileLayoutProps {
 }
 
 export default function MobileLayout({ children }: MobileLayoutProps) {
+  const router = useRouter();
+  const { search } = router.query;
   return (
     <div className="mobile-layout">
       <Header mobile />
       <Section>
         <SearchContainer />
-        <Filter />
+        {!search && <Filter />}
         <Map />
       </Section>
       <Drawer>{children}</Drawer>
