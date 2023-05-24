@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, KeyboardEventHandler, SetStateAction } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { MdCancel } from 'react-icons/md';
 import { useTheme } from '@emotion/react';
@@ -7,12 +7,17 @@ import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
 
-export default function SearchBar() {
-  const [value, setValue] = useState('');
+interface SearchBar {
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+  onKeyDown: KeyboardEventHandler;
+}
+
+export default function SearchBar({ value, setValue, onKeyDown }: SearchBar) {
   const { color: themeColor } = useTheme();
   const { gray200 } = themeColor;
   return (
-    <Wrapper role="searchbox" aria-label="search">
+    <Wrapper role="searchbox" aria-label="search" {...{ onKeyDown }}>
       <CiSearch size={26} />
       <Input onChange={({ target }) => setValue(target.value)} {...{ value }} />
       <Cancel aria-label="cancel" type="button" onClick={() => setValue('')} disabled={!value}>
