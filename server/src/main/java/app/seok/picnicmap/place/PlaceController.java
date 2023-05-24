@@ -31,9 +31,16 @@ public class PlaceController {
   @GetMapping("/api/place/list")//?type=[]&lngLT=&latLT=&lngRB=&latRB=&size=
   public PlaceListResponseDTO getPlaceList(
       @RequestParam(name = "type", defaultValue = "0,1,2,3,4,5,6,7") int[] type,
-      @RequestParam(name = "lng") double lng, @RequestParam(name = "lat") double lat,
+      @RequestParam(name = "lng", defaultValue = "126.977380") double lng,
+      @RequestParam(name = "lat", defaultValue = "37.575843") double lat,
       @RequestParam(name = "size", defaultValue = "10") int size,
-      @RequestParam(name = "page", defaultValue = "1") int page) {
+      @RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "latLT", defaultValue = "0") double latLT,
+      @RequestParam(name = "lngLT", defaultValue = "0") double lngLT,
+      @RequestParam(name = "latRB", defaultValue = "0") double latRB,
+      @RequestParam(name = "lngRB", defaultValue = "0") double lngRB
+  ) {
+
     PlaceListResponseDTO response = PlaceListResponseDTO.status404All();
     int offset = size * (page - 1);
     if (offset < 0) {
@@ -53,17 +60,23 @@ public class PlaceController {
       }
       List<ParkDTO> parks;
       if (containsZero) {
-        parks = parkService.getListPark(lat, lng, size, offset);
+        parks = parkService.getListPark(lat, lng, size, offset
+            , latLT, lngLT, latRB, lngRB
+        );
       } else {
         parks = new ArrayList<>();
       }
       List<WalkDTO> walks;
       if (containsone) {
-        walks = walkService.getListWalk(lat, lng, size, offset);
+        walks = walkService.getListWalk(lat, lng, size, offset
+            , latLT, lngLT, latRB, lngRB
+        );
       } else {
         walks = new ArrayList<>();
       }
-      List<CultureDTO> cultures = cultureService.getListCulture(type, lat, lng, size, offset);
+      List<CultureDTO> cultures = cultureService.getListCulture(type, lat, lng, size, offset,
+          latLT, lngLT, latRB, lngRB
+      );
       System.out.println(parks.size() + " " + walks.size() + " " + cultures.size());
       response = PlaceListResponseDTO.status200(parks, walks, cultures);
     } catch (Exception e) {

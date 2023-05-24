@@ -24,12 +24,29 @@ public interface WalkRepository extends JpaRepository<Walk, Long> {
           + "   WHERE a.course_name = w.course_name GROUP BY course_name) AS lats "
           + "FROM walk w "
           + "WHERE w.id IN "
-          + "  (SELECT MIN(id) FROM walk "
-          + "   GROUP BY course_name "
-          + "   ORDER BY ST_DISTANCE(POINT(:lat, :lng), POINT(lat, lng))) "
-          + "ORDER BY near LIMIT :size OFFSET :offset", nativeQuery = true)
+          + "  (SELECT f.id AS id FROM "
+          + "   (SELECT b.id AS id FROM "
+          + "    (SELECT MIN(c.id) AS id, MIN(ST_DISTANCE(POINT(:lat, :lng), POINT(c.lat, c.lng))) AS near"
+          + "     FROM walk c "
+          + "     GROUP BY c.course_name "
+          + "     ORDER BY near "
+          + "     LIMIT :size OFFSET :offset"
+          + "    ) b"
+          + "   ) f"
+          + "    UNION "
+          + "    (SELECT MIN(e.id) AS id"
+          + "     FROM walk e "
+          + "     WHERE e.lat<:latLT AND e.lng>:lngLT AND e.lat>:latRB AND e.lng<:lngRB "
+          + "     GROUP BY e.course_name"
+          + "    )"
+          + "  ) "
+
+      , nativeQuery = true)
   List<WalkDTO> findNearestLocation(@Param("lat") Double lat, @Param("lng") Double lng,
-      @Param("size") Integer size, @Param("offset") Integer offset);
+      @Param("size") Integer size, @Param("offset") Integer offset
+      , @Param("latLT") Double latLT, @Param("lngLT") Double lngLT
+      , @Param("latRB") Double latRB, @Param("lngRB") Double lngRB
+  );
 
   @Query(value =
       "SELECT w.id AS id, w.course_name AS courseName, w.content AS content, ROUND(w.lng, 5) AS lng"
