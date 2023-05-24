@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
+import styled from '@emotion/styled';
 import Map from '../common/Map';
 import SideBar from '../common/SideBar';
 import Filter from '../Filter';
-import styled from '@emotion/styled';
 
 interface DesktopLayoutProps {
   children: ReactNode;

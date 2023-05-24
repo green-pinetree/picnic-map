@@ -1,6 +1,6 @@
+import { css } from '@emotion/react';
 import BREAK_POINT from './breakpoint';
 import { COLOR } from './color';
-import { css } from '@emotion/react';
 
 export const title = css`
   font-family: 'ImcreSoojin';

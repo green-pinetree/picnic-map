@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { MdCancel } from 'react-icons/md';
+import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
-import { useTheme } from '@emotion/react';
-import styled from '@emotion/styled';
 
 export default function SearchBar() {
   const [value, setValue] = useState('');

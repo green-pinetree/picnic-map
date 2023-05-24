@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
+import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1, body1, subtitle2 } from '@/styles/font';
-import styled from '@emotion/styled';
 
 interface DetailProps {
   imgSrc: string;

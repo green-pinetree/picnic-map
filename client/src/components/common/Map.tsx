@@ -1,12 +1,12 @@
 /* eslint-disable no-new */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import styled from '@emotion/styled';
 import Loading from './Loading';
 import { PlaceListSliceState } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
-import styled from '@emotion/styled';
 
 export default function Map() {
   const [isLoading, setIsLoading] = useState(false);
