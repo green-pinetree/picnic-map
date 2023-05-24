@@ -1,7 +1,7 @@
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { UserLocation } from './userLocation';
 import { Response } from '@/types/Response';
 import { httpGet } from '@/utils/http';
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Weather {
   district: string;

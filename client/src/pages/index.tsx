@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from '@emotion/styled';
 import Loading from '@/components/common/Loading';
 import DesktopLayout from '@/components/Layout/DesktopLayout';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import PlaceInfo from '@/components/PlaceInfo';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
+import { AppDispatch } from '@/store/store';
 import { addLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
-import styled from '@emotion/styled';
 
 export default function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [isGetLocation, setIsGetLocation] = useState(false);
   const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
   useEffect(() => {

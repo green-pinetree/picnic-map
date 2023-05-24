@@ -1,5 +1,5 @@
-import BREAK_POINT from './breakpoint';
 import { css } from '@emotion/react';
+import BREAK_POINT from './breakpoint';
 
 const globalStyle = css`
   @font-face {

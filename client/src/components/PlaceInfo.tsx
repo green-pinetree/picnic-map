@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle2, body1, desc } from '@/styles/font';
-import styled from '@emotion/styled';
 
 interface PlaceInfoProps {
   imgSrc: string;

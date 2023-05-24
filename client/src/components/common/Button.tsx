@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
+import styled from '@emotion/styled';
 import { button1, button2 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
-import styled from '@emotion/styled';
 
 interface ButtonProps {
   size: 'middle' | 'small';

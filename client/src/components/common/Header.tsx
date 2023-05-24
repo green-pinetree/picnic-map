@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
+import styled from '@emotion/styled';
 import DateInfo from '../DateInfo';
 import BREAK_POINT from '@/styles/breakpoint';
 import { title } from '@/styles/font';
-import styled from '@emotion/styled';
 
 interface HeaderProps {
   mobile?: boolean;

@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
+import styled from '@emotion/styled';
 import Header from './Header';
 import DateInfo from '../DateInfo';
 import SearchContainer from '../SearchContainer';
 import { subtitle1 } from '@/styles/font';
-import styled from '@emotion/styled';
 
 interface SideBarProps {
   children: ReactNode;

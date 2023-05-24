@@ -1,9 +1,9 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import Button from './common/Button';
 import SearchBar from './common/SearchBar';
 import BREAK_POINT from '@/styles/breakpoint';
 import { BADGE } from '@/styles/zIndex';
-import styled from '@emotion/styled';
 
 export default function SearchContainer() {
   return (

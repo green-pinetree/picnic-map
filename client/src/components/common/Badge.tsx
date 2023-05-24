@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { body1 } from '@/styles/font';
 import styled from '@emotion/styled';
+import { body1 } from '@/styles/font';
 
 interface BadgeProps {
   children: ReactNode;
