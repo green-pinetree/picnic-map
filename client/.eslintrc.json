@@ -70,11 +70,19 @@
           },
           // 아래는 전부 스타일 관련 파일들을 unknown 그룹 하나로 묶어주는 역할을 한다.
           {
-            "pattern": "@pages/**/*.style",
+            "pattern": "@/pages/**/*.style",
             "group": "unknown"
           },
           {
-            "pattern": "@components/**/*.style",
+            "pattern": "@/components/**/*.style",
+            "group": "unknown"
+          },
+          {
+            "pattern": "@/store",
+            "group": "unknown"
+          },
+          {
+            "pattern": "@/store/**",
             "group": "unknown"
           },
           {
