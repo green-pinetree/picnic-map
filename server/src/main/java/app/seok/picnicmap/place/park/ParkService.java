@@ -27,16 +27,18 @@ public class ParkService {
   }
 
   public List<ParkDTO> getSearchPark(String search, double lat, double lng, int size, int offset) {
-    System.out.println("service >> " + search + " " + lng + " " + lat + " " + size + " " + offset);
     return parkRepository.findByQueryNearestLocation(search, lat, lng, size, offset);
   }
 
   public List<ParkDTO> getListPark(double lat, double lng, int size, int offset
-      , double latLT, double lngLT, double latRB, double lngRB) {
-    System.out.println("service >> " + " " + lng + " " + lat + " " + size + " " + offset);
+          , double latLT, double lngLT, double latRB, double lngRB) {
     return parkRepository.findNearestLocation(lat, lng, size, offset
-        , latLT, lngLT, latRB, lngRB
+            , latLT, lngLT, latRB, lngRB
     );
+  }
+
+  public List<ParkDTO> getListPark(double lat, double lng, int size, int offset) {
+    return parkRepository.findNearestLocation(lat, lng, size, offset);
   }
 
   public void saveParkFromJson(String parkJsonString) throws JsonProcessingException {

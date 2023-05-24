@@ -33,16 +33,18 @@ public class CultureService {
 
   public List<CultureDTO> getSearchCulture(String search, double lat, double lng, int size,
       int offset) {
-    System.out.println("service >> " + search + " " + lng + " " + lat + " " + size + " " + offset);
     return cultureRepository.findByQueryNearestLocation(search, lat, lng, size, offset);
   }
 
   public List<CultureDTO> getListCulture(int[] type, double lat, double lng, int size, int offset,
-      double latLT, double lngLT, double latRB, double lngRB) {
-    System.out.println("service >> " + " " + lng + " " + lat + " " + size + " " + offset);
+                                         double latLT, double lngLT, double latRB, double lngRB) {
     return cultureRepository.findNearestLocation(type, lat, lng, size, offset
-        , latLT, lngLT, latRB, lngRB
+            , latLT, lngLT, latRB, lngRB
     );
+  }
+
+  public List<CultureDTO> getListCulture(int[] type, double lat, double lng, int size, int offset){
+    return cultureRepository.findNearestLocation(type, lat, lng, size, offset);
   }
 
   public int saveCultureFromJson(String aipServiceName, String cultureJsonString)

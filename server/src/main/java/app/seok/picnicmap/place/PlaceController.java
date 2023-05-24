@@ -46,7 +46,6 @@ public class PlaceController {
     if (offset < 0) {
       offset = 0;
     }
-    System.out.println("controller >> " + " " + lng + " " + lat + " " + size + " " + offset);
     try {
       boolean containsZero = false;
       boolean containsone = false;
@@ -60,24 +59,25 @@ public class PlaceController {
       }
       List<ParkDTO> parks;
       if (containsZero) {
-        parks = parkService.getListPark(lat, lng, size, offset
+        parks = latLT * lngLT * latRB * lngRB > 0 ? parkService.getListPark(lat, lng, size, offset
             , latLT, lngLT, latRB, lngRB
-        );
+        ) : parkService.getListPark(lat, lng, size, offset);
       } else {
         parks = new ArrayList<>();
       }
       List<WalkDTO> walks;
       if (containsone) {
-        walks = walkService.getListWalk(lat, lng, size, offset
+        walks = latLT * lngLT * latRB * lngRB > 0 ? walkService.getListWalk(lat, lng, size, offset
             , latLT, lngLT, latRB, lngRB
-        );
+        ) : walkService.getListWalk(lat, lng, size, offset);
       } else {
         walks = new ArrayList<>();
       }
-      List<CultureDTO> cultures = cultureService.getListCulture(type, lat, lng, size, offset,
-          latLT, lngLT, latRB, lngRB
-      );
-      System.out.println(parks.size() + " " + walks.size() + " " + cultures.size());
+      List<CultureDTO> cultures =
+          latLT * lngLT * latRB * lngRB > 0 ? cultureService.getListCulture(type, lat, lng, size,
+              offset,
+              latLT, lngLT, latRB, lngRB
+          ) : cultureService.getListCulture(type, lat, lng, size, offset);
       response = PlaceListResponseDTO.status200(parks, walks, cultures);
     } catch (Exception e) {
       response.setMessage(e.getMessage());
@@ -101,8 +101,6 @@ public class PlaceController {
     if (offset < 0) {
       offset = 0;
     }
-    System.out.println(
-        "controller >> " + query + " " + lng + " " + lat + " " + size + " " + offset);
     try {
       List<ParkDTO> parks = parkService.getSearchPark(query, lat, lng, size, offset);
       List<WalkDTO> walks = walkService.getSearchWalk(query, lat, lng, size, offset);

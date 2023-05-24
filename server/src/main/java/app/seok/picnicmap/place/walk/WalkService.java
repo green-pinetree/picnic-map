@@ -46,16 +46,17 @@ public class WalkService {
   }
 
   public List<WalkDTO> getSearchWalk(String search, double lat, double lng, int size, int offset) {
-    System.out.println("service >> " + search + " " + lng + " " + lat + " " + size + " " + offset);
     return walkRepository.findByQueryNearestLocation(search, lat, lng, size, offset);
   }
 
   public List<WalkDTO> getListWalk(double lat, double lng, int size, int offset
       , double latLT, double lngLT, double latRB, double lngRB) {
-    System.out.println("service >> " + lng + " " + lat + " " + size + " " + offset);
     return walkRepository.findNearestLocation(lat, lng, size, offset
-        , latLT, lngLT, latRB, lngRB
-    );
+        , latLT, lngLT, latRB, lngRB);
+  }
+
+  public List<WalkDTO> getListWalk(double lat, double lng, int size, int offset) {
+    return walkRepository.findNearestLocation(lat, lng, size, offset);
   }
 
   public int saveWalkFromJson(String aipServiceName, String walkJsonString)
