@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Button from './common/Button';
 import SearchBar from './common/SearchBar';
+import { AppDispatch } from '@/store';
 import { ReducerType } from '@/store/rootReducer';
 import { fetchSearchList } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
@@ -12,6 +13,7 @@ import { BADGE } from '@/styles/zIndex';
 
 export default function SearchContainer() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
   const { search } = router.query as { search: string | undefined };
   const [value, setValue] = useState(search || '');
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
@@ -43,7 +45,6 @@ export default function SearchContainer() {
       searchHandler();
     }
   };
-  const dispatch = useDispatch();
   return (
     <Wrapper>
       <SearchBar {...{ value, setValue }} onKeyDown={(e) => keyDownHandler(e)} />
