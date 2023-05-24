@@ -10,12 +10,13 @@ import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Map() {
   const [isLoading, setIsLoading] = useState(false);
+  const [map, setMap] = useState<naver.maps.Map | null>(null);
+  const [markers, setMarkers] = useState<naver.maps.Marker[] | void[]>([]);
   const mapElement = useRef(null);
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
     (state) => state.userLocation
   );
   const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
-
   const drawMap = useCallback(() => {
     setIsLoading(true);
     const { naver } = window;
@@ -30,27 +31,41 @@ export default function Map() {
         position: naver.maps.Position.TOP_RIGHT,
       },
     };
-    const map = new naver.maps.Map(mapElement.current, mapOptions);
+    const newMap = new naver.maps.Map(mapElement.current, mapOptions);
     new naver.maps.Marker({
       position: location,
-      map,
+      map: newMap,
       icon: {
         content: `<div class="user-position"><div /></div>`,
       },
     });
-    placeList.map((place) => {
-      const loc = new naver.maps.LatLng(place.lat, place.lng);
-      new naver.maps.Marker({
-        position: loc,
-        map,
-      });
-    });
+    setMap(newMap);
+    drawPlaceMarker();
     setIsLoading(false);
-  }, [mapElement, isLoading, latitude, longitude, placeList.length]);
+  }, [latitude, longitude]);
+
+  const drawPlaceMarker = useCallback(() => {
+    if (!map) return;
+    setMarkers(markers.map((mark) => mark && mark.setMap(null)));
+    setMarkers(
+      placeList.map((place) => {
+        const loc = new naver.maps.LatLng(place.lat, place.lng);
+        return new naver.maps.Marker({
+          position: loc,
+          map,
+        });
+      })
+    );
+  }, [map, markers, placeList.length, latitude, longitude]);
 
   useEffect(() => {
     drawMap();
-  }, [latitude, longitude, placeList.length]);
+  }, [latitude, longitude]);
+
+  useEffect(() => {
+    drawPlaceMarker();
+  }, [placeList.length]);
+
   return (
     <Wrapper>
       {isLoading && (
