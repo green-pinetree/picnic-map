@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
@@ -29,14 +28,7 @@ export default function PlaceInfo({
     <Place>
       <InfoContainer>
         <ImageBox>
-          <Image
-            src={src}
-            alt="place-image"
-            width={160}
-            height={90}
-            priority
-            onError={handleImageError}
-          />
+          <img src={src} alt={name} onError={handleImageError} />
         </ImageBox>
         <Info>
           <TitleContainer>
@@ -81,6 +73,10 @@ const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  img {
+    width: 160px;
+    height: 90px;
+  }
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     width: 50%;
   }
