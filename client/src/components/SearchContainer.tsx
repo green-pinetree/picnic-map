@@ -26,12 +26,16 @@ export default function SearchContainer() {
   }, [search]);
 
   useEffect(() => {
-    if (!value || !longitude || !latitude) return;
+    if (!search || !longitude || !latitude) return;
     dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
-  }, [value, longitude, latitude]);
+  }, [longitude, latitude]);
 
   const searchHandler = () => {
     dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
+    if (!value) {
+      router.push('/');
+      return;
+    }
     router.push({
       pathname: '/',
       query: { search: value },

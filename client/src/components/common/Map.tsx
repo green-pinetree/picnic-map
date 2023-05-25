@@ -1,4 +1,5 @@
 /* eslint-disable no-new */
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
@@ -10,6 +11,8 @@ import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Map() {
+  const router = useRouter();
+  const { search } = router.query as { search: string | undefined };
   const [isLoading, setIsLoading] = useState(false);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const [markers, setMarkers] = useState<naver.maps.Marker[] | void[]>([]);
@@ -23,17 +26,14 @@ export default function Map() {
   );
 
   const drawMap = useCallback(
-    (center: { lat: number; lng: number } | undefined) => {
+    (center: { lat: number; lng: number }) => {
       setIsLoading(true);
       const { naver } = window;
       if (!mapElement.current || !naver) return;
       if (!latitude || !longitude) return;
-      const location = new naver.maps.LatLng(
-        center ? center.lat : latitude,
-        center ? center.lng : longitude
-      );
+      const centerLocation = new naver.maps.LatLng(center.lat, center.lng);
       const mapOptions: naver.maps.MapOptions = {
-        center: location,
+        center: centerLocation,
         zoom: 17,
         zoomControl: true,
         zoomControlOptions: {
@@ -41,16 +41,17 @@ export default function Map() {
         },
       };
       const newMap = new naver.maps.Map(mapElement.current, mapOptions);
-      new naver.maps.Marker({
-        position: new naver.maps.LatLng(latitude, longitude),
-        map: newMap,
-        icon: {
-          content: `<div class="user-position"><div /></div>`,
-        },
-      });
-      if (center) {
+      if (center.lat === latitude && center.lng === longitude) {
         new naver.maps.Marker({
-          position: location,
+          position: centerLocation,
+          map: newMap,
+          icon: {
+            content: `<div class="user-position"><div /></div>`,
+          },
+        });
+      } else {
+        new naver.maps.Marker({
+          position: centerLocation,
           map: newMap,
           icon: {
             content: `<div class="search-position"><div /></div>`,
@@ -78,12 +79,15 @@ export default function Map() {
   }, [map]);
 
   useEffect(() => {
-    if (searchList.length !== 0) {
-      drawMap({ lat: searchList[0].lat, lng: searchList[0].lng });
+    if (!longitude || !latitude) return;
+    if (search) {
+      const center = searchList.filter((node) => node.lat !== 0 && node.lng !== 0);
+      if (center.length !== 0) drawMap({ lat: center[0].lat, lng: center[0].lng });
+      else drawMap({ lat: latitude, lng: longitude });
       return;
     }
-    drawMap(undefined);
-  }, [latitude, longitude, searchList.length]);
+    drawMap({ lat: latitude, lng: longitude });
+  }, [latitude, longitude, search, searchList.length]);
 
   useEffect(() => {
     drawPlaceMarker();
