@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
@@ -14,7 +13,7 @@ interface DetailProps {
 export default function Detail({ imgSrc, name, address, description }: DetailProps) {
   return (
     <Wrapper>
-      <Image src={imgSrc} alt="place-image" width={360} height={180} priority />
+      <img src={imgSrc} alt={name} />
       <Title>{name}</Title>
       <Content>
         <Row>
@@ -37,6 +36,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  img {
+    width: 360px;
+    height: 180px;
+  }
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     margin-top: 10px;
   }
