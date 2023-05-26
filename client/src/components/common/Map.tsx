@@ -34,10 +34,6 @@ export default function Map() {
     const mapOptions: naver.maps.MapOptions = {
       center: centerLocation,
       zoom: 17,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT,
-      },
     };
     const newMap = new naver.maps.Map(mapElement.current, mapOptions);
     // 사용자 위치 표시
