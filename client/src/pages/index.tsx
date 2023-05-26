@@ -11,6 +11,7 @@ import { useQueryString } from '@/hooks/useQueryString';
 import { useRenderList } from '@/hooks/useRenderList';
 import { useSetCenter } from '@/hooks/useSetCenter';
 import { useUserLocation } from '@/hooks/useUserLocation';
+import BREAK_POINT from '@/styles/breakpoint';
 import { buttonStyle } from '@/styles/mixin';
 
 export default function Home() {
@@ -69,6 +70,10 @@ const DetailWrapper = styled.div`
   top: 0px;
   z-index: 1;
   background-color: ${({ theme }) => theme.color.white};
+  overflow-y: auto;
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    font-size: 16px;
+  }
 `;
 const Cancel = styled.button`
   border: 0;
