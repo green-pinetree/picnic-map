@@ -16,7 +16,7 @@ export default function Drawer({ children, title = '주변 장소' }: DrawerProp
   }, [title]);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
     let changeHeight = window.innerHeight - e.targetTouches[0].clientY + 30;
-    if (changeHeight < 35) {
+    if (changeHeight < 150) {
       changeHeight = 33;
     }
     setDrawerHeight(changeHeight);
