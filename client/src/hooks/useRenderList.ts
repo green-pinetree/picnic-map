@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useQueryString } from './useQueryString';
 import { AppDispatch } from '@/store';
 import { Bounds } from '@/store/mapBounds';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
@@ -11,6 +12,7 @@ import { UserLocation } from '@/store/userLocation';
 
 export const useRenderList = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { search } = useQueryString();
   const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
     (state) => state.placeList
   );
@@ -24,6 +26,7 @@ export const useRenderList = () => {
   const { max, min } = useSelector<ReducerType, Bounds>((state) => state.mapBounds);
   useEffect(() => {
     if (!latitude || !longitude) return;
+    if (search) return;
     const typeList: number[] = [];
     typeFilter.map((filter, index) => filter && typeList.push(index));
     dispatch(

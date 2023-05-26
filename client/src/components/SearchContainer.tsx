@@ -21,14 +21,13 @@ export default function SearchContainer() {
   );
 
   useEffect(() => {
-    if (!search) return;
-    setValue(search);
+    setValue(search || '');
   }, [search]);
 
   useEffect(() => {
     if (!search || !longitude || !latitude) return;
     dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
-  }, [longitude, latitude, search]);
+  }, [longitude, latitude]);
 
   const searchHandler = () => {
     if (!value) {
