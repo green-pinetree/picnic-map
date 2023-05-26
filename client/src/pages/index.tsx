@@ -6,6 +6,7 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AppDispatch } from '@/store';
 import { addCenter } from '@/store/centerLocation';
+import { Bounds } from '@/store/mapBounds';
 import { PlaceListSliceState, fetchPlaceList } from '@/store/placeList';
 import { addRenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
@@ -39,6 +40,7 @@ export default function Home() {
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
     (state) => state.userLocation
   );
+  const { max, min } = useSelector<ReducerType, Bounds>((state) => state.mapBounds);
   const [detail, setDetail] = useState<Place>();
   const fetchDetail = async () => {
     const response = await httpGet(`/api/place/detail?type=${type}&id=${id}`);
@@ -69,6 +71,7 @@ export default function Home() {
       setIsGetLocation(false);
     });
   }, []);
+
   useEffect(() => {
     if (!latitude || !longitude) return;
     const typeList: number[] = [];
@@ -79,9 +82,10 @@ export default function Home() {
         longitude,
         type: typeList,
         page: 1,
+        bounds: { min: { ...min }, max: { ...max } },
       })
     );
-  }, [latitude, longitude, typeFilter]);
+  }, [min, max, typeFilter]);
 
   useEffect(() => {
     if (searchList.length === 0) {

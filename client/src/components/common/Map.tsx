@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from './Loading';
 import { CenterLocation, addCenter } from '@/store/centerLocation';
+import { addBounds } from '@/store/mapBounds';
 import { RenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
 import { SearchListSliceState } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
+import { debounce } from 'lodash';
 
 export default function Map() {
   const dispatch = useDispatch();
@@ -51,6 +53,13 @@ export default function Map() {
     });
     setMap(newMap);
     setIsLoading(false);
+    const bounds = newMap.getBounds();
+    dispatch(
+      addBounds({
+        min: { lat: bounds.getMin().y, lng: bounds.getMin().x },
+        max: { lat: bounds.getMax().y, lng: bounds.getMax().x },
+      })
+    );
   }, [latitude, longitude, center]);
 
   const drawPlaceMarker = useCallback(() => {
@@ -65,7 +74,7 @@ export default function Map() {
         });
       })
     );
-  }, [map]);
+  }, [map, renderList.length]);
 
   useEffect(() => {
     if (!latitude || !longitude) return;
@@ -73,8 +82,24 @@ export default function Map() {
   }, [latitude, longitude, center]);
 
   useEffect(() => {
+    if (!map) return;
     drawPlaceMarker();
-  }, [map]);
+    naver.maps.Event.addListener(
+      map,
+      'bounds_changed',
+      debounce(() => {
+        const bounds = map.getBounds();
+        dispatch(
+          addBounds({
+            min: { lat: bounds.getMin().y, lng: bounds.getMin().x },
+            max: { lat: bounds.getMax().y, lng: bounds.getMax().x },
+          })
+        );
+      }, 1000)
+    );
+    // eslint-disable-next-line consistent-return
+    return () => naver.maps.Event.clearListeners(map, 'bounds_changed');
+  }, [map, renderList.length]);
 
   useEffect(() => {
     if (!map || !center.latitude || !center.longitude) return;

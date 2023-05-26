@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { Bounds } from './mapBounds';
 import { UserLocation } from './userLocation';
 import { Place } from '@/types/Place';
 import { Response } from '@/types/Response';
@@ -13,7 +14,21 @@ export type PlaceListSliceState = {
 // 비동기 통신 구현
 export const fetchPlaceList = createAsyncThunk(
   'fetchPlaceList',
-  async ({ latitude, longitude, type, page }: UserLocation & { type: number[]; page: number }) => {
+  async ({
+    latitude,
+    longitude,
+    type,
+    page,
+    bounds = undefined,
+  }: UserLocation & { type: number[]; page: number } & { bounds?: Bounds }) => {
+    if (bounds) {
+      const data = await httpGet(
+        `/api/place/list?type=${type.join(',')}&lat=${latitude}&lng=${longitude}&latLT=${
+          bounds.min.lat
+        }&lngLT=${bounds.min.lng}&latRB=${bounds.max.lat}&lngRB=${bounds.max.lng}`
+      );
+      return data;
+    }
     const data = await httpGet(
       `/api/place/list?type=${type.join(',')}&lng=${longitude}&lat=${latitude}&page=${page}&size=10`
     );

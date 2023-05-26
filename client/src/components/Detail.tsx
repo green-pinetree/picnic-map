@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1, body1, subtitle2 } from '@/styles/font';
@@ -6,21 +6,71 @@ import { Place } from '@/types/Place';
 
 export default function Detail(placeInfo: Place) {
   const { image, name, content, detail } = placeInfo;
-  const { address } = detail;
+  const { mainEquip, mainPlants, address, tel, distance, leadTime, relateSubway, homepage } =
+    detail;
+  const [src, setSrc] = useState(image[0] || '/dummy-image.jpg');
+  const handleImageError = () => {
+    setSrc('/dummy-image.jpg');
+  };
   return (
     <Wrapper>
-      <img src={image[0]} alt={name} />
+      <img src={src} alt={name} onError={handleImageError} />
       <Title>{name}</Title>
       <Content>
-        <Row>
-          <Category>공원 주소</Category>
-          <Description>{address}</Description>
-          <Description>{address}</Description>
-        </Row>
-        <Row>
-          <Category>공원 개요</Category>
-          <Description>{content}</Description>
-        </Row>
+        {address && (
+          <Row>
+            <Category>주소</Category>
+            <Description>{address}</Description>
+          </Row>
+        )}
+        {tel && (
+          <Row>
+            <Category>연락처</Category>
+            <Description>{tel}</Description>
+          </Row>
+        )}
+        {mainEquip && (
+          <Row>
+            <Category>주요 시설</Category>
+            <Description>{mainEquip}</Description>
+          </Row>
+        )}
+        {mainPlants && (
+          <Row>
+            <Category>주요 식물</Category>
+            <Description>{mainPlants}</Description>
+          </Row>
+        )}
+        {homepage && (
+          <Row>
+            <Category>홈페이지</Category>
+            <Description>{homepage}</Description>
+          </Row>
+        )}
+        {distance && (
+          <Row>
+            <Category>거리</Category>
+            <Description>{distance}</Description>
+          </Row>
+        )}
+        {leadTime && (
+          <Row>
+            <Category>시간</Category>
+            <Description>{leadTime}</Description>
+          </Row>
+        )}
+        {relateSubway && (
+          <Row>
+            <Category>주변 지하철</Category>
+            <Description>{relateSubway}</Description>
+          </Row>
+        )}
+        {content && (
+          <Row>
+            <Category>개요</Category>
+            <Description>{content.split('<br />')[0]}</Description>
+          </Row>
+        )}
       </Content>
     </Wrapper>
   );
@@ -56,7 +106,7 @@ const Content = styled.div`
 
 const Row = styled.div`
   width: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     padding-bottom: 10px;
