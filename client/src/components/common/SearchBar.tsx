@@ -1,4 +1,4 @@
-import React, { Dispatch, KeyboardEventHandler, SetStateAction } from 'react';
+import React, { Dispatch, KeyboardEventHandler, SetStateAction, useRef } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { MdCancel } from 'react-icons/md';
 import { useTheme } from '@emotion/react';
@@ -16,11 +16,20 @@ interface SearchBar {
 export default function SearchBar({ value, setValue, onKeyDown }: SearchBar) {
   const { color: themeColor } = useTheme();
   const { gray200 } = themeColor;
+  const inputElement = useRef<HTMLInputElement>(null);
   return (
     <Wrapper role="searchbox" aria-label="search" {...{ onKeyDown }}>
       <CiSearch size={26} />
-      <Input onChange={({ target }) => setValue(target.value)} {...{ value }} />
-      <Cancel aria-label="cancel" type="button" onClick={() => setValue('')} disabled={!value}>
+      <Input ref={inputElement} onChange={({ target }) => setValue(target.value)} {...{ value }} />
+      <Cancel
+        aria-label="cancel"
+        type="button"
+        onClick={() => {
+          setValue('');
+          inputElement.current?.focus();
+        }}
+        disabled={!value}
+      >
         <MdCancel color={gray200} opacity={value ? 1 : 0} size={15} />
       </Cancel>
     </Wrapper>
