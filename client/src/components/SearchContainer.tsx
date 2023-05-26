@@ -21,8 +21,7 @@ export default function SearchContainer() {
   );
 
   useEffect(() => {
-    if (!search) return;
-    setValue(search);
+    setValue(search || '');
   }, [search]);
 
   useEffect(() => {

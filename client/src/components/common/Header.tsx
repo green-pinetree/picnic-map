@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import DateInfo from '../DateInfo';
 import { addCenter } from '@/store/centerLocation';
 import { ReducerType } from '@/store/rootReducer';
+import { addEmptySearchList } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import { title } from '@/styles/font';
@@ -29,6 +30,7 @@ export default function Header({ mobile = false }: HeaderProps) {
         aria-details="go to home"
         onClick={() => {
           dispatch(addCenter({ latitude, longitude }));
+          dispatch(addEmptySearchList([]));
           router.push('/');
         }}
       >
