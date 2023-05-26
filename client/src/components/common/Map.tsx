@@ -3,11 +3,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from './Loading';
-import { CenterLocation, addCenter } from '@/store/centerLocation';
+import { CenterLocation } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
 import { RenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
-import { SearchListSliceState } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import { debounce } from 'lodash';
@@ -23,9 +22,6 @@ export default function Map() {
   );
   const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
   const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
-  const { searchList } = useSelector<ReducerType, SearchListSliceState>(
-    (state) => state.searchList
-  );
 
   const drawMap = useCallback(() => {
     setIsLoading(true);
@@ -112,13 +108,6 @@ export default function Map() {
       },
     });
   }, [center, map]);
-
-  useEffect(() => {
-    const searchLocation = searchList.filter((node) => node.lat !== 0 && node.lng !== 0);
-    if (searchLocation.length !== 0)
-      dispatch(addCenter({ latitude: searchLocation[0].lat, longitude: searchLocation[0].lng }));
-    else dispatch(addCenter({ latitude, longitude }));
-  }, [searchList.length]);
 
   return (
     <Wrapper>

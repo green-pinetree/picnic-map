@@ -62,6 +62,7 @@ export default function Home() {
     if (!id || !type) return;
     fetchDetail();
   }, [id, type]);
+
   useEffect(() => {
     setIsGetLocation(true);
     navigator.geolocation.getCurrentPosition((position) => {
