@@ -13,7 +13,7 @@ export default function Detail(placeInfo: Place) {
     setSrc('/dummy-image.jpg');
   };
   useEffect(() => {
-    setSrc(image[0]);
+    setSrc(image[0] || '/dummy-image.jpg');
   }, [image]);
   return (
     <Wrapper>

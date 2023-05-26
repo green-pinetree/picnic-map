@@ -77,6 +77,7 @@ export default function Map() {
 
   useEffect(() => {
     if (!latitude || !longitude) return;
+    if (center.latitude === 0 || center.longitude === 0) return;
     drawMap();
   }, [latitude, longitude, center]);
 
