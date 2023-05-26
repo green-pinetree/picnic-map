@@ -12,6 +12,7 @@ import app.seok.picnicmap.place.walk.WalkDTO;
 import app.seok.picnicmap.place.walk.WalkService;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -30,20 +31,53 @@ public class PlaceController {
   @GetMapping("/api/place/list")//?type=[]&lngLT=&latLT=&lngRB=&latRB=&size=
   public PlaceListResponseDTO getPlaceList(
       @RequestParam(name = "type", defaultValue = "0,1,2,3,4,5,6,7") int[] type,
-      @RequestParam(name = "lng") double lng, @RequestParam(name = "lat") double lat,
+      @RequestParam(name = "lng", defaultValue = "126.977380") double lng,
+      @RequestParam(name = "lat", defaultValue = "37.575843") double lat,
       @RequestParam(name = "size", defaultValue = "10") int size,
-      @RequestParam(name = "page", defaultValue = "1") int page) {
+      @RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "latLT", defaultValue = "0") double latLT,
+      @RequestParam(name = "lngLT", defaultValue = "0") double lngLT,
+      @RequestParam(name = "latRB", defaultValue = "0") double latRB,
+      @RequestParam(name = "lngRB", defaultValue = "0") double lngRB
+  ) {
+
     PlaceListResponseDTO response = PlaceListResponseDTO.status404All();
     int offset = size * (page - 1);
     if (offset < 0) {
       offset = 0;
     }
-    System.out.println("controller >> " + " " + lng + " " + lat + " " + size + " " + offset);
     try {
-      List<ParkDTO> parks = parkService.getListPark(lat, lng, size, offset);
-      List<WalkDTO> walks = walkService.getListWalk(lat, lng, size, offset);
-      List<CultureDTO> cultures = cultureService.getListCulture(type, lat, lng, size, offset);
-      System.out.println(parks.size() + " " + walks.size() + " " + cultures.size());
+      boolean containsZero = false;
+      boolean containsone = false;
+      for (int value : type) {
+        if (value == 0) {
+          containsZero = true;
+        }
+        if (value == 1) {
+          containsone = true;
+        }
+      }
+      List<ParkDTO> parks;
+      if (containsZero) {
+        parks = latLT * lngLT * latRB * lngRB > 0 ? parkService.getListPark(lat, lng, size, offset
+            , latLT, lngLT, latRB, lngRB
+        ) : parkService.getListPark(lat, lng, size, offset);
+      } else {
+        parks = new ArrayList<>();
+      }
+      List<WalkDTO> walks;
+      if (containsone) {
+        walks = latLT * lngLT * latRB * lngRB > 0 ? walkService.getListWalk(lat, lng, size, offset
+            , latLT, lngLT, latRB, lngRB
+        ) : walkService.getListWalk(lat, lng, size, offset);
+      } else {
+        walks = new ArrayList<>();
+      }
+      List<CultureDTO> cultures =
+          latLT * lngLT * latRB * lngRB > 0 ? cultureService.getListCulture(type, lat, lng, size,
+              offset,
+              latLT, lngLT, latRB, lngRB
+          ) : cultureService.getListCulture(type, lat, lng, size, offset);
       response = PlaceListResponseDTO.status200(parks, walks, cultures);
     } catch (Exception e) {
       response.setMessage(e.getMessage());
@@ -67,8 +101,6 @@ public class PlaceController {
     if (offset < 0) {
       offset = 0;
     }
-    System.out.println(
-        "controller >> " + query + " " + lng + " " + lat + " " + size + " " + offset);
     try {
       List<ParkDTO> parks = parkService.getSearchPark(query, lat, lng, size, offset);
       List<WalkDTO> walks = walkService.getSearchWalk(query, lat, lng, size, offset);

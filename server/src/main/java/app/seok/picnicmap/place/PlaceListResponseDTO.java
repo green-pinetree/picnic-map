@@ -94,7 +94,7 @@ public class PlaceListResponseDTO {
 
     List<String> image = new ArrayList<>();
     if (park.getPImg() != null) {
-      Collections.addAll(image, park.getPImg().split("/?/"));
+      Collections.addAll(image, park.getPImg().split("~split~"));
     }
     data.setImage(image);
 
@@ -203,6 +203,14 @@ public class PlaceListResponseDTO {
       // lat이 null인 경우에 대한 처리 로직
     }
 
+    List<String> image = new ArrayList<>();
+    if (walk.getImage() != null) {
+      Collections.addAll(image, walk.getImage().split("~split~"));
+    } else {
+      // lat이 null인 경우에 대한 처리 로직
+    }
+    data.setImage(image);
+
     Detail detail = new Detail();
 
     // distance 설정
@@ -303,7 +311,7 @@ public class PlaceListResponseDTO {
 
     List<String> image = new ArrayList<>();
     if (culture.getMainImg() != null) {
-      Collections.addAll(image, culture.getMainImg().split("/?/"));
+      Collections.addAll(image, culture.getMainImg().split("~split~"));
     }
     data.setImage(image);
 

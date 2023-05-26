@@ -79,7 +79,7 @@ public class WeatherService {
     LocalDateTime now = LocalDateTime.now();
     String time = ApiTimeCalculator.apiVilageBaseTime();
     String date = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-    if (Integer.parseInt(now.format(DateTimeFormatter.ofPattern("HH00"))) > Integer.parseInt(
+    if (Integer.parseInt(now.format(DateTimeFormatter.ofPattern("HH00"))) < Integer.parseInt(
         time)) {
       LocalDateTime previousDate = now.minusDays(1);
       date = previousDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -98,7 +98,7 @@ public class WeatherService {
       } else {
         weather = new Weather();
         weather.setFcstDate(item.getFcstDate());
-        weather.setBaseDate(item.getBaseDate());
+        weather.setBaseDate(now.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
         weather.setNx(item.getNx());
         weather.setNy(item.getNy());
         weather.setDistrict("");
@@ -117,9 +117,28 @@ public class WeatherService {
       }
     }
     for (String key : weatherMap.keySet()) {
-      weatherRepository.save(weatherMap.get(key));
+      saveOrUpdateWeather(weatherMap.get(key));
     }
     return dto;
+  }
+
+  public void saveOrUpdateWeather(Weather weather) {
+    List<Weather> existingWeatherList = weatherRepository.findByBaseDateAndFcstDate(
+        weather.getBaseDate(), weather.getFcstDate());
+
+    if (existingWeatherList.size() > 0) {
+      Weather existingWeather = existingWeatherList.get(0);
+
+      existingWeather.setSky(weather.getSky());
+      existingWeather.setSkyMsg(weather.getSkyMsg());
+      existingWeather.setPop(weather.getPop());
+      existingWeather.setPty(weather.getPty());
+      existingWeather.setPtyMsg(weather.getPtyMsg());
+
+      weatherRepository.save(existingWeather);
+    } else {
+      weatherRepository.save(weather);
+    }
   }
 
   /*
@@ -140,9 +159,18 @@ public class WeatherService {
       weather.setSkyMsg(msg[i]);
       weather.setSky(weatherCode.skyNameToCode(msg[i]));
       weather.setFcstDate(DateUtils.calculateDate(date, 3 + i));
-      weatherRepository.save(weather);
+      saveOrNoneWeather(weather);
     }
     return dto;
+  }
+
+  public void saveOrNoneWeather(Weather weather) {
+    List<Weather> existingWeatherList = weatherRepository.findByBaseDateAndFcstDate(
+        weather.getBaseDate(), weather.getFcstDate());
+
+    if (existingWeatherList.size() == 0) {
+      weatherRepository.save(weather);
+    }
   }
 
   /*

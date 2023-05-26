@@ -19,6 +19,7 @@ public class GeoLocationController {
     if (ipAddress == null || ipAddress.isEmpty()) {
       ipAddress = request.getRemoteAddr();
     }
+    System.out.println(ipAddress);
     return geoLocationService.getGeoLocation(ipAddress);
   }
 }
