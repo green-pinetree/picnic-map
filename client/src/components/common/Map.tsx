@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from './Loading';
-import { CenterLocation } from '@/store/centerLocation';
+import { CenterLocation, addCenter } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
 import { RenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
@@ -67,10 +67,14 @@ export default function Map() {
     setMarkers(
       renderList.map((place) => {
         const loc = new naver.maps.LatLng(place.lat, place.lng);
-        return new naver.maps.Marker({
+        const mark = new naver.maps.Marker({
           position: loc,
           map,
         });
+        naver.maps.Event.addListener(mark, 'click', () =>
+          dispatch(addCenter({ latitude: place.lat, longitude: place.lng }))
+        );
+        return mark;
       })
     );
   }, [map, renderList.length]);
@@ -107,7 +111,7 @@ export default function Map() {
     if (!map || !center.latitude || !center.longitude) return;
     if (longitude === center.longitude && latitude === center.latitude) return;
     new naver.maps.Marker({
-      position: new naver.maps.LatLng(center.latitude, center.longitude),
+      position: new naver.maps.LatLng(center.latitude + 0.0003, center.longitude - 0.00015),
       map,
       icon: {
         content: `<div class="search-position"><div /></div>`,
