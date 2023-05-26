@@ -20,7 +20,7 @@ export default function Home() {
   const { id, search } = useQueryString();
   const { detail } = useFetchDetail();
   const { isGetLocation } = useUserLocation();
-  useRenderList();
+  const { isLoading } = useRenderList();
   useSetCenter();
   const onCancelDetail = () => {
     if (search) {
@@ -36,10 +36,14 @@ export default function Home() {
   return (
     <>
       <MobileLayout>
-        {id && detail ? <Detail {...detail} /> : <RenderPlaceList {...{ isGetLocation }} mobile />}
+        {id && detail ? (
+          <Detail {...detail} />
+        ) : (
+          <RenderPlaceList isLoading={isLoading || isGetLocation} mobile />
+        )}
       </MobileLayout>
-      <DesktopLayout>
-        <RenderPlaceList {...{ isGetLocation }} />
+      <DesktopLayout {...{ isGetLocation }}>
+        <RenderPlaceList isLoading={isLoading || isGetLocation} />
         {id && detail && (
           <DetailWrapper>
             <Cancel onClick={onCancelDetail}>

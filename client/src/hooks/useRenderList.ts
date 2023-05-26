@@ -11,7 +11,9 @@ import { UserLocation } from '@/store/userLocation';
 
 export const useRenderList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { placeList } = useSelector<ReducerType, PlaceListSliceState>((state) => state.placeList);
+  const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
+    (state) => state.placeList
+  );
   const { searchList } = useSelector<ReducerType, SearchListSliceState>(
     (state) => state.searchList
   );
@@ -42,4 +44,5 @@ export const useRenderList = () => {
     }
     dispatch(addRenderList(searchList));
   }, [placeList.length, searchList.length]);
+  return { isLoading: loading };
 };
