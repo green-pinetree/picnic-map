@@ -1,18 +1,26 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from '@emotion/styled';
 import DateInfo from '../DateInfo';
 import BREAK_POINT from '@/styles/breakpoint';
 import { title } from '@/styles/font';
+import { buttonStyle } from '@/styles/mixin';
 
 interface HeaderProps {
   mobile?: boolean;
 }
 
 export default function Header({ mobile = false }: HeaderProps) {
+  const router = useRouter();
   return (
     <Wrapper>
-      <Logo>
+      <Logo
+        role="button"
+        aria-label="logo"
+        aria-details="go to home"
+        onClick={() => router.push('/')}
+      >
         <Image
           src="/Icon.svg"
           alt="Logo"
@@ -49,6 +57,7 @@ const Logo = styled.div`
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     height: 44px;
   }
+  ${buttonStyle}
 `;
 
 const Title = styled.span`
