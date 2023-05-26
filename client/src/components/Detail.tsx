@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
@@ -47,7 +48,11 @@ export default function Detail(placeInfo: Place) {
         {homepage && (
           <Row>
             <Category>홈페이지</Category>
-            <Description>{homepage}</Description>
+            <Description>
+              <Link href={homepage} target="_blank">
+                {homepage}
+              </Link>
+            </Description>
           </Row>
         )}
         {distance && (
@@ -128,4 +133,11 @@ const Category = styled.div`
 const Description = styled.div`
   ${body1}
   line-height: 20px;
+  word-wrap: break-word;
+  a {
+    color: ${({ theme }) => theme.color.info};
+    :hover {
+      text-decoration-line: underline;
+    }
+  }
 `;
