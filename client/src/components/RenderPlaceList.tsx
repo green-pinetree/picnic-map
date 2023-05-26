@@ -24,6 +24,7 @@ export default function RenderPlaceList({ isGetLocation, mobile = false }: Rende
         renderList.map((place) => (
           <PlaceInfo
             key={place.id}
+            id={place.id}
             imgSrc={place.image[0]}
             name={place.name}
             address={place.detail.address || ''}

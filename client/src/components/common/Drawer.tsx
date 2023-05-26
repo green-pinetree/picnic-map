@@ -10,7 +10,6 @@ interface DrawerProps {
 export default function Drawer({ children }: DrawerProps) {
   const [drawerHeight, setDrawerHeight] = useState(300);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
-    e.preventDefault();
     let changeHeight = window.innerHeight - e.targetTouches[0].clientY + 30;
     if (changeHeight < 35) {
       changeHeight = 33;

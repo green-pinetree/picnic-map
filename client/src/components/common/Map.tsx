@@ -1,15 +1,19 @@
 /* eslint-disable no-new */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from './Loading';
+import { CenterLocation, addCenter } from '@/store/centerLocation';
+import { addBounds } from '@/store/mapBounds';
 import { RenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
 import { SearchListSliceState } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
+import { debounce } from 'lodash';
 
 export default function Map() {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const [markers, setMarkers] = useState<naver.maps.Marker[] | void[]>([]);
@@ -17,51 +21,46 @@ export default function Map() {
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
     (state) => state.userLocation
   );
+  const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
   const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
   const { searchList } = useSelector<ReducerType, SearchListSliceState>(
     (state) => state.searchList
   );
 
-  const drawMap = useCallback(
-    (center: { lat: number; lng: number } | undefined) => {
-      setIsLoading(true);
-      const { naver } = window;
-      if (!mapElement.current || !naver) return;
-      if (!latitude || !longitude) return;
-      const location = new naver.maps.LatLng(
-        center ? center.lat : latitude,
-        center ? center.lng : longitude
-      );
-      const mapOptions: naver.maps.MapOptions = {
-        center: location,
-        zoom: 17,
-        zoomControl: true,
-        zoomControlOptions: {
-          position: naver.maps.Position.TOP_RIGHT,
-        },
-      };
-      const newMap = new naver.maps.Map(mapElement.current, mapOptions);
-      new naver.maps.Marker({
-        position: new naver.maps.LatLng(latitude, longitude),
-        map: newMap,
-        icon: {
-          content: `<div class="user-position"><div /></div>`,
-        },
-      });
-      if (center) {
-        new naver.maps.Marker({
-          position: location,
-          map: newMap,
-          icon: {
-            content: `<div class="search-position"><div /></div>`,
-          },
-        });
-      }
-      setMap(newMap);
-      setIsLoading(false);
-    },
-    [latitude, longitude, searchList.length]
-  );
+  const drawMap = useCallback(() => {
+    setIsLoading(true);
+    const { naver } = window;
+    if (!mapElement.current || !naver) return;
+    if (!latitude || !longitude) return;
+    if (!center.latitude || !center.longitude) return;
+    const centerLocation = new naver.maps.LatLng(center.latitude, center.longitude);
+    const mapOptions: naver.maps.MapOptions = {
+      center: centerLocation,
+      zoom: 17,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: naver.maps.Position.TOP_RIGHT,
+      },
+    };
+    const newMap = new naver.maps.Map(mapElement.current, mapOptions);
+    // 사용자 위치 표시
+    new naver.maps.Marker({
+      position: new naver.maps.LatLng(latitude, longitude),
+      map: newMap,
+      icon: {
+        content: `<div class="user-position"><div /></div>`,
+      },
+    });
+    setMap(newMap);
+    setIsLoading(false);
+    const bounds = newMap.getBounds();
+    dispatch(
+      addBounds({
+        min: { lat: bounds.getMin().y, lng: bounds.getMin().x },
+        max: { lat: bounds.getMax().y, lng: bounds.getMax().x },
+      })
+    );
+  }, [latitude, longitude, center]);
 
   const drawPlaceMarker = useCallback(() => {
     if (!map) return;
@@ -75,19 +74,51 @@ export default function Map() {
         });
       })
     );
-  }, [map]);
+  }, [map, renderList.length]);
 
   useEffect(() => {
-    if (searchList.length !== 0) {
-      drawMap({ lat: searchList[0].lat, lng: searchList[0].lng });
-      return;
-    }
-    drawMap(undefined);
-  }, [latitude, longitude, searchList.length]);
+    if (!latitude || !longitude) return;
+    drawMap();
+  }, [latitude, longitude, center]);
 
   useEffect(() => {
+    if (!map) return;
     drawPlaceMarker();
-  }, [map]);
+    naver.maps.Event.addListener(
+      map,
+      'bounds_changed',
+      debounce(() => {
+        const bounds = map.getBounds();
+        dispatch(
+          addBounds({
+            min: { lat: bounds.getMin().y, lng: bounds.getMin().x },
+            max: { lat: bounds.getMax().y, lng: bounds.getMax().x },
+          })
+        );
+      }, 1000)
+    );
+    // eslint-disable-next-line consistent-return
+    return () => naver.maps.Event.clearListeners(map, 'bounds_changed');
+  }, [map, renderList.length]);
+
+  useEffect(() => {
+    if (!map || !center.latitude || !center.longitude) return;
+    if (longitude === center.longitude && latitude === center.latitude) return;
+    new naver.maps.Marker({
+      position: new naver.maps.LatLng(center.latitude, center.longitude),
+      map,
+      icon: {
+        content: `<div class="search-position"><div /></div>`,
+      },
+    });
+  }, [center, map]);
+
+  useEffect(() => {
+    const searchLocation = searchList.filter((node) => node.lat !== 0 && node.lng !== 0);
+    if (searchLocation.length !== 0)
+      dispatch(addCenter({ latitude: searchLocation[0].lat, longitude: searchLocation[0].lng }));
+    else dispatch(addCenter({ latitude, longitude }));
+  }, [searchList.length]);
 
   return (
     <Wrapper>

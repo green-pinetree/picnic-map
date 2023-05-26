@@ -468,6 +468,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4":
+  version: 4.14.195
+  resolution: "@types/lodash@npm:4.14.195"
+  checksum: 39b75ca635b3fa943d17d3d3aabc750babe4c8212485a4df166fe0516e39288e14b0c60afc6e21913cc0e5a84734633c71e617e2bd14eaa1cf51b8d7799c432e
+  languageName: node
+  linkType: hard
+
 "@types/navermaps@npm:^3.6.5":
   version: 3.6.5
   resolution: "@types/navermaps@npm:3.6.5"
@@ -965,6 +972,7 @@ __metadata:
     "@emotion/react": ^11.11.0
     "@emotion/styled": ^11.11.0
     "@reduxjs/toolkit": ^1.9.5
+    "@types/lodash": ^4
     "@types/navermaps": ^3.6.5
     "@types/node": 20.1.5
     "@types/react": 18.2.6
@@ -979,6 +987,7 @@ __metadata:
     eslint-plugin-import-order: ^2.1.4
     eslint-plugin-jsx-a11y: ^6.7.1
     husky: ^8.0.3
+    lodash: ^4.17.21
     next: 13.4.2
     react: 18.2.0
     react-dom: 18.2.0
@@ -2537,6 +2546,13 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
   languageName: node
   linkType: hard
 

@@ -1,31 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { Bounds } from './mapBounds';
 import { UserLocation } from './userLocation';
+import { Place } from '@/types/Place';
 import { Response } from '@/types/Response';
 import { httpGet } from '@/utils/http';
-
-export interface Place {
-  id: number;
-  type: { code: number; msg: string };
-  name: string;
-  content: string | null;
-  lng: number;
-  lat: number;
-  image: string[];
-  detail: {
-    area: string | null;
-    mainEquip: string | null;
-    mainPlants: string | null;
-    directions: string | null;
-    address: string | null;
-    tel: string | null;
-    distance: string | null;
-    leadTime: string | null;
-    relateSubway: string | null;
-    path: string | null;
-    homepage: string | null;
-  };
-  near: number | null;
-}
 
 export type PlaceListSliceState = {
   loading: boolean;
@@ -36,7 +14,21 @@ export type PlaceListSliceState = {
 // 비동기 통신 구현
 export const fetchPlaceList = createAsyncThunk(
   'fetchPlaceList',
-  async ({ latitude, longitude, type, page }: UserLocation & { type: number[]; page: number }) => {
+  async ({
+    latitude,
+    longitude,
+    type,
+    page,
+    bounds = undefined,
+  }: UserLocation & { type: number[]; page: number } & { bounds?: Bounds }) => {
+    if (bounds) {
+      const data = await httpGet(
+        `/api/place/list?type=${type.join(',')}&lat=${latitude}&lng=${longitude}&latLT=${
+          bounds.min.lat
+        }&lngLT=${bounds.min.lng}&latRB=${bounds.max.lat}&lngRB=${bounds.max.lng}`
+      );
+      return data;
+    }
     const data = await httpGet(
       `/api/place/list?type=${type.join(',')}&lng=${longitude}&lat=${latitude}&page=${page}&size=10`
     );
