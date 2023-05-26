@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { UserLocation } from './userLocation';
 import { Place } from '@/types/Place';
 import { Response } from '@/types/Response';
@@ -35,7 +35,11 @@ export const initialState: SearchListSliceState = {
 export const searchList = createSlice({
   name: 'searchList',
   initialState,
-  reducers: {},
+  reducers: {
+    addEmptySearchList(state, action: PayloadAction<[]>) {
+      return { ...state, searchList: action.payload };
+    },
+  },
   extraReducers: (builder) => {
     builder
       // 통신 중
@@ -55,5 +59,5 @@ export const searchList = createSlice({
       }));
   },
 });
-
+export const { addEmptySearchList } = searchList.actions;
 export default searchList.reducer;

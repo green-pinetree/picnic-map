@@ -33,7 +33,7 @@ export default function Map() {
     if (!mapElement.current || !naver) return;
     if (!latitude || !longitude) return;
     if (!center.latitude || !center.longitude) return;
-    const centerLocation = new naver.maps.LatLng(center.latitude, center.longitude);
+    const centerLocation = new naver.maps.LatLng(center.latitude - 0.001, center.longitude);
     const mapOptions: naver.maps.MapOptions = {
       center: centerLocation,
       zoom: 17,

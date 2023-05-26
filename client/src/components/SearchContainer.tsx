@@ -6,7 +6,7 @@ import Button from './common/Button';
 import SearchBar from './common/SearchBar';
 import { AppDispatch } from '@/store';
 import { ReducerType } from '@/store/rootReducer';
-import { fetchSearchList } from '@/store/searchList';
+import { addEmptySearchList, fetchSearchList } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import { BADGE } from '@/styles/zIndex';
@@ -31,11 +31,12 @@ export default function SearchContainer() {
   }, [longitude, latitude, search]);
 
   const searchHandler = () => {
-    dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
     if (!value) {
+      dispatch(addEmptySearchList([]));
       router.push('/');
       return;
     }
+    dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
     router.push({
       pathname: '/',
       query: { search: value },
