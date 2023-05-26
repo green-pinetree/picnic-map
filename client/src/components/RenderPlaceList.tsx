@@ -43,7 +43,6 @@ const Wrapper = styled.div`
   width: 100%;
   flex: 1;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
 `;
