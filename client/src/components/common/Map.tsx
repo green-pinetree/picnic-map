@@ -1,6 +1,7 @@
 /* eslint-disable no-new */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { debounce } from 'lodash';
 import styled from '@emotion/styled';
 import Loading from './Loading';
 import { CenterLocation, addCenter } from '@/store/centerLocation';
@@ -9,7 +10,6 @@ import { RenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
-import { debounce } from 'lodash';
 
 export default function Map() {
   const dispatch = useDispatch();
