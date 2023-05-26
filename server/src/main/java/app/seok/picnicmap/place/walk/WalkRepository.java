@@ -34,11 +34,12 @@ public interface WalkRepository extends JpaRepository<Walk, Long> {
           + "    ) b"
           + "   ) f"
           + "    UNION "
-          + "    (SELECT MIN(e.id) AS id"
+          + "    (SELECT g.id FROM (SELECT MIN(e.id) AS id"
           + "     FROM walk e "
           + "     WHERE e.lat<:latLT AND e.lng>:lngLT AND e.lat>:latRB AND e.lng<:lngRB "
-          + "     GROUP BY e.course_name"
-          + "    )"
+          + "     GROUP BY e.course_name "
+          + "     LIMIT 33"
+          + "    ) g)"
           + "  ) "
 
       , nativeQuery = true)
