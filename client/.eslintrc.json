@@ -60,6 +60,11 @@
             "position": "before"
           },
           {
+            "pattern": "lodash",
+            "group": "external",
+            "position": "before"
+          },
+          {
             "pattern": "@reduxjs/toolkit",
             "group": "external",
             "position": "before"
