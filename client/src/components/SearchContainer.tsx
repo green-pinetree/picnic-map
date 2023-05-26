@@ -65,6 +65,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 12px;
+  width: 100%;
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     width: 100vw;
     position: absolute;

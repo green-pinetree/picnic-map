@@ -20,7 +20,7 @@ export const fetchSearchList = createAsyncThunk(
     page,
   }: UserLocation & { search: string; page: number }) => {
     const data = await httpGet(
-      `/api/place/search?q=${search}&lng=${longitude}&lat=${latitude}&page=${page}&size=10`
+      `/api/place/search?q=${search}&lng=${longitude}&lat=${latitude}&page=${page}&size=20`
     );
     return data;
   }

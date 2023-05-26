@@ -34,6 +34,7 @@ const Wrapper = styled.div`
   height: 43px;
   pointer-events: none;
   padding: 0 5px;
+  max-width: 285px;
   border: 1px solid ${({ theme }) => theme.color.gray300};
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 10px;
@@ -50,6 +51,7 @@ const Input = styled.input`
   border-radius: 10px;
   outline: none;
   padding: 0 5px;
+  max-width: 227px;
   ${subtitle1}
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     padding: 0 20px;
