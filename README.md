@@ -1,5 +1,5 @@
 <div align="center" >
-# <img src="https://github.com/green-pinetree/picnic-map/assets/81913106/56c37956-bbec-48e2-962b-ccb3157ef0dc" width="300" height="120"/>
+<img src="https://github.com/green-pinetree/picnic-map/assets/81913106/56c37956-bbec-48e2-962b-ccb3157ef0dc" width="300" height="120"/>
 
 **나들이 장소를 추천해드려요!**
 
