@@ -24,10 +24,9 @@ export const fetchPlaceList = createAsyncThunk(
     if (bounds) {
       const data = await httpGet(
         `/api/place/list?type=${type.join(',')}&lat=${latitude}&lng=${longitude}&latLT=${
-          bounds.min.lat
-        }&lngLT=${bounds.min.lng}&latRB=${bounds.max.lat}&lngRB=${bounds.max.lng}`
+          bounds.max.lat
+        }&lngLT=${bounds.min.lng}&latRB=${bounds.min.lat}&lngRB=${bounds.max.lng}`
       );
-      console.log(bounds);
       return data;
     }
     const data = await httpGet(
@@ -56,7 +55,7 @@ export const placeList = createSlice({
         ...state,
         error: null,
         loading: false,
-        placeList: payload.data,
+        placeList: [...payload.data],
       }))
       // 통신 에러
       .addCase(fetchPlaceList.rejected, (state, { payload }) => ({
