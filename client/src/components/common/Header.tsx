@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import DateInfo from '../DateInfo';
+import { addCenter } from '@/store/centerLocation';
+import { ReducerType } from '@/store/rootReducer';
+import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import { title } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
@@ -13,13 +17,20 @@ interface HeaderProps {
 
 export default function Header({ mobile = false }: HeaderProps) {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
+    (state) => state.userLocation
+  );
   return (
     <Wrapper>
       <Logo
         role="button"
         aria-label="logo"
         aria-details="go to home"
-        onClick={() => router.push('/')}
+        onClick={() => {
+          dispatch(addCenter({ latitude, longitude }));
+          router.push('/');
+        }}
       >
         <Image
           src="/Icon.svg"
