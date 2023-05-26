@@ -1,17 +1,22 @@
-import React, { useState, TouchEvent, ReactNode } from 'react';
+import React, { useState, TouchEvent, ReactNode, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { subtitle1 } from '@/styles/font';
 import { DRAWER } from '@/styles/zIndex';
 
 interface DrawerProps {
   children: ReactNode;
+  title?: string;
 }
 
-export default function Drawer({ children }: DrawerProps) {
+export default function Drawer({ children, title = '주변 장소' }: DrawerProps) {
   const [drawerHeight, setDrawerHeight] = useState(300);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    scrollRef.current?.scrollTo(0, 0);
+  }, [title]);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
     let changeHeight = window.innerHeight - e.targetTouches[0].clientY + 30;
-    if (changeHeight < 35) {
+    if (changeHeight < 150) {
       changeHeight = 33;
     }
     setDrawerHeight(changeHeight);
@@ -20,9 +25,9 @@ export default function Drawer({ children }: DrawerProps) {
     <PlaceContainer {...{ drawerHeight }}>
       <Header onTouchMove={(e) => touchMoveHandler(e)}>
         <Bar />
-        <Title>주변 장소</Title>
+        <Title>{title}</Title>
       </Header>
-      <Contents>{children}</Contents>
+      <Contents ref={scrollRef}>{children}</Contents>
     </PlaceContainer>
   );
 }
@@ -38,7 +43,7 @@ const PlaceContainer = styled.div<{ drawerHeight: number }>`
   max-height: calc(100vh - 58px);
   width: 100%;
   overflow-y: hidden;
-  border-radius: 30px 30px 0px 0px;
+  border-radius: 20px 20px 0px 0px;
   border-top: 1px solid ${({ theme }) => theme.color.gray400};
 `;
 

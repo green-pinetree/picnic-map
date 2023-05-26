@@ -26,7 +26,7 @@ export default function Badge({ children, code }: BadgeProps) {
 }
 
 const Wrapper = styled.div<{ clicked: boolean }>`
-  min-width: 83px;
+  width: fit-content;
   height: 36px;
   padding: 0px 10px;
   white-space: nowrap;
@@ -39,6 +39,7 @@ const Wrapper = styled.div<{ clicked: boolean }>`
   background-color: ${({ theme, clicked }) => (clicked ? theme.color.primary : theme.color.white)};
   cursor: pointer;
   @media (hover: hover) {
+    min-width: 83px;
     &:hover {
       background-color: ${({ theme }) => theme.color.primary};
       filter: brightness(${({ clicked }) => (clicked ? 0.9 : 1)});

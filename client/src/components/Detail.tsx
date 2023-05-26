@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1, body1, subtitle2 } from '@/styles/font';
@@ -12,6 +12,9 @@ export default function Detail(placeInfo: Place) {
   const handleImageError = () => {
     setSrc('/dummy-image.jpg');
   };
+  useEffect(() => {
+    setSrc(image[0] || '/dummy-image.jpg');
+  }, [image]);
   return (
     <Wrapper>
       <img src={src} alt={name} onError={handleImageError} />

@@ -7,7 +7,6 @@ import { CenterLocation, addCenter } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
 import { RenderList } from '@/store/renderList';
 import { ReducerType } from '@/store/rootReducer';
-import { SearchListSliceState } from '@/store/searchList';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import { debounce } from 'lodash';
@@ -23,24 +22,18 @@ export default function Map() {
   );
   const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
   const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
-  const { searchList } = useSelector<ReducerType, SearchListSliceState>(
-    (state) => state.searchList
-  );
 
+  // 지도 그리기
   const drawMap = useCallback(() => {
     setIsLoading(true);
     const { naver } = window;
     if (!mapElement.current || !naver) return;
     if (!latitude || !longitude) return;
     if (!center.latitude || !center.longitude) return;
-    const centerLocation = new naver.maps.LatLng(center.latitude, center.longitude);
+    const centerLocation = new naver.maps.LatLng(center.latitude - 0.001, center.longitude);
     const mapOptions: naver.maps.MapOptions = {
       center: centerLocation,
       zoom: 17,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT,
-      },
     };
     const newMap = new naver.maps.Map(mapElement.current, mapOptions);
     // 사용자 위치 표시
@@ -54,6 +47,7 @@ export default function Map() {
     setMap(newMap);
     setIsLoading(false);
     const bounds = newMap.getBounds();
+    // 지도 바운더리 반영
     dispatch(
       addBounds({
         min: { lat: bounds.getMin().y, lng: bounds.getMin().x },
@@ -62,25 +56,32 @@ export default function Map() {
     );
   }, [latitude, longitude, center]);
 
+  // 지도에 표시할 마커 그리기
   const drawPlaceMarker = useCallback(() => {
     if (!map) return;
     setMarkers(markers.map((mark) => mark && mark.setMap(null)));
     setMarkers(
       renderList.map((place) => {
         const loc = new naver.maps.LatLng(place.lat, place.lng);
-        return new naver.maps.Marker({
+        const mark = new naver.maps.Marker({
           position: loc,
           map,
         });
+        naver.maps.Event.addListener(mark, 'click', () =>
+          dispatch(addCenter({ latitude: place.lat, longitude: place.lng }))
+        );
+        return mark;
       })
     );
   }, [map, renderList.length]);
 
   useEffect(() => {
     if (!latitude || !longitude) return;
+    if (center.latitude === 0 || center.longitude === 0) return;
     drawMap();
   }, [latitude, longitude, center]);
 
+  // bounds변경 감지 이벤트 붙이기
   useEffect(() => {
     if (!map) return;
     drawPlaceMarker();
@@ -101,24 +102,18 @@ export default function Map() {
     return () => naver.maps.Event.clearListeners(map, 'bounds_changed');
   }, [map, renderList.length]);
 
+  // 검색 혹은 특정 장소 클릭시 지도 가운데 위치 변경 -> 해당 장소 마커 표시
   useEffect(() => {
     if (!map || !center.latitude || !center.longitude) return;
     if (longitude === center.longitude && latitude === center.latitude) return;
     new naver.maps.Marker({
-      position: new naver.maps.LatLng(center.latitude, center.longitude),
+      position: new naver.maps.LatLng(center.latitude + 0.0003, center.longitude - 0.00015),
       map,
       icon: {
         content: `<div class="search-position"><div /></div>`,
       },
     });
   }, [center, map]);
-
-  useEffect(() => {
-    const searchLocation = searchList.filter((node) => node.lat !== 0 && node.lng !== 0);
-    if (searchLocation.length !== 0)
-      dispatch(addCenter({ latitude: searchLocation[0].lat, longitude: searchLocation[0].lng }));
-    else dispatch(addCenter({ latitude, longitude }));
-  }, [searchList.length]);
 
   return (
     <Wrapper>

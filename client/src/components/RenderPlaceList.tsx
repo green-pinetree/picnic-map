@@ -8,15 +8,16 @@ import { ReducerType } from '@/store/rootReducer';
 import BREAK_POINT from '@/styles/breakpoint';
 
 interface RenderPlaceListProps {
-  isGetLocation: boolean;
+  isLoading: boolean;
   mobile?: boolean;
 }
 
-export default function RenderPlaceList({ isGetLocation, mobile = false }: RenderPlaceListProps) {
+export default function RenderPlaceList({ isLoading, mobile = false }: RenderPlaceListProps) {
   const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
+
   return (
     <Wrapper>
-      {isGetLocation ? (
+      {isLoading ? (
         <LoadingContainer>
           <Loading />
         </LoadingContainer>
@@ -40,6 +41,7 @@ export default function RenderPlaceList({ isGetLocation, mobile = false }: Rende
 
 const Wrapper = styled.div`
   width: 100%;
+  flex: 1;
   display: flex;
   justify-content: center;
   flex-direction: column;
