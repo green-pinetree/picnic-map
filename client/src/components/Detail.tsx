@@ -2,18 +2,14 @@ import React from 'react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1, body1, subtitle2 } from '@/styles/font';
+import { Place } from '@/types/Place';
 
-interface DetailProps {
-  imgSrc: string;
-  name: string;
-  address: string;
-  description: string;
-}
-
-export default function Detail({ imgSrc, name, address, description }: DetailProps) {
+export default function Detail(placeInfo: Place) {
+  const { image, name, content, detail } = placeInfo;
+  const { address } = detail;
   return (
     <Wrapper>
-      <img src={imgSrc} alt={name} />
+      <img src={image[0]} alt={name} />
       <Title>{name}</Title>
       <Content>
         <Row>
@@ -23,7 +19,7 @@ export default function Detail({ imgSrc, name, address, description }: DetailPro
         </Row>
         <Row>
           <Category>공원 개요</Category>
-          <Description>{description}</Description>
+          <Description>{content}</Description>
         </Row>
       </Content>
     </Wrapper>

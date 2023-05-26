@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Place } from './placeList';
 import { UserLocation } from './userLocation';
+import { Place } from '@/types/Place';
 import { Response } from '@/types/Response';
 import { httpGet } from '@/utils/http';
 

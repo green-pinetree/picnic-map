@@ -6,17 +6,18 @@ import SideBar from '../common/SideBar';
 import Filter from '../Filter';
 
 interface DesktopLayoutProps {
+  title?: string;
   children: ReactNode;
 }
 
-export default function DesktopLayout({ children }: DesktopLayoutProps) {
+export default function DesktopLayout({ title, children }: DesktopLayoutProps) {
   const router = useRouter();
-  const { search } = router.query;
+  const { search, id } = router.query;
   return (
     <div className="desktop-layout">
-      <SideBar>{children}</SideBar>
+      <SideBar {...{ title }}>{children}</SideBar>
       <Section>
-        {!search && <Filter />}
+        {!search && !id && <Filter />}
         <Map />
       </Section>
     </div>

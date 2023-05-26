@@ -28,7 +28,7 @@ export default function SearchContainer() {
   useEffect(() => {
     if (!search || !longitude || !latitude) return;
     dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));
-  }, [longitude, latitude]);
+  }, [longitude, latitude, search]);
 
   const searchHandler = () => {
     dispatch(fetchSearchList({ search: value, latitude, longitude, page: 1 }));

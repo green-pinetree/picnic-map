@@ -1,31 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { UserLocation } from './userLocation';
+import { Place } from '@/types/Place';
 import { Response } from '@/types/Response';
 import { httpGet } from '@/utils/http';
-
-export interface Place {
-  id: number;
-  type: { code: number; msg: string };
-  name: string;
-  content: string | null;
-  lng: number;
-  lat: number;
-  image: string[];
-  detail: {
-    area: string | null;
-    mainEquip: string | null;
-    mainPlants: string | null;
-    directions: string | null;
-    address: string | null;
-    tel: string | null;
-    distance: string | null;
-    leadTime: string | null;
-    relateSubway: string | null;
-    path: string | null;
-    homepage: string | null;
-  };
-  near: number | null;
-}
 
 export type PlaceListSliceState = {
   loading: boolean;

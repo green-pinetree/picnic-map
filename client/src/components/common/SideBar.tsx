@@ -6,9 +6,10 @@ import SearchContainer from '../SearchContainer';
 import { subtitle1 } from '@/styles/font';
 
 interface SideBarProps {
+  title?: string;
   children: ReactNode;
 }
-export default function SideBar({ children }: SideBarProps) {
+export default function SideBar({ title = '주변 장소', children }: SideBarProps) {
   return (
     <Wrapper>
       <Header />
@@ -17,7 +18,7 @@ export default function SideBar({ children }: SideBarProps) {
         <DateInfo />
       </DateContainer>
       <PlaceContainer>
-        <Title>주변 장소</Title>
+        <Title>{title}</Title>
         <Contents>{children}</Contents>
       </PlaceContainer>
     </Wrapper>
