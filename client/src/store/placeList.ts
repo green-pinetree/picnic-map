@@ -23,9 +23,11 @@ export const fetchPlaceList = createAsyncThunk(
   }: UserLocation & { type: number[]; page: number } & { bounds?: Bounds }) => {
     if (bounds) {
       const data = await httpGet(
-        `/api/place/list?type=${type.join(',')}&lat=${latitude}&lng=${longitude}&latLT=${
-          bounds.max.lat
-        }&lngLT=${bounds.min.lng}&latRB=${bounds.min.lat}&lngRB=${bounds.max.lng}`
+        `/api/place/list?type=${type.join(',')}&lat=${(bounds.min.lat + bounds.max.lat) / 2}&lng=${
+          (bounds.max.lng + bounds.min.lng) / 2
+        }&latLT=${bounds.max.lat}&lngLT=${bounds.min.lng}&latRB=${bounds.min.lat}&lngRB=${
+          bounds.max.lng
+        }`
       );
       return data;
     }
