@@ -97,7 +97,7 @@ export default function Home() {
   return (
     <>
       <MobileLayout>
-        <RenderPlaceList {...{ isGetLocation }} mobile />
+        {id && detail ? <Detail {...detail} /> : <RenderPlaceList {...{ isGetLocation }} mobile />}
       </MobileLayout>
       <DesktopLayout>
         <RenderPlaceList {...{ isGetLocation }} />

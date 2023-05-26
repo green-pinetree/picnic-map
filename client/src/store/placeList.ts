@@ -27,6 +27,7 @@ export const fetchPlaceList = createAsyncThunk(
           bounds.min.lat
         }&lngLT=${bounds.min.lng}&latRB=${bounds.max.lat}&lngRB=${bounds.max.lng}`
       );
+      console.log(bounds);
       return data;
     }
     const data = await httpGet(

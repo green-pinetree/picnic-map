@@ -13,16 +13,16 @@ interface MobileLayoutProps {
 
 export default function MobileLayout({ children }: MobileLayoutProps) {
   const router = useRouter();
-  const { search } = router.query;
+  const { search, id } = router.query;
   return (
     <div className="mobile-layout">
       <Header mobile />
       <Section>
         <SearchContainer />
-        {!search && <Filter />}
+        {!search && !id && <Filter />}
         <Map />
       </Section>
-      <Drawer>{children}</Drawer>
+      <Drawer title={id ? '' : '주변 장소'}>{children}</Drawer>
     </div>
   );
 }
