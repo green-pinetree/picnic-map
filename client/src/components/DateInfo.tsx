@@ -20,7 +20,7 @@ export default function DateInfo() {
     dispatch(fetchWeatherList({ longitude, latitude }));
   }, [latitude, longitude]);
   return (
-    <TodayInfo>
+    <TodayInfo id="date-info">
       <DateDropDown />
       {current && (
         <TodayWeather>
