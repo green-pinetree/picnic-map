@@ -4,7 +4,7 @@ import { MdCancel } from 'react-icons/md';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
-import { subtitle2 } from '@/styles/font';
+import { subtitle3 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
 
 interface SearchBar {
@@ -20,7 +20,12 @@ export default function SearchBar({ value, setValue, onKeyDown }: SearchBar) {
   return (
     <Wrapper role="searchbox" aria-label="search" {...{ onKeyDown }}>
       <CiSearch size={26} />
-      <Input ref={inputElement} onChange={({ target }) => setValue(target.value)} {...{ value }} />
+      <Input
+        placeholder="검색어를 입력하세요"
+        ref={inputElement}
+        onChange={({ target }) => setValue(target.value)}
+        {...{ value }}
+      />
       <Cancel
         aria-label="cancel"
         type="button"
@@ -60,8 +65,12 @@ const Input = styled.input`
   border-radius: 10px;
   outline: none;
   padding: 0 5px;
-  max-width: 227px;
-  ${subtitle2}
+  width: 230px;
+  ${subtitle3}
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray300};
+    font-size: 18px;
+  }
 `;
 
 const Cancel = styled.button`

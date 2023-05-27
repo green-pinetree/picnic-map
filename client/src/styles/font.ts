@@ -29,6 +29,16 @@ export const subtitle2 = css`
   color: ${COLOR.black};
 `;
 
+export const subtitle3 = css`
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: ${COLOR.black};
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    font-size: 18px;
+  }
+`;
+
 export const body1 = css`
   font-family: sans-serif;
   font-size: 16px;

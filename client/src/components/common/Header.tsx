@@ -27,7 +27,6 @@ export default function Header({ mobile = false }: HeaderProps) {
       <Logo
         role="button"
         aria-label="logo"
-        aria-details="go to home"
         onClick={() => {
           dispatch(addCenter({ latitude, longitude }));
           dispatch(addEmptySearchList([]));

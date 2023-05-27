@@ -10,7 +10,6 @@ import { useQueryString } from '@/hooks/useQueryString';
 import { useRenderList } from '@/hooks/useRenderList';
 import { useSetCenter } from '@/hooks/useSetCenter';
 import { useUserLocation } from '@/hooks/useUserLocation';
-import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Home() {
   const { id } = useQueryString();
@@ -58,8 +57,5 @@ const DetailWrapper = styled.div`
   z-index: 1;
   background-color: ${({ theme }) => theme.color.white};
   overflow-y: auto;
-  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
-    font-size: 16px;
-    position: inherit;
-  }
+  border-right: 1px solid ${({ theme }) => theme.color.gray200};
 `;
