@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router';
-import { MdCancel } from 'react-icons/md';
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import Drawer from '@/components/common/Drawer';
 import Detail from '@/components/Detail';
+import CancelDetail from '@/components/DetailBack';
 import DesktopLayout from '@/components/Layout/DesktopLayout';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import RenderPlaceList from '@/components/RenderPlaceList';
@@ -12,44 +11,32 @@ import { useRenderList } from '@/hooks/useRenderList';
 import { useSetCenter } from '@/hooks/useSetCenter';
 import { useUserLocation } from '@/hooks/useUserLocation';
 import BREAK_POINT from '@/styles/breakpoint';
-import { buttonStyle } from '@/styles/mixin';
 
 export default function Home() {
-  const { color: themeColor } = useTheme();
-  const { gray200 } = themeColor;
-  const router = useRouter();
-  const { id, search } = useQueryString();
+  const { id } = useQueryString();
   const { detail } = useFetchDetail();
   const { isGetLocation } = useUserLocation();
   const { isLoading } = useRenderList();
   useSetCenter();
-  const onCancelDetail = () => {
-    if (search) {
-      router.push({
-        pathname: '/',
-        query: { search },
-      });
-    } else {
-      router.push('/');
-    }
-  };
 
   return (
     <>
       <MobileLayout>
         {id && detail ? (
-          <Detail {...detail} />
+          <Drawer title={id ? '' : '주변 장소'} isDetail>
+            <Detail {...detail} />
+          </Drawer>
         ) : (
-          <RenderPlaceList isLoading={isLoading || isGetLocation} mobile />
+          <Drawer title={id ? '' : '주변 장소'}>
+            <RenderPlaceList isLoading={isLoading || isGetLocation} mobile />
+          </Drawer>
         )}
       </MobileLayout>
       <DesktopLayout {...{ isGetLocation }}>
         <RenderPlaceList isLoading={isLoading || isGetLocation} />
         {id && detail && (
           <DetailWrapper>
-            <Cancel onClick={onCancelDetail}>
-              <MdCancel color={gray200} size={20} />
-            </Cancel>
+            <CancelDetail />
             <Detail {...detail} />
           </DetailWrapper>
         )}
@@ -64,7 +51,7 @@ const DetailWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   position: absolute;
   left: 390px;
   top: 0px;
@@ -73,15 +60,6 @@ const DetailWrapper = styled.div`
   overflow-y: auto;
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     font-size: 16px;
+    position: inherit;
   }
-`;
-const Cancel = styled.button`
-  border: 0;
-  width: 20px;
-  display: flex;
-  background-color: ${({ theme }) => theme.color.white};
-  padding: 0;
-  border-radius: 20px;
-  pointer-events: all;
-  ${buttonStyle}
 `;

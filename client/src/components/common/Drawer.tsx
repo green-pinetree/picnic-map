@@ -1,14 +1,16 @@
 import React, { useState, TouchEvent, ReactNode, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
+import CancelDetail from '../DetailBack';
 import { subtitle1 } from '@/styles/font';
 import { DRAWER } from '@/styles/zIndex';
 
 interface DrawerProps {
   children: ReactNode;
   title?: string;
+  isDetail?: boolean;
 }
 
-export default function Drawer({ children, title = '주변 장소' }: DrawerProps) {
+export default function Drawer({ children, title = '주변 장소', isDetail = false }: DrawerProps) {
   const [drawerHeight, setDrawerHeight] = useState(300);
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -24,7 +26,15 @@ export default function Drawer({ children, title = '주변 장소' }: DrawerProp
   return (
     <PlaceContainer {...{ drawerHeight }}>
       <Header onTouchMove={(e) => touchMoveHandler(e)}>
-        <Bar />
+        {isDetail ? (
+          <TopWrapper>
+            <CancelDetail />
+            <Bar />
+            <div style={{ width: '24px' }} />
+          </TopWrapper>
+        ) : (
+          <Bar />
+        )}
         <Title>{title}</Title>
       </Header>
       <Contents ref={scrollRef}>{children}</Contents>
@@ -53,6 +63,13 @@ const Header = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 5px;
+`;
+
+const TopWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 `;
 
 const Bar = styled.div`
