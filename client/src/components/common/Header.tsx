@@ -63,7 +63,7 @@ const Wrapper = styled.header`
   }
 `;
 
-const Logo = styled.div`
+const Logo = styled.title`
   width: fit-content;
   height: 54px;
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
