@@ -4,7 +4,7 @@ import { MdCancel } from 'react-icons/md';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import BREAK_POINT from '@/styles/breakpoint';
-import { subtitle1 } from '@/styles/font';
+import { subtitle2 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
 
 interface SearchBar {
@@ -61,10 +61,7 @@ const Input = styled.input`
   outline: none;
   padding: 0 5px;
   max-width: 227px;
-  ${subtitle1}
-  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
-    padding: 0 20px;
-  }
+  ${subtitle2}
 `;
 
 const Cancel = styled.button`

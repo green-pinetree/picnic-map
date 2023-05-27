@@ -1,4 +1,5 @@
 /* eslint-disable no-new */
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from 'lodash';
@@ -13,6 +14,7 @@ import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Map() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const [markers, setMarkers] = useState<naver.maps.Marker[] | void[]>([]);
@@ -67,9 +69,13 @@ export default function Map() {
           position: loc,
           map,
         });
-        naver.maps.Event.addListener(mark, 'click', () =>
-          dispatch(addCenter({ latitude: place.lat, longitude: place.lng }))
-        );
+        naver.maps.Event.addListener(mark, 'click', () => {
+          dispatch(addCenter({ latitude: place.lat, longitude: place.lng }));
+          router.push({
+            pathname: router.pathname,
+            query: { ...router.query, id: place.id, type: place.type.code },
+          });
+        });
         return mark;
       })
     );
