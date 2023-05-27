@@ -61,9 +61,9 @@ export default function PlaceInfo({
 const Place = styled.div`
   display: flex;
   flex-direction: column;
-  width: 96%;
+  width: 100%;
   height: fit-content;
-  padding: 16px 0px;
+  padding: 16px 10px;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
   cursor: pointer;
   @media (hover: hover) {

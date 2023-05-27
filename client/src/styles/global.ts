@@ -209,13 +209,13 @@ const globalStyle = css`
     }
   }
   .user-position {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: ${COLOR.warning};
-    border-radius: 30px;
+    border-radius: 32px;
     box-shadow: 0px 1px 1px 1px ${COLOR.gray400};
     div {
       width: 50%;
@@ -226,13 +226,13 @@ const globalStyle = css`
   }
 
   .search-position {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: ${COLOR.info};
-    border-radius: 30px;
+    border-radius: 32px;
     box-shadow: 0px 1px 1px 1px ${COLOR.gray400};
     div {
       width: 50%;
