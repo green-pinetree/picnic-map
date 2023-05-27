@@ -40,7 +40,7 @@ export default function Header({ mobile = false }: HeaderProps) {
           height={mobile ? 44 : 50}
           priority
         />
-        <Title>나들이 갈까?</Title>
+        <Title aria-label="title">나들이 갈까?</Title>
       </Logo>
       {mobile && <DateInfo />}
     </Wrapper>
@@ -63,7 +63,7 @@ const Wrapper = styled.header`
   }
 `;
 
-const Logo = styled.title`
+const Logo = styled.div`
   width: fit-content;
   height: 54px;
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
