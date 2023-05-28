@@ -19,7 +19,7 @@ export default function Filter() {
   );
 }
 const Wrapper = styled.div`
-  width: 100vw;
+  width: calc(100vw - 390px);
   display: flex;
   position: absolute;
   z-index: ${BADGE};
@@ -32,6 +32,7 @@ const Wrapper = styled.div`
     margin: 10px;
   }
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    width: 100vw;
     top: 120px;
   }
 `;
