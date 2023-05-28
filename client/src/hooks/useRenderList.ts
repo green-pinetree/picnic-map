@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQueryString } from './useQueryString';
 import { AppDispatch } from '@/store';
@@ -12,6 +12,7 @@ import { UserLocation } from '@/store/userLocation';
 
 export const useRenderList = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [hasSearchList, setHasSearchList] = useState(true);
   const { search } = useQueryString();
   const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
     (state) => state.placeList
@@ -41,11 +42,14 @@ export const useRenderList = () => {
   }, [min, max, typeFilter]);
 
   useEffect(() => {
-    if (searchList.length === 0) {
+    if (!search) {
       dispatch(addRenderList(placeList));
       return;
     }
+    if (searchList.length === 0) {
+      setHasSearchList(false);
+    }
     dispatch(addRenderList(searchList));
-  }, [placeList.length, searchList.length]);
-  return { isLoading: loading };
+  }, [placeList.length, search]);
+  return { isLoading: loading, hasSearchList };
 };

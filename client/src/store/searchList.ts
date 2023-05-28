@@ -22,6 +22,7 @@ export const fetchSearchList = createAsyncThunk(
     const data = await httpGet(
       `/api/place/search?q=${search}&lng=${longitude}&lat=${latitude}&page=${page}&size=20`
     );
+    console.log(data.data);
     return data;
   }
 );
