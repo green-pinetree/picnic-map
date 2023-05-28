@@ -8,7 +8,7 @@ export default function Filter() {
   return (
     <Wrapper>
       <Badge code={0}>공원</Badge>
-      <Badge code={1}>둘레길</Badge>
+      <Badge code={1}>두드림길</Badge>
       <Badge code={2}>미술관</Badge>
       <Badge code={3}>공연장</Badge>
       <Badge code={4}>도서관</Badge>

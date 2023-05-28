@@ -28,7 +28,7 @@ export default function Badge({ children, code }: BadgeProps) {
 const Wrapper = styled.div<{ clicked: boolean }>`
   width: fit-content;
   height: 36px;
-  padding: 0px 10px;
+  padding: 0px 15px;
   white-space: nowrap;
   ${body1}
   color: ${({ theme, clicked }) => (clicked ? theme.color.white : theme.color.black)};
