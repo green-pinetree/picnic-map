@@ -16,7 +16,7 @@ export default function Home() {
   const { id } = useQueryString();
   const { detail } = useFetchDetail();
   const { isGetLocation } = useUserLocation();
-  const { isLoading, hasSearchList } = useRenderList();
+  const { isLoading, hasRenderList } = useRenderList();
   useSetCenter();
 
   return (
@@ -33,7 +33,7 @@ export default function Home() {
         )}
       </MobileLayout>
       <DesktopLayout {...{ isGetLocation }}>
-        {!hasSearchList ? (
+        {!hasRenderList ? (
           <NoSearchResult>검색 장소가 없습니다.</NoSearchResult>
         ) : (
           <RenderPlaceList isLoading={isLoading || isGetLocation} />

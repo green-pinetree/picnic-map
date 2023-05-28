@@ -12,7 +12,7 @@ import { UserLocation } from '@/store/userLocation';
 
 export const useRenderList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [hasSearchList, setHasSearchList] = useState(true);
+  const [hasRenderList, setHasRenderList] = useState(true);
   const { search } = useQueryString();
   const { placeList, loading } = useSelector<ReducerType, PlaceListSliceState>(
     (state) => state.placeList
@@ -20,6 +20,7 @@ export const useRenderList = () => {
   const { searchList } = useSelector<ReducerType, SearchListSliceState>(
     (state) => state.searchList
   );
+
   const typeFilter = useSelector<ReducerType, TypeFilter>((state) => state.typeFilter);
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
     (state) => state.userLocation
@@ -43,13 +44,17 @@ export const useRenderList = () => {
 
   useEffect(() => {
     if (!search) {
+      setHasRenderList(true);
       dispatch(addRenderList(placeList));
       return;
     }
     if (searchList.length === 0) {
-      setHasSearchList(false);
+      setHasRenderList(false);
+      dispatch(addRenderList(searchList));
+      return;
     }
+    setHasRenderList(true);
     dispatch(addRenderList(searchList));
-  }, [placeList.length, search]);
-  return { isLoading: loading, hasSearchList };
+  }, [placeList.length, search, searchList.length]);
+  return { isLoading: loading, hasRenderList };
 };

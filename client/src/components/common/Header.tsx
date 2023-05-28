@@ -7,6 +7,7 @@ import DateInfo from '../DateInfo';
 import { addCenter } from '@/store/centerLocation';
 import { ReducerType } from '@/store/rootReducer';
 import { addEmptySearchList } from '@/store/searchList';
+import { initType } from '@/store/typeFilter';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
 import { title } from '@/styles/font';
@@ -28,8 +29,9 @@ export default function Header({ mobile = false }: HeaderProps) {
         role="button"
         aria-label="logo"
         onClick={() => {
-          dispatch(addCenter({ latitude, longitude }));
+          dispatch(initType());
           dispatch(addEmptySearchList([]));
+          dispatch(addCenter({ latitude, longitude }));
           router.push('/');
         }}
       >
