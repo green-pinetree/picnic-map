@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { Global, ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -11,6 +12,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemeProvider {...{ theme }}>
       <Global styles={globalStyle} />
       <AppStyle>
+        <Head>
+          <title>나들이 갈까?</title>
+        </Head>
         <Provider store={store}>
           <Component {...pageProps} />
         </Provider>

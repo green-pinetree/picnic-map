@@ -4,7 +4,7 @@
 echo ">> Picnic-map pre-push hook: Checking branch name..."
 
 BRANCH=`git rev-parse --abbrev-ref HEAD`
-PROTECTED_BRANCHES="^(main|dev)"
+PROTECTED_BRANCHES="^(dev)"
 
 if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
 then

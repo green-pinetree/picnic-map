@@ -3,7 +3,7 @@ import Script from 'next/script';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="ko">
       <Head>
         <meta charSet="UTF-8" />
         <link rel="icon" href="/favicon.svg" />
