@@ -1,9 +1,11 @@
 <div align="center" >
-<img src="https://github.com/green-pinetree/picnic-map/assets/81913106/56c37956-bbec-48e2-962b-ccb3157ef0dc" width="300" height="120"/>
-
-**나들이 장소를 추천해드려요!**
-
-서비스 링크 : https://picnic-map.polarmin.net/
+<img src="https://github.com/green-pinetree/picnic-map/assets/81913106/56c37956-bbec-48e2-962b-ccb3157ef0dc" width="300" height="120"/>    
+  
+**나들이 장소를 추천해드려요!**  
+[2023 서울 열린데이터광장 공공데이터 경진대회](https://mediahub.seoul.go.kr/gongmo/2000334) 출품작입니다.
+  
+  
+서비스 링크 : https://picnic-map.polarmin.net/  
 
 </div>
 
