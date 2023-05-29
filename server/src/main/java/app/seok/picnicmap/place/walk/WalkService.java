@@ -88,7 +88,7 @@ public class WalkService {
       walk.setCpiContent((String) walkObject.get("CPI_CONTENT"));
       walk.setX(Double.parseDouble((String) walkObject.get("X")));
       walk.setY(Double.parseDouble((String) walkObject.get("Y")));
-      double[] wgs = coordinateConversion.convertGRS80TMToWGS84(walk.getX(), walk.getY());
+      double[] wgs = coordinateConversion.conversion(walk.getX(), walk.getY());
       walk.setLat(wgs[0]);
       walk.setLng(wgs[1]);
       walkRepository.save(walk);
