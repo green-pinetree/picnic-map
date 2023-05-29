@@ -75,7 +75,7 @@ public class PlaceDetailResponseDTO {
     data.setId(walk.getId());
     Type type = new Type();
     type.setCode(1);
-    type.setMsg("둘레길");
+    type.setMsg("두드림길");
     data.setType(type);
     if (walk.getCourseName() != null) {
       data.setName(walk.getCourseName());

@@ -167,7 +167,7 @@ public class PlaceListResponseDTO {
 
     Type type = new Type();
     type.setCode(1);
-    type.setMsg("둘레길");
+    type.setMsg("두드림길");
     data.setType(type);
 
     // name 설정
