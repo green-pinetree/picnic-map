@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
@@ -38,7 +39,15 @@ export default function PlaceInfo({
     <Place role="button" onClick={handleClick}>
       <InfoContainer>
         <ImageBox>
-          <img src={src} alt={name} onError={handleImageError} />
+          <Image
+            src={src}
+            alt={name}
+            width={160}
+            height={90}
+            priority
+            unoptimized
+            onError={handleImageError}
+          />
         </ImageBox>
         <Info>
           <TitleContainer>
@@ -93,10 +102,6 @@ const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  img {
-    width: 160px;
-    height: 90px;
-  }
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     width: 50%;
   }

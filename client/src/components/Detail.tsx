@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
@@ -18,7 +19,15 @@ export default function Detail(placeInfo: Place) {
   }, [image]);
   return (
     <Wrapper>
-      <img src={src} alt={name} onError={handleImageError} />
+      <Image
+        width={360}
+        height={180}
+        src={src}
+        alt={name}
+        priority
+        unoptimized
+        onError={handleImageError}
+      />
       <Title>{name}</Title>
       <Content>
         {address && (
@@ -94,10 +103,6 @@ const Wrapper = styled.div`
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
-  }
-  img {
-    width: 360px;
-    height: 180px;
   }
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     margin-top: 10px;
