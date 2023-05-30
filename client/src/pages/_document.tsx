@@ -12,11 +12,10 @@ export default function Document() {
           content="나들이 장소 추천 서비스⭐ 나들이 장소를 추천받아 보세요!"
         />
         <meta property="og:type" content="website" />
-        <meta name="og:site_name" content="나들이 갈까?" />
+        <meta property="og:site_name" content="나들이 갈까?" />
         <meta property="og:title" content="나들이 갈까?" />
-        <meta name="og:desc" content="나들이 장소 추천 서비스⭐ 나들이 장소를 추천받아 보세요!" />
         <meta
-          name="og:description"
+          property="og:description"
           content="나들이 장소 추천 서비스⭐ 나들이 장소를 추천받아 보세요!"
         />
         <meta property="og:url" content="https://picnic-map.polarmin.net/" />
