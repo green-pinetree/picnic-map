@@ -20,15 +20,6 @@ export default function Document() {
         />
         <meta property="og:url" content="https://picnic-map.polarmin.net/" />
         <meta property="og:image" content="https://picnic-map.polarmin.net/og_image.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="picnic-map.polarmin.net" />
-        <meta property="twitter:url" content="https://picnic-map.polarmin.net/" />
-        <meta name="twitter:title" content="나들이 갈까?" />
-        <meta
-          name="twitter:description"
-          content="나들이 장소 추천 서비스⭐ 나들이 장소를 추천받아 보세요!"
-        />
-        <meta name="twitter:image" content="https://picnic-map.polarmin.net/og_image.png" />
         <Script
           type="text/javascript"
           strategy="beforeInteractive"
