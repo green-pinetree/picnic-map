@@ -5,7 +5,6 @@ import CancelDetail from '@/components/DetailBack';
 import DesktopLayout from '@/components/Layout/DesktopLayout';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import RenderPlaceList from '@/components/RenderPlaceList';
-import { useFetchDetail } from '@/hooks/useFetchDetail';
 import { useQueryString } from '@/hooks/useQueryString';
 import { useRenderList } from '@/hooks/useRenderList';
 import { useSetCenter } from '@/hooks/useSetCenter';
@@ -14,7 +13,6 @@ import { subtitle3 } from '@/styles/font';
 
 export default function Home() {
   const { id } = useQueryString();
-  const { detail } = useFetchDetail();
   const { isGetLocation } = useUserLocation();
   const { isLoading, hasRenderList } = useRenderList();
   useSetCenter();
@@ -22,9 +20,9 @@ export default function Home() {
   return (
     <>
       <MobileLayout>
-        {id && detail ? (
+        {id ? (
           <Drawer title={id ? '' : '주변 장소'} isDetail>
-            <Detail {...detail} />
+            <Detail />
           </Drawer>
         ) : (
           <Drawer title={id ? '' : '주변 장소'}>
@@ -38,10 +36,10 @@ export default function Home() {
         ) : (
           <RenderPlaceList isLoading={isLoading || isGetLocation} />
         )}
-        {id && detail && (
+        {id && (
           <DetailWrapper>
             <CancelDetail />
-            <Detail {...detail} />
+            <Detail />
           </DetailWrapper>
         )}
       </DesktopLayout>

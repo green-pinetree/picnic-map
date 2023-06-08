@@ -1,22 +1,42 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
+import { addCenter } from '@/store/centerLocation';
+import { useQueryString } from '@/hooks/useQueryString';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1, body1, subtitle2 } from '@/styles/font';
 import { Place } from '@/types/Place';
+import { httpGet } from '@/utils/http';
 
-export default function Detail(placeInfo: Place) {
-  const { image, name, content, detail } = placeInfo;
-  const { mainEquip, mainPlants, address, tel, distance, leadTime, relateSubway, homepage } =
-    detail;
-  const [src, setSrc] = useState(image[0] || '/dummy-image.jpg');
+export default function Detail() {
+  const [place, setPlace] = useState<Place>();
+  const dispatch = useDispatch();
+  const { id, type } = useQueryString();
+  const [src, setSrc] = useState('/dummy-image.jpg');
+
+  const fetchDetail = async () => {
+    const response = await httpGet(`/api/place/detail?type=${type}&id=${id}`);
+    setPlace(response.data);
+    const { image } = response.data;
+    setSrc(image[0] || '/dummy-image.jpg');
+    const { lat, lng } = response.data;
+    dispatch(addCenter({ longitude: lng, latitude: lat }));
+  };
   const handleImageError = () => {
     setSrc('/dummy-image.jpg');
   };
   useEffect(() => {
-    setSrc(image[0] || '/dummy-image.jpg');
-  }, [image]);
+    if (!id || !type) return;
+    fetchDetail();
+  }, [id, type]);
+
+  if (!place) return <div />;
+  const { name, content, detail } = place;
+  const { mainEquip, mainPlants, address, tel, distance, leadTime, relateSubway, homepage } =
+    detail;
+
   return (
     <Wrapper>
       <Image
