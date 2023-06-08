@@ -4,37 +4,34 @@ import Detail from '@/components/Detail';
 import CancelDetail from '@/components/DetailBack';
 import DesktopLayout from '@/components/Layout/DesktopLayout';
 import MobileLayout from '@/components/Layout/MobileLayout';
-import RenderPlaceList from '@/components/PlaceList';
+import PlaceList from '@/components/PlaceList';
 import { usePlaceList } from '@/hooks/usePlaceList';
 import { useQueryString } from '@/hooks/useQueryString';
-// import { useSetCenter } from '@/hooks/useSetCenter';
 import { useUserLocation } from '@/hooks/useUserLocation';
 
 export default function Home() {
   const { id } = useQueryString();
   const { isGetLocation } = useUserLocation();
   const { isLoading } = usePlaceList();
-  // useSetCenter();
-
   return (
     <>
       <MobileLayout>
         {id ? (
-          <Drawer title={id ? '' : '주변 장소'} isDetail>
-            <Detail />
+          <Drawer isDetail>
+            <Detail isLoading={isLoading || isGetLocation} />
           </Drawer>
         ) : (
-          <Drawer title={id ? '' : '주변 장소'}>
-            <RenderPlaceList isLoading={isLoading || isGetLocation} mobile />
+          <Drawer>
+            <PlaceList isLoading={isLoading || isGetLocation} mobile />
           </Drawer>
         )}
       </MobileLayout>
       <DesktopLayout {...{ isGetLocation }}>
-        <RenderPlaceList isLoading={isLoading || isGetLocation} />
+        <PlaceList isLoading={isLoading || isGetLocation} />
         {id && (
           <DetailWrapper>
             <CancelDetail />
-            <Detail />
+            <Detail isLoading={isLoading || isGetLocation} />
           </DetailWrapper>
         )}
       </DesktopLayout>

@@ -1,25 +1,23 @@
 import React, { useState, TouchEvent, ReactNode, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import CancelDetail from '../DetailBack';
-import { subtitle1 } from '@/styles/font';
 import { DRAWER } from '@/styles/zIndex';
 
 interface DrawerProps {
   children: ReactNode;
-  title?: string;
   isDetail?: boolean;
 }
 
 const MIN_HEIGHT = 34;
 const MIDDLE_HEIGHT = 300;
 
-export default function Drawer({ children, title = '주변 장소', isDetail = false }: DrawerProps) {
+export default function Drawer({ children, isDetail = false }: DrawerProps) {
   const [drawerHeight, setDrawerHeight] = useState(MIDDLE_HEIGHT);
   const [drawerEndHeight, setDrawerEndHeight] = useState(MIDDLE_HEIGHT);
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
-  }, [title]);
+  }, []);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
     const changeHeight = window.innerHeight - e.targetTouches[0].clientY + 30;
     // 일정 범위 이상 터치 이동해야 서랍 이동
@@ -68,10 +66,7 @@ export default function Drawer({ children, title = '주변 장소', isDetail = f
           <Bar />
         )}
       </Header>
-      <Contents ref={scrollRef}>
-        <Title>{title}</Title>
-        {children}
-      </Contents>
+      <Contents ref={scrollRef}>{children}</Contents>
     </PlaceContainer>
   );
 }
@@ -115,12 +110,6 @@ const Bar = styled.div`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.color.gray300};
   margin: 10px 0px;
-`;
-
-const Title = styled.div`
-  ${subtitle1}
-  width: 90%;
-  line-height: 30px;
 `;
 
 const Contents = styled.div`
