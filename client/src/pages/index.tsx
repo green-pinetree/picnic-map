@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import Drawer from '@/components/common/Drawer';
-import Detail from '@/components/Detail';
-import CancelDetail from '@/components/DetailBack';
-import DesktopLayout from '@/components/Layout/DesktopLayout';
-import MobileLayout from '@/components/Layout/MobileLayout';
-import PlaceList from '@/components/PlaceList';
+import DetailBackIcon from '@/components/atoms/DetailBackIcon';
+import Detail from '@/components/organisms/Detail';
+import Drawer from '@/components/organisms/Drawer';
+import PlaceList from '@/components/organisms/PlaceList';
+import DesktopLayout from '@/components/Templates/DesktopLayout';
+import MobileLayout from '@/components/Templates/MobileLayout';
 import { usePlaceList } from '@/hooks/usePlaceList';
 import { useQueryString } from '@/hooks/useQueryString';
 import { useUserLocation } from '@/hooks/useUserLocation';
@@ -18,7 +18,7 @@ export default function Home() {
       <MobileLayout>
         {id ? (
           <Drawer isDetail>
-            <Detail isLoading={isLoading || isGetLocation} />
+            <Detail />
           </Drawer>
         ) : (
           <Drawer>
@@ -30,8 +30,8 @@ export default function Home() {
         <PlaceList isLoading={isLoading || isGetLocation} />
         {id && (
           <DetailWrapper>
-            <CancelDetail />
-            <Detail isLoading={isLoading || isGetLocation} />
+            <DetailBackIcon />
+            <Detail />
           </DetailWrapper>
         )}
       </DesktopLayout>

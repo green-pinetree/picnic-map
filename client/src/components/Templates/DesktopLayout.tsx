@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import Loading from '../common/Loading';
-import Map from '../common/Map';
-import SideBar from '../common/SideBar';
-import Filter from '../Filter';
+import Loading from '../atoms/Loading';
+import Filter from '../molecules/Filter';
+import Map from '../molecules/Map';
+import SideBar from '../organisms/SideBar';
 
 interface DesktopLayoutProps {
   title?: string;

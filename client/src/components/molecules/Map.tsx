@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from 'lodash';
 import styled from '@emotion/styled';
-import Loading from './Loading';
+import Loading from '../atoms/Loading';
 import { CenterLocation, addCenter } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
 import { PlaceList } from '@/store/placeList';

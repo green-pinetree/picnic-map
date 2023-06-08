@@ -1,6 +1,6 @@
 import React, { useState, TouchEvent, ReactNode, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
-import CancelDetail from '../DetailBack';
+import DetailBackIcon from '../atoms/DetailBackIcon';
 import { DRAWER } from '@/styles/zIndex';
 
 interface DrawerProps {
@@ -58,7 +58,7 @@ export default function Drawer({ children, isDetail = false }: DrawerProps) {
       <Header onTouchMove={(e) => touchMoveHandler(e)} onTouchEnd={(e) => touchEndHandler(e)}>
         {isDetail ? (
           <TopWrapper>
-            <CancelDetail />
+            <DetailBackIcon />
             <Bar />
             <div style={{ width: '24px' }} />
           </TopWrapper>

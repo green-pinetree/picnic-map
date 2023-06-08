@@ -1,19 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import Loading from './common/Loading';
-import PlaceInfo from './PlaceInfo';
+import Loading from '../atoms/Loading';
+import PlaceInfo from '../molecules/PlaceInfo';
 import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle3 } from '@/styles/font';
 
-interface RenderPlaceListProps {
+interface PlaceListProps {
   isLoading: boolean;
   mobile?: boolean;
 }
 
-export default function RenderPlaceList({ isLoading, mobile = false }: RenderPlaceListProps) {
+export default function PlaceList({ isLoading, mobile = false }: PlaceListProps) {
   const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
   return (
     <Wrapper>

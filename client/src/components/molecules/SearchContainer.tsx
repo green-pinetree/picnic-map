@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useState, KeyboardEvent, useEffect } from 'react';
 import styled from '@emotion/styled';
-import Button from './common/Button';
-import SearchBar from './common/SearchBar';
+import Button from '../atoms/Button';
+import SearchBar from '../atoms/SearchBar';
 import BREAK_POINT from '@/styles/breakpoint';
 import { BADGE } from '@/styles/zIndex';
 

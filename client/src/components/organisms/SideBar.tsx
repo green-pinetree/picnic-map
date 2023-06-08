@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import Header from './Header';
-import DateInfo from '../DateInfo';
-import SearchContainer from '../SearchContainer';
+import DateInfo from '../molecules/DateInfo';
+import Header from '../molecules/Header';
+import SearchContainer from '../molecules/SearchContainer';
 import { subtitle1 } from '@/styles/font';
 
 interface SideBarProps {

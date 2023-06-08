@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import Header from '../common/Header';
-import Map from '../common/Map';
-import Filter from '../Filter';
-import SearchContainer from '../SearchContainer';
+import Filter from '../molecules/Filter';
+import Header from '../molecules/Header';
+import Map from '../molecules/Map';
+import SearchContainer from '../molecules/SearchContainer';
 
 interface MobileLayoutProps {
   children: ReactNode;

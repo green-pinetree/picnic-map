@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
-import Loading from './common/Loading';
+import Loading from '../atoms/Loading';
 import { addCenter } from '@/store/centerLocation';
 import { useQueryString } from '@/hooks/useQueryString';
 import BREAK_POINT from '@/styles/breakpoint';
@@ -11,11 +11,7 @@ import { subtitle1, body1, subtitle2 } from '@/styles/font';
 import { Place } from '@/types/Place';
 import { httpGet } from '@/utils/http';
 
-interface DetailProps {
-  isLoading: boolean;
-}
-
-export default function Detail({ isLoading }: DetailProps) {
+export default function Detail() {
   const [place, setPlace] = useState<Place>();
   const dispatch = useDispatch();
   const { id, type } = useQueryString();
@@ -47,7 +43,7 @@ export default function Detail({ isLoading }: DetailProps) {
 
   return (
     <Wrapper>
-      {isLoading || isFetching ? (
+      {isFetching ? (
         <LoadingContainer>
           <Loading />
         </LoadingContainer>
