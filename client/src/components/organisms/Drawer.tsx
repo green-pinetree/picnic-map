@@ -1,6 +1,7 @@
 import React, { useState, TouchEvent, ReactNode, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import DetailBackIcon from '../atoms/DetailBackIcon';
+import BREAK_POINT from '@/styles/breakpoint';
 import { DRAWER } from '@/styles/zIndex';
 
 interface DrawerProps {
@@ -85,6 +86,9 @@ const PlaceContainer = styled.div<{ drawerHeight: number }>`
   border-radius: 20px 20px 0px 0px;
   border-top: 1px solid ${({ theme }) => theme.color.gray400};
   transition: all 0.3s ease;
+  @media screen and (min-width: ${BREAK_POINT.mobile}px) {
+    display: none;
+  }
 `;
 
 const Header = styled.div`

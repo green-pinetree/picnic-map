@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import DateInfo from '../molecules/DateInfo';
 import Header from '../molecules/Header';
 import SearchContainer from '../molecules/SearchContainer';
+import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1 } from '@/styles/font';
 
 interface SideBarProps {
@@ -29,6 +30,9 @@ const Wrapper = styled.aside`
   width: 390px;
   border-right: 1px solid ${({ theme }) => theme.color.gray200};
   height: 100vh;
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    display: none;
+  }
 `;
 
 const DateContainer = styled.div`
