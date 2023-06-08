@@ -37,7 +37,7 @@ export const usePlaceList = () => {
     );
     dispatch(addPlaceList(data.data));
     setIsLoading(false);
-  }, [min, max, typeFilter]);
+  }, [min, max, typeFilter, search]);
 
   const fetchSearchList = useCallback(async () => {
     setIsLoading(true);
@@ -57,7 +57,7 @@ export const usePlaceList = () => {
     if (!latitude || !longitude) return;
     if (search) return;
     fetchPlaceList();
-  }, [min, max, typeFilter]);
+  }, [min, max, typeFilter, search]);
 
   useEffect(() => {
     if (!latitude || !longitude) return;
