@@ -14,7 +14,7 @@ import { httpGet } from '@/utils/http';
 export const usePlaceList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setIsLoading] = useState(false);
-  const { search } = useQueryString();
+  const { search, id } = useQueryString();
 
   const typeFilter = useSelector<ReducerType, TypeFilter>((state) => state.typeFilter);
 
@@ -55,7 +55,7 @@ export const usePlaceList = () => {
 
   useEffect(() => {
     if (!latitude || !longitude) return;
-    if (search) return;
+    if (search || id) return;
     fetchPlaceList();
   }, [min, max, typeFilter, search]);
 
