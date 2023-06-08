@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import Loading from './Loading';
 import { CenterLocation, addCenter } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
-import { RenderList } from '@/store/renderList';
+import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
@@ -23,7 +23,7 @@ export default function Map() {
     (state) => state.userLocation
   );
   const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
-  const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
+  const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
 
   // 지도 그리기
   const drawMap = useCallback(() => {
@@ -63,7 +63,7 @@ export default function Map() {
     if (!map) return;
     setMarkers(markers.map((mark) => mark && mark.setMap(null)));
     setMarkers(
-      renderList.map((place) => {
+      placeList.map((place) => {
         const loc = new naver.maps.LatLng(place.lat, place.lng);
         const mark = new naver.maps.Marker({
           position: loc,
@@ -79,7 +79,7 @@ export default function Map() {
         return mark;
       })
     );
-  }, [map, renderList.length]);
+  }, [map, placeList.length]);
 
   useEffect(() => {
     if (!latitude || !longitude) return;
@@ -106,7 +106,7 @@ export default function Map() {
     );
     // eslint-disable-next-line consistent-return
     return () => naver.maps.Event.clearListeners(map, 'bounds_changed');
-  }, [map, renderList.length]);
+  }, [map, placeList.length]);
 
   // 검색 혹은 특정 장소 클릭시 지도 가운데 위치 변경 -> 해당 장소 마커 표시
   useEffect(() => {

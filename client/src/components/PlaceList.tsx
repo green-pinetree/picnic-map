@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from './common/Loading';
 import PlaceInfo from './PlaceInfo';
-import { RenderList } from '@/store/renderList';
+import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import BREAK_POINT from '@/styles/breakpoint';
+import { subtitle3 } from '@/styles/font';
 
 interface RenderPlaceListProps {
   isLoading: boolean;
@@ -13,16 +14,20 @@ interface RenderPlaceListProps {
 }
 
 export default function RenderPlaceList({ isLoading, mobile = false }: RenderPlaceListProps) {
-  const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
-
+  const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
   return (
     <Wrapper>
-      {isLoading ? (
+      {isLoading && (
         <LoadingContainer>
           <Loading />
         </LoadingContainer>
-      ) : (
-        renderList.map((place) => (
+      )}
+      {placeList.length === 0 && !isLoading && (
+        <NoSearchResult>검색 장소가 없습니다.</NoSearchResult>
+      )}
+      {placeList.length !== 0 &&
+        !isLoading &&
+        placeList.map((place) => (
           <PlaceInfo
             key={place.id}
             id={place.id}
@@ -33,8 +38,7 @@ export default function RenderPlaceList({ isLoading, mobile = false }: RenderPla
             type={place.type}
             {...{ mobile }}
           />
-        ))
-      )}
+        ))}
     </Wrapper>
   );
 }
@@ -55,4 +59,13 @@ const LoadingContainer = styled.div`
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     margin-top: 40px;
   }
+`;
+const NoSearchResult = styled.div`
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  ${subtitle3}
 `;
