@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import DetailBackIcon from '@/components/atoms/DetailBackIcon';
 import Loading from '@/components/atoms/Loading';
 import Filter from '@/components/molecules/Filter';
-import Header from '@/components/molecules/Header';
 import Map from '@/components/molecules/Map';
-import SearchContainer from '@/components/molecules/SearchContainer';
-import Detail from '@/components/organisms/Detail';
+import Detail from '@/components/molecules/Detail';
 import Drawer from '@/components/organisms/Drawer';
-import PlaceList from '@/components/organisms/PlaceList';
+import Header from '@/components/organisms/Header';
+import PlaceList from '@/components/molecules/PlaceList';
+import SearchContainer from '@/components/molecules/SearchContainer';
 import SideBar from '@/components/organisms/SideBar';
 import { usePlaceList } from '@/hooks/usePlaceList';
 import { useQueryString } from '@/hooks/useQueryString';
@@ -25,15 +24,7 @@ export default function Home() {
   }, []);
   return (
     <Wrapper>
-      <SideBar>
-        <PlaceList isLoading={isLoading || isGetLocation} />
-        {id && (
-          <DetailWrapper>
-            <DetailBackIcon />
-            <Detail />
-          </DetailWrapper>
-        )}
-      </SideBar>
+      <SideBar isLoading={isLoading || isGetLocation} />
       {width < BREAK_POINT.mobile && <Header mobile />}
       <Section>
         {width < BREAK_POINT.mobile && <SearchContainer />}
@@ -72,21 +63,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const DetailWrapper = styled.div`
-  padding: 5px;
-  width: 390px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: absolute;
-  left: 390px;
-  top: 0px;
-  z-index: 1;
-  background-color: ${({ theme }) => theme.color.white};
-  overflow-y: auto;
-  border-right: 1px solid ${({ theme }) => theme.color.gray200};
-`;
 const Section = styled.section`
   flex: 1;
 `;

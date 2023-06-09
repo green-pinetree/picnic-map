@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
+import PlaceInfo from './PlaceInfo';
 import Loading from '../atoms/Loading';
-import PlaceInfo from '../molecules/PlaceInfo';
 import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import BREAK_POINT from '@/styles/breakpoint';
