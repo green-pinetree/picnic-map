@@ -13,8 +13,9 @@ import { subtitle1 } from '@/styles/font';
 interface SideBarProps {
   title?: string;
   isLoading: boolean;
+  isGetLocation: boolean;
 }
-export default function SideBar({ title = '주변 장소', isLoading }: SideBarProps) {
+export default function SideBar({ title = '주변 장소', isLoading, isGetLocation }: SideBarProps) {
   const { id } = useQueryString();
   return (
     <Wrapper>
@@ -26,11 +27,11 @@ export default function SideBar({ title = '주변 장소', isLoading }: SideBarP
       <PlaceContainer>
         <Title>{title}</Title>
         <Contents>
-          <PlaceList {...{ isLoading }} />
+          <PlaceList isLoading={isLoading || isGetLocation} />
           {id && (
             <DetailWrapper>
               <DetailBackIcon />
-              <Detail />
+              <Detail {...{ isGetLocation }} />
             </DetailWrapper>
           )}
         </Contents>

@@ -11,7 +11,11 @@ import { subtitle1, body1, subtitle2 } from '@/styles/font';
 import { Place } from '@/types/Place';
 import { httpGet } from '@/utils/http';
 
-export default function Detail() {
+interface DetailProps {
+  isGetLocation: boolean;
+}
+
+export default function Detail({ isGetLocation }: DetailProps) {
   const [place, setPlace] = useState<Place>();
   const dispatch = useDispatch();
   const { id, type } = useQueryString();
@@ -32,9 +36,9 @@ export default function Detail() {
     setSrc('/dummy-image.jpg');
   };
   useEffect(() => {
-    if (!id || !type) return;
+    if (!id || !type || isGetLocation) return;
     fetchDetail();
-  }, [id, type]);
+  }, [id, type, isGetLocation]);
 
   if (!place) return <div />;
   const { name, content, detail } = place;
