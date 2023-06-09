@@ -16,17 +16,17 @@ export default function Drawer({ children, isDetail = false }: DrawerProps) {
   const [drawerHeight, setDrawerHeight] = useState(MIDDLE_HEIGHT);
   const [drawerEndHeight, setDrawerEndHeight] = useState(MIDDLE_HEIGHT);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [windowHeight, setWindowHeight] = useState(0);
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
+    setWindowHeight(window.innerHeight);
   }, []);
   const touchMoveHandler = (e: TouchEvent<HTMLDivElement>) => {
-    const changeHeight = window.innerHeight - e.targetTouches[0].clientY + 30;
-    // 일정 범위 이상 터치 이동해야 서랍 이동
-    if (Math.abs(changeHeight - drawerEndHeight) < 20) return;
+    const changeHeight = windowHeight - e.targetTouches[0].clientY + 30;
     setDrawerHeight(changeHeight);
   };
   const touchEndHandler = (e: TouchEvent<HTMLDivElement>) => {
-    const changeHeight = window.innerHeight - e.changedTouches[0].clientY + 30;
+    const changeHeight = windowHeight - e.changedTouches[0].clientY + 30;
     // 일정 범위 이상 터치 이동해야 서랍 이동
     if (Math.abs(changeHeight - drawerEndHeight) < 20) return;
     // 서랍을 아래 방향으로 스와이프 한 경우
@@ -45,8 +45,8 @@ export default function Drawer({ children, isDetail = false }: DrawerProps) {
     // 서랍을 위로 스와이프 한 경우
     // middle -> top
     else if (drawerHeight > MIDDLE_HEIGHT) {
-      setDrawerHeight(window.innerHeight - 58);
-      setDrawerEndHeight(window.innerHeight - 58);
+      setDrawerHeight(windowHeight - 58);
+      setDrawerEndHeight(windowHeight - 58);
     }
     // bottom -> middle
     else {
@@ -85,7 +85,7 @@ const PlaceContainer = styled.div<{ drawerHeight: number }>`
   overflow-y: hidden;
   border-radius: 20px 20px 0px 0px;
   border-top: 1px solid ${({ theme }) => theme.color.gray400};
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   @media screen and (min-width: ${BREAK_POINT.mobile}px) {
     display: none;
   }
