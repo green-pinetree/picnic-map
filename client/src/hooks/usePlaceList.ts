@@ -37,7 +37,7 @@ export const usePlaceList = () => {
     );
     dispatch(addPlaceList(data.data));
     setIsLoading(false);
-  }, [min, max, typeFilter, search]);
+  }, [min, max, typeFilter]);
 
   const fetchSearchList = useCallback(async () => {
     setIsLoading(true);
@@ -46,10 +46,12 @@ export const usePlaceList = () => {
     );
     const searchList = data.data;
     dispatch(addPlaceList(searchList));
-    const center = searchList.filter((node: Place) => node.lat !== 0 && node.lng !== 0);
-    if (center.length !== 0)
-      dispatch(addCenter({ latitude: center[0].lat, longitude: center[0].lng }));
-    else dispatch(addCenter({ latitude, longitude }));
+    if (!id) {
+      const center = searchList.filter((node: Place) => node.lat !== 0 && node.lng !== 0);
+      if (center.length !== 0)
+        dispatch(addCenter({ latitude: center[0].lat, longitude: center[0].lng }));
+      else dispatch(addCenter({ latitude, longitude }));
+    }
     setIsLoading(false);
   }, [search, latitude, longitude]);
 
