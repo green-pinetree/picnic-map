@@ -4,10 +4,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from 'lodash';
 import styled from '@emotion/styled';
-import Loading from './Loading';
 import { CenterLocation, addCenter } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
-import { RenderList } from '@/store/renderList';
+import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
 import BREAK_POINT from '@/styles/breakpoint';
@@ -15,7 +14,6 @@ import BREAK_POINT from '@/styles/breakpoint';
 export default function Map() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const [markers, setMarkers] = useState<naver.maps.Marker[] | void[]>([]);
   const mapElement = useRef(null);
@@ -23,11 +21,10 @@ export default function Map() {
     (state) => state.userLocation
   );
   const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
-  const renderList = useSelector<ReducerType, RenderList>((state) => state.renderList);
+  const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
 
   // 지도 그리기
   const drawMap = useCallback(() => {
-    setIsLoading(true);
     const { naver } = window;
     if (!mapElement.current || !naver) return;
     if (!latitude || !longitude) return;
@@ -47,7 +44,6 @@ export default function Map() {
       },
     });
     setMap(newMap);
-    setIsLoading(false);
     const bounds = newMap.getBounds();
     // 지도 바운더리 반영
     dispatch(
@@ -63,7 +59,7 @@ export default function Map() {
     if (!map) return;
     setMarkers(markers.map((mark) => mark && mark.setMap(null)));
     setMarkers(
-      renderList.map((place) => {
+      placeList.map((place) => {
         const loc = new naver.maps.LatLng(place.lat, place.lng);
         const mark = new naver.maps.Marker({
           position: loc,
@@ -79,7 +75,7 @@ export default function Map() {
         return mark;
       })
     );
-  }, [map, renderList.length]);
+  }, [map, placeList.length]);
 
   useEffect(() => {
     if (!latitude || !longitude) return;
@@ -106,7 +102,7 @@ export default function Map() {
     );
     // eslint-disable-next-line consistent-return
     return () => naver.maps.Event.clearListeners(map, 'bounds_changed');
-  }, [map, renderList.length]);
+  }, [map, placeList.length]);
 
   // 검색 혹은 특정 장소 클릭시 지도 가운데 위치 변경 -> 해당 장소 마커 표시
   useEffect(() => {
@@ -123,11 +119,6 @@ export default function Map() {
 
   return (
     <Wrapper>
-      {isLoading && (
-        <LoadingContainer>
-          <Loading />
-        </LoadingContainer>
-      )}
       <MapContainer ref={mapElement} />
     </Wrapper>
   );
@@ -137,17 +128,6 @@ const Wrapper = styled.div`
   height: 100vh;
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     margin-top: 4px;
-  }
-`;
-
-const LoadingContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
-    height: 60%;
   }
 `;
 

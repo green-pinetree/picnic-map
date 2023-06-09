@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Badge from './common/Badge';
+import Badge from '../atoms/Badge';
 import BREAK_POINT from '@/styles/breakpoint';
 import { BADGE } from '@/styles/zIndex';
 

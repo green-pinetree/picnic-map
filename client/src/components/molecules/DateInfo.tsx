@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import DateDropDown from './common/DateDropDown';
+import DateDropDown from './DateDropDown';
 import { AppDispatch } from '@/store';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';

@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { useQueryString } from '@/hooks/useQueryString';
 import { buttonStyle } from '@/styles/mixin';
 
-export default function DetailBack() {
+export default function DetailBackIcon() {
   const { color: themeColor } = useTheme();
   const { gray400 } = themeColor;
   const router = useRouter();

@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import BREAK_POINT from './breakpoint';
 import { COLOR } from './color';
 
 const globalStyle = css`
@@ -189,24 +188,6 @@ const globalStyle = css`
   }
   button {
     border: 0px;
-  }
-  .mobile-layout {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    height: -webkit-fill-available;
-    height: fill-available;
-    @media screen and (min-width: ${BREAK_POINT.mobile}px) {
-      display: none;
-    }
-  }
-  .desktop-layout {
-    display: flex;
-    @media screen and (max-width: ${BREAK_POINT.mobile}px) {
-      display: none;
-    }
   }
   .user-position {
     width: 32px;
