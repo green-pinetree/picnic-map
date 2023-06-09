@@ -29,7 +29,7 @@ export default function Home() {
       <Section>
         {width < BREAK_POINT.mobile && <SearchContainer />}
         {!search && !id && <Filter />}
-        {isLoading || isGetLocation ? (
+        {isGetLocation ? (
           <LoadingContainer>
             <Loading />
           </LoadingContainer>
