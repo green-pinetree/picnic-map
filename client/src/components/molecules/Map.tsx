@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from 'lodash';
 import styled from '@emotion/styled';
-import Loading from '../atoms/Loading';
 import { CenterLocation, addCenter } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
 import { PlaceList } from '@/store/placeList';
@@ -15,7 +14,6 @@ import BREAK_POINT from '@/styles/breakpoint';
 export default function Map() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
   const [markers, setMarkers] = useState<naver.maps.Marker[] | void[]>([]);
   const mapElement = useRef(null);
@@ -27,7 +25,6 @@ export default function Map() {
 
   // 지도 그리기
   const drawMap = useCallback(() => {
-    setIsLoading(true);
     const { naver } = window;
     if (!mapElement.current || !naver) return;
     if (!latitude || !longitude) return;
@@ -47,7 +44,6 @@ export default function Map() {
       },
     });
     setMap(newMap);
-    setIsLoading(false);
     const bounds = newMap.getBounds();
     // 지도 바운더리 반영
     dispatch(
@@ -123,11 +119,6 @@ export default function Map() {
 
   return (
     <Wrapper>
-      {isLoading && (
-        <LoadingContainer>
-          <Loading />
-        </LoadingContainer>
-      )}
       <MapContainer ref={mapElement} />
     </Wrapper>
   );
@@ -137,17 +128,6 @@ const Wrapper = styled.div`
   height: 100vh;
   @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
     margin-top: 4px;
-  }
-`;
-
-const LoadingContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
-    height: 60%;
   }
 `;
 

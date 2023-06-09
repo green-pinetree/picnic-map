@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import DetailBackIcon from '@/components/atoms/DetailBackIcon';
+import Loading from '@/components/atoms/Loading';
 import Filter from '@/components/molecules/Filter';
 import Header from '@/components/molecules/Header';
 import Map from '@/components/molecules/Map';
@@ -37,7 +38,13 @@ export default function Home() {
       <Section>
         {width < BREAK_POINT.mobile && <SearchContainer />}
         {!search && !id && <Filter />}
-        <Map />
+        {isLoading || isGetLocation ? (
+          <LoadingContainer>
+            <Loading />
+          </LoadingContainer>
+        ) : (
+          <Map />
+        )}
       </Section>
       {id ? (
         <Drawer isDetail>
@@ -82,4 +89,14 @@ const DetailWrapper = styled.div`
 `;
 const Section = styled.section`
   flex: 1;
+`;
+const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (max-width: ${BREAK_POINT.mobile}px) {
+    height: 70%;
+  }
 `;
