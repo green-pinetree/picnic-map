@@ -24,7 +24,7 @@ export default function Home() {
   }, []);
   return (
     <Wrapper>
-      <SideBar isLoading={isLoading || isGetLocation} />
+      <SideBar {...{ isLoading, isGetLocation }} />
       {width < BREAK_POINT.mobile && <Header mobile />}
       <Section>
         {width < BREAK_POINT.mobile && <SearchContainer />}
@@ -39,7 +39,7 @@ export default function Home() {
       </Section>
       {id ? (
         <Drawer isDetail>
-          <Detail />
+          <Detail isGetLocation />
         </Drawer>
       ) : (
         <Drawer>

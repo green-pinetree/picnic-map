@@ -4,7 +4,7 @@ import { useQueryString } from './useQueryString';
 import { AppDispatch } from '@/store';
 import { addCenter } from '@/store/centerLocation';
 import { Bounds } from '@/store/mapBounds';
-import { addPlaceList } from '@/store/placeList';
+import { PlaceList, addPlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { TypeFilter } from '@/store/typeFilter';
 import { UserLocation } from '@/store/userLocation';
@@ -17,6 +17,7 @@ export const usePlaceList = () => {
   const { search, id } = useQueryString();
 
   const typeFilter = useSelector<ReducerType, TypeFilter>((state) => state.typeFilter);
+  const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
 
   const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
     (state) => state.userLocation
@@ -57,7 +58,8 @@ export const usePlaceList = () => {
 
   useEffect(() => {
     if (!latitude || !longitude) return;
-    if (search || id) return;
+    if (search) return;
+    if (id && placeList.length !== 0) return;
     fetchPlaceList();
   }, [min, max, typeFilter, search]);
 
