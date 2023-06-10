@@ -31,7 +31,7 @@ export default function SideBar({ title = '주변 장소', isLoading, isGetLocat
           {id && (
             <DetailWrapper>
               <DetailBackIcon />
-              <Detail {...{ isGetLocation }} />
+              <Detail />
             </DetailWrapper>
           )}
         </Contents>

@@ -39,7 +39,7 @@ export default function Home() {
       </Section>
       {id ? (
         <Drawer isDetail>
-          <Detail isGetLocation />
+          <Detail />
         </Drawer>
       ) : (
         <Drawer>

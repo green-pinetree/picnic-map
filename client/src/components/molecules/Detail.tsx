@@ -11,17 +11,12 @@ import { subtitle1, body1, subtitle2 } from '@/styles/font';
 import { Place } from '@/types/Place';
 import { httpGet } from '@/utils/http';
 
-interface DetailProps {
-  isGetLocation: boolean;
-}
-
-export default function Detail({ isGetLocation }: DetailProps) {
+export default function Detail() {
   const [place, setPlace] = useState<Place>();
   const dispatch = useDispatch();
   const { id, type } = useQueryString();
   const [src, setSrc] = useState('/dummy-image.jpg');
   const [isFetching, setIsFetching] = useState(false);
-
   const fetchDetail = async () => {
     setIsFetching(true);
     const response = await httpGet(`/api/place/detail?type=${type}&id=${id}`);
@@ -36,12 +31,11 @@ export default function Detail({ isGetLocation }: DetailProps) {
     setSrc('/dummy-image.jpg');
   };
   useEffect(() => {
-    if (!id || !type || isGetLocation) return;
+    if (!id || !type) return;
     fetchDetail();
-  }, [id, type, isGetLocation]);
+  }, [id, type]);
 
-  if (!place) return <div />;
-  const { name, content, detail } = place;
+  const { name, content, detail } = place || { name: '', content: '', detail: {} };
   const { mainEquip, mainPlants, address, tel, distance, leadTime, relateSubway, homepage } =
     detail;
 
