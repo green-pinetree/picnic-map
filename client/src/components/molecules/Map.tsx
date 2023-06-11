@@ -85,12 +85,6 @@ export default function Map() {
     drawMap();
   }, [latitude, longitude, center]);
 
-  useEffect(() => {
-    if (!id) {
-      drawPlaceMarker();
-    }
-  }, [id]);
-
   // bounds변경 감지 이벤트 붙이기
   useEffect(() => {
     if (!map) return;
@@ -111,7 +105,7 @@ export default function Map() {
     );
     // eslint-disable-next-line consistent-return
     return () => naver.maps.Event.clearListeners(map, 'bounds_changed');
-  }, [map, placeList.length]);
+  }, [map, placeList.length, id]);
 
   // 검색 혹은 특정 장소 클릭시 지도 가운데 위치 변경 -> 해당 장소 마커 표시
   useEffect(() => {
