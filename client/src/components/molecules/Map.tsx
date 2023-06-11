@@ -86,6 +86,12 @@ export default function Map() {
     drawMap();
   }, [latitude, longitude, center]);
 
+  useEffect(() => {
+    if (!id) {
+      drawPlaceMarker();
+    }
+  }, [id]);
+
   // bounds변경 감지 이벤트 붙이기
   useEffect(() => {
     if (!map) return;
