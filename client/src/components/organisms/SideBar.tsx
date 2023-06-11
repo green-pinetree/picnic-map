@@ -85,7 +85,7 @@ const Contents = styled.div`
 const DetailWrapper = styled.div`
   padding: 5px;
   width: 390px;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
