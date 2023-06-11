@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from 'lodash';
 import styled from '@emotion/styled';
-import { CenterLocation, addCenter } from '@/store/centerLocation';
+import { CenterLocation } from '@/store/centerLocation';
 import { addBounds } from '@/store/mapBounds';
 import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
@@ -69,7 +69,6 @@ export default function Map() {
           map,
         });
         naver.maps.Event.addListener(mark, 'click', () => {
-          dispatch(addCenter({ latitude: place.lat, longitude: place.lng }));
           router.push({
             pathname: router.pathname,
             query: { ...router.query, id: place.id, type: place.type.code },
