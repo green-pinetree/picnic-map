@@ -9,6 +9,7 @@ import { addBounds } from '@/store/mapBounds';
 import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
+import { useQueryString } from '@/hooks/useQueryString';
 import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Map() {
@@ -22,6 +23,8 @@ export default function Map() {
   );
   const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
   const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
+
+  const { id, search } = useQueryString();
 
   // 지도 그리기
   const drawMap = useCallback(() => {
@@ -86,6 +89,7 @@ export default function Map() {
   // bounds변경 감지 이벤트 붙이기
   useEffect(() => {
     if (!map) return;
+    if (id || search) return;
     drawPlaceMarker();
     naver.maps.Event.addListener(
       map,

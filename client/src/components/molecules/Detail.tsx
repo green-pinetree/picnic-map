@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from '../atoms/Loading';
@@ -17,7 +17,8 @@ export default function Detail() {
   const { id, type } = useQueryString();
   const [src, setSrc] = useState('/dummy-image.jpg');
   const [isFetching, setIsFetching] = useState(false);
-  const fetchDetail = async () => {
+
+  const fetchDetail = useCallback(async () => {
     setIsFetching(true);
     const response = await httpGet(`/api/place/detail?type=${type}&id=${id}`);
     setPlace(response.data);
@@ -26,14 +27,17 @@ export default function Detail() {
     const { lat, lng } = response.data;
     dispatch(addCenter({ longitude: lng, latitude: lat }));
     setIsFetching(false);
-  };
+  }, [id]);
+
   const handleImageError = () => {
     setSrc('/dummy-image.jpg');
   };
   useEffect(() => {
-    if (!id || !type) return;
+    if (!id) return;
+    if (place && String(place.id) === id) return;
+    if (isFetching) return;
     fetchDetail();
-  }, [id, type]);
+  }, [id]);
 
   const { name, content, detail } = place || { name: '', content: '', detail: {} };
   const { mainEquip, mainPlants, address, tel, distance, leadTime, relateSubway, homepage } =

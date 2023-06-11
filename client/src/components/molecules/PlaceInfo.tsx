@@ -31,7 +31,7 @@ export default function PlaceInfo({
   };
   const handleClick = () => {
     router.push({
-      pathname: router.pathname,
+      pathname: '/',
       query: { ...router.query, id, type: type.code },
     });
   };
