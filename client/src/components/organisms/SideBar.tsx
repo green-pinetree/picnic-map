@@ -28,10 +28,12 @@ export default function SideBar({ title = '주변 장소', isLoading, isGetLocat
         <Title>{title}</Title>
         <Contents>
           <PlaceList isLoading={isLoading || isGetLocation} />
-          <DetailWrapper {...{ id }}>
-            <DetailBackIcon />
-            <Detail />
-          </DetailWrapper>
+          {id && (
+            <DetailWrapper>
+              <DetailBackIcon />
+              <Detail />
+            </DetailWrapper>
+          )}
         </Contents>
       </PlaceContainer>
     </Wrapper>
@@ -80,11 +82,11 @@ const Contents = styled.div`
   overflow-y: auto;
 `;
 
-const DetailWrapper = styled.div<{ id: string | undefined }>`
+const DetailWrapper = styled.div`
   padding: 5px;
   width: 390px;
   height: 100vh;
-  display: ${({ id }) => (id ? 'flex' : 'none')};
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
   position: absolute;

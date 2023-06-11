@@ -39,8 +39,7 @@ export default function Home() {
       </Section>
       {width <= BREAK_POINT.mobile && (
         <Drawer isDetail={!!id}>
-          <Detail />
-          {!id && <PlaceList isLoading={isLoading || isGetLocation} mobile />}
+          {id ? <Detail /> : <PlaceList isLoading={isLoading || isGetLocation} mobile />}
         </Drawer>
       )}
     </Wrapper>
