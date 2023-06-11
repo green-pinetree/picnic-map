@@ -24,10 +24,10 @@ export default function Home() {
   }, []);
   return (
     <Wrapper>
-      <SideBar {...{ isLoading, isGetLocation }} />
-      {width < BREAK_POINT.mobile && <Header mobile />}
+      {width > BREAK_POINT.mobile && <SideBar {...{ isLoading, isGetLocation }} />}
+      {width <= BREAK_POINT.mobile && <Header mobile />}
       <Section>
-        {width < BREAK_POINT.mobile && <SearchContainer />}
+        {width <= BREAK_POINT.mobile && <SearchContainer />}
         {!search && !id && <Filter />}
         {isGetLocation ? (
           <LoadingContainer>
@@ -37,13 +37,10 @@ export default function Home() {
           <Map />
         )}
       </Section>
-      {id ? (
-        <Drawer isDetail>
+      {width <= BREAK_POINT.mobile && (
+        <Drawer isDetail={!!id}>
           <Detail />
-        </Drawer>
-      ) : (
-        <Drawer>
-          <PlaceList isLoading={isLoading || isGetLocation} mobile />
+          {!id && <PlaceList isLoading={isLoading || isGetLocation} mobile />}
         </Drawer>
       )}
     </Wrapper>

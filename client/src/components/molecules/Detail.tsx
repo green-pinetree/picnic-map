@@ -44,7 +44,7 @@ export default function Detail() {
     detail;
 
   return (
-    <Wrapper>
+    <Wrapper display={!!id}>
       {isFetching ? (
         <LoadingContainer>
           <Loading />
@@ -127,10 +127,10 @@ export default function Detail() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ display: boolean }>`
   width: 100%;
   height: 100%;
-  display: flex;
+  display: ${({ display }) => (display ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   padding-top: 10px;
