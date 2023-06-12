@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useTransition } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from '../atoms/Loading';
@@ -16,17 +16,20 @@ export default function Detail() {
   const dispatch = useDispatch();
   const { id, type } = useQueryString();
   const [src, setSrc] = useState('/dummy-image.jpg');
-  const [isFetching, setIsFetching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const fetchDetail = useCallback(async () => {
-    setIsFetching(true);
+    setIsLoading(true);
     const response = await httpGet(`/api/place/detail?type=${type}&id=${id}`);
     setPlace(response.data);
     const { image } = response.data;
     setSrc(image[0] || '/dummy-image.jpg');
-    const { lat, lng } = response.data;
-    dispatch(addCenter({ longitude: lng, latitude: lat }));
-    setIsFetching(false);
+    startTransition(() => {
+      const { lat, lng } = response.data;
+      dispatch(addCenter({ longitude: lng, latitude: lat }));
+      setIsLoading(false);
+    });
   }, [id]);
 
   const handleImageError = () => {
@@ -35,7 +38,7 @@ export default function Detail() {
   useEffect(() => {
     if (!id) return;
     if (place && String(place.id) === id) return;
-    if (isFetching) return;
+    if (isPending) return;
     fetchDetail();
   }, [id]);
 
@@ -45,7 +48,7 @@ export default function Detail() {
 
   return (
     <Wrapper>
-      {isFetching ? (
+      {isPending || isLoading ? (
         <LoadingContainer>
           <Loading />
         </LoadingContainer>
@@ -150,6 +153,7 @@ const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 40px;
 `;
 const Title = styled.div`
   ${subtitle1}

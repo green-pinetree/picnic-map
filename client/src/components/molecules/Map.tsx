@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-new */
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -9,7 +10,6 @@ import { addBounds } from '@/store/mapBounds';
 import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
-import { useQueryString } from '@/hooks/useQueryString';
 import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Map() {
@@ -23,8 +23,6 @@ export default function Map() {
   );
   const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
   const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
-
-  const { id, search } = useQueryString();
 
   // 지도 그리기
   const drawMap = useCallback(() => {
@@ -79,17 +77,23 @@ export default function Map() {
     );
   }, [map, placeList.length]);
 
+  // 지도 업데이트
   useEffect(() => {
     if (!latitude || !longitude) return;
     if (center.latitude === 0 || center.longitude === 0) return;
     drawMap();
   }, [latitude, longitude, center]);
 
+  // 마커 업데이트
+  useEffect(() => {
+    if (!map) return;
+    drawPlaceMarker();
+    return () => markers.forEach((mark) => naver.maps.Event.clearListeners(mark, 'click'));
+  }, [map, placeList]);
+
   // bounds변경 감지 이벤트 붙이기
   useEffect(() => {
     if (!map) return;
-    if (id || search) return;
-    drawPlaceMarker();
     naver.maps.Event.addListener(
       map,
       'bounds_changed',
@@ -103,22 +107,8 @@ export default function Map() {
         );
       }, 1000)
     );
-    // eslint-disable-next-line consistent-return
     return () => naver.maps.Event.clearListeners(map, 'bounds_changed');
-  }, [map, placeList.length, id]);
-
-  // 검색 혹은 특정 장소 클릭시 지도 가운데 위치 변경 -> 해당 장소 마커 표시
-  useEffect(() => {
-    if (!map || !center.latitude || !center.longitude) return;
-    if (longitude === center.longitude && latitude === center.latitude) return;
-    new naver.maps.Marker({
-      position: new naver.maps.LatLng(center.latitude + 0.0003, center.longitude - 0.00015),
-      map,
-      icon: {
-        content: `<div class="search-position"><div /></div>`,
-      },
-    });
-  }, [center, map]);
+  }, [map]);
 
   return (
     <Wrapper>

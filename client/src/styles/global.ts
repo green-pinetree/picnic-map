@@ -205,23 +205,6 @@ const globalStyle = css`
       background-color: ${COLOR.offWhite};
     }
   }
-
-  .search-position {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: ${COLOR.info};
-    border-radius: 32px;
-    box-shadow: 0px 1px 1px 1px ${COLOR.gray400};
-    div {
-      width: 50%;
-      height: 50%;
-      border-radius: 100%;
-      background-color: ${COLOR.offWhite};
-    }
-  }
 `;
 
 export default globalStyle;
