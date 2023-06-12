@@ -74,7 +74,7 @@ export default function Map() {
         return mark;
       })
     );
-  }, [map]);
+  }, [map, placeList]);
 
   // 지도 업데이트
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Map() {
     if (!map) return;
     drawPlaceMarker();
     return () => markers.forEach((mark) => naver.maps.Event.clearListeners(mark, 'click'));
-  }, [map]);
+  }, [map, placeList]);
 
   // bounds변경 감지 이벤트 붙이기
   useEffect(() => {
