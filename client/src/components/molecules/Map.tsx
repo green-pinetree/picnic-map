@@ -53,7 +53,7 @@ export default function Map() {
         max: { lat: bounds.getMax().y, lng: bounds.getMax().x },
       })
     );
-  }, [latitude, longitude, center]);
+  }, [latitude, longitude]);
 
   // 지도에 표시할 마커 그리기
   const drawPlaceMarker = useCallback(() => {
@@ -81,7 +81,19 @@ export default function Map() {
     if (!latitude || !longitude) return;
     if (center.latitude === 0 || center.longitude === 0) return;
     drawMap();
-  }, [latitude, longitude, center]);
+  }, [latitude, longitude]);
+
+  useEffect(() => {
+    if (!map) return;
+    if (!center.latitude || !center.longitude) return;
+    if (center.latitude === 0 || center.longitude === 0) return;
+    const centerLocation = new naver.maps.LatLng(center.latitude - 0.001, center.longitude);
+    const mapOptions: naver.maps.MapOptions = {
+      center: centerLocation,
+      zoom: 17,
+    };
+    map.setOptions(mapOptions);
+  }, [map, center]);
 
   // 마커 업데이트
   useEffect(() => {
