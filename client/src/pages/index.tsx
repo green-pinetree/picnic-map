@@ -20,6 +20,7 @@ export default function Home() {
   const { isLoading } = usePlaceList();
   const [width, setWidth] = useState(BREAK_POINT.desktop);
   useEffect(() => {
+    setWidth(window.innerWidth);
     const handleResize = () => {
       setWidth(window.innerWidth);
     };
