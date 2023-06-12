@@ -58,7 +58,6 @@ export default function Map() {
   // 지도에 표시할 마커 그리기
   const drawPlaceMarker = useCallback(() => {
     if (!map) return;
-    setMarkers(markers.map((mark) => mark && mark.setMap(null)));
     setMarkers(
       placeList.map((place) => {
         const loc = new naver.maps.LatLng(place.lat, place.lng);
@@ -75,7 +74,7 @@ export default function Map() {
         return mark;
       })
     );
-  }, [map, placeList.length]);
+  }, [map]);
 
   // 지도 업데이트
   useEffect(() => {
@@ -89,7 +88,7 @@ export default function Map() {
     if (!map) return;
     drawPlaceMarker();
     return () => markers.forEach((mark) => naver.maps.Event.clearListeners(mark, 'click'));
-  }, [map, placeList]);
+  }, [map]);
 
   // bounds변경 감지 이벤트 붙이기
   useEffect(() => {

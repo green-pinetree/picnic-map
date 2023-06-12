@@ -7,6 +7,7 @@ import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle3 } from '@/styles/font';
+import { getDate } from '@/utils/getDate';
 
 interface PlaceListProps {
   isLoading: boolean;
@@ -27,9 +28,9 @@ export default function PlaceList({ isLoading, mobile = false }: PlaceListProps)
       )}
       {placeList.length !== 0 &&
         !isLoading &&
-        placeList.map((place) => (
+        placeList.map((place, index) => (
           <PlaceInfo
-            key={place.id}
+            key={place.id + getDate(index)}
             id={place.id}
             imgSrc={place.image[0]}
             name={place.name}
