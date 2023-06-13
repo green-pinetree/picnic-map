@@ -23,10 +23,8 @@ export default function PlaceList({ isLoading, mobile = false }: PlaceListProps)
           <Loading />
         </LoadingContainer>
       )}
-      {placeList.length === 0 && !isLoading && (
-        <NoSearchResult>검색 장소가 없습니다.</NoSearchResult>
-      )}
-      {placeList.length !== 0 &&
+      {!placeList && <NoSearchResult>검색 장소가 없습니다.</NoSearchResult>}
+      {placeList &&
         !isLoading &&
         placeList.map((place, index) => (
           <PlaceInfo

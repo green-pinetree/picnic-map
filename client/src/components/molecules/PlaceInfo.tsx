@@ -44,8 +44,9 @@ export default function PlaceInfo({
             alt={name}
             width={160}
             height={90}
-            priority
             unoptimized
+            placeholder="blur"
+            blurDataURL={src}
             onError={handleImageError}
           />
         </ImageBox>

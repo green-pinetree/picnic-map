@@ -45,6 +45,11 @@ export const usePlaceList = () => {
     const data = await httpGet(
       `/api/place/search?q=${search}&lng=${longitude}&lat=${latitude}&page=1&size=20`
     );
+    if (data.message !== 'Success') {
+      dispatch(addPlaceList(null));
+      setIsLoading(false);
+      return;
+    }
     const searchList = data.data;
     dispatch(addPlaceList(searchList));
     if (!id) {
@@ -59,7 +64,7 @@ export const usePlaceList = () => {
   useEffect(() => {
     if (!latitude || !longitude) return;
     if (search) return;
-    if (id && placeList.length !== 0) return;
+    if (id && placeList && placeList.length !== 0) return;
     fetchPlaceList();
   }, [min, max, typeFilter, search]);
 

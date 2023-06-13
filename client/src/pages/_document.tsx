@@ -20,6 +20,7 @@ export default function Document() {
         />
         <meta property="og:url" content="https://picnic-map.polarmin.net/" />
         <meta property="og:image" content="https://picnic-map.polarmin.net/og_image.png" />
+
         <Script
           type="text/javascript"
           strategy="beforeInteractive"

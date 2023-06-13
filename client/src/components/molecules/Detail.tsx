@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState, useTransition } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from '../atoms/Loading';
@@ -17,7 +17,6 @@ export default function Detail() {
   const { id, type } = useQueryString();
   const [src, setSrc] = useState('/dummy-image.jpg');
   const [isLoading, setIsLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
 
   const fetchDetail = useCallback(async () => {
     setIsLoading(true);
@@ -25,11 +24,9 @@ export default function Detail() {
     setPlace(response.data);
     const { image } = response.data;
     setSrc(image[0] || '/dummy-image.jpg');
-    startTransition(() => {
-      const { lat, lng } = response.data;
-      dispatch(addCenter({ longitude: lng, latitude: lat }));
-      setIsLoading(false);
-    });
+    const { lat, lng } = response.data;
+    dispatch(addCenter({ longitude: lng, latitude: lat }));
+    setIsLoading(false);
   }, [id]);
 
   const handleImageError = () => {
@@ -38,7 +35,6 @@ export default function Detail() {
   useEffect(() => {
     if (!id) return;
     if (place && String(place.id) === id) return;
-    if (isPending) return;
     fetchDetail();
   }, [id]);
 
@@ -48,7 +44,7 @@ export default function Detail() {
 
   return (
     <Wrapper>
-      {isPending || isLoading ? (
+      {isLoading ? (
         <LoadingContainer>
           <Loading />
         </LoadingContainer>

@@ -31,7 +31,7 @@ export default function Home() {
   }, []);
   return (
     <Wrapper>
-      {width > BREAK_POINT.mobile && <SideBar {...{ isLoading, isGetLocation }} />}
+      {width > BREAK_POINT.mobile && <SideBar isLoading={isLoading || isGetLocation} />}
       {width <= BREAK_POINT.mobile && <Header mobile />}
       <Section>
         {width <= BREAK_POINT.mobile && <SearchContainer />}

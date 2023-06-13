@@ -58,6 +58,8 @@ export default function Map() {
   // 지도에 표시할 마커 그리기
   const drawPlaceMarker = useCallback(() => {
     if (!map) return;
+    if (!placeList) return;
+    setMarkers(markers.map((mark) => mark && mark.setMap(null)));
     setMarkers(
       placeList.map((place) => {
         const loc = new naver.maps.LatLng(place.lat, place.lng);
@@ -74,7 +76,7 @@ export default function Map() {
         return mark;
       })
     );
-  }, [map, placeList]);
+  }, [placeList, map]);
 
   // 지도 업데이트
   useEffect(() => {
@@ -87,20 +89,26 @@ export default function Map() {
     if (!map) return;
     if (!center.latitude || !center.longitude) return;
     if (center.latitude === 0 || center.longitude === 0) return;
-    const centerLocation = new naver.maps.LatLng(center.latitude - 0.001, center.longitude);
+    setMarkers(markers.map((mark) => mark && mark.setMap(null)));
+    const centerLocation = new naver.maps.LatLng(center.latitude, center.longitude);
     const mapOptions: naver.maps.MapOptions = {
       center: centerLocation,
       zoom: 17,
     };
+    const mark = new naver.maps.Marker({
+      position: centerLocation,
+      map,
+    });
+    setMarkers([mark]);
     map.setOptions(mapOptions);
-  }, [map, center]);
+  }, [center]);
 
   // 마커 업데이트
   useEffect(() => {
     if (!map) return;
     drawPlaceMarker();
     return () => markers.forEach((mark) => naver.maps.Event.clearListeners(mark, 'click'));
-  }, [map, placeList]);
+  }, [placeList, map]);
 
   // bounds변경 감지 이벤트 붙이기
   useEffect(() => {

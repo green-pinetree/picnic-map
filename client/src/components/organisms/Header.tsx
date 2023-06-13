@@ -38,7 +38,8 @@ export default function Header({ mobile = false }: HeaderProps) {
           alt="Logo"
           width={mobile ? 44 : 50}
           height={mobile ? 44 : 50}
-          priority
+          placeholder="blur"
+          blurDataURL="/Icon.svg"
         />
         <Title aria-label="title">나들이 갈까?</Title>
       </Logo>
