@@ -1,5 +1,7 @@
 package app.seok.picnicmap.weather;
 
+import static app.seok.picnicmap.util.DateUtils.getMidDate;
+
 import app.seok.picnicmap.api.openapi.MidLandFcstDTO;
 import app.seok.picnicmap.api.openapi.MidLandFcstDTO.Body;
 import app.seok.picnicmap.api.openapi.OpenapiApiExplorer;
@@ -145,7 +147,7 @@ public class WeatherService {
    * 기상청 중기예보
    * */
   public MidLandFcstDTO getMidLandFcst(String date) throws IOException {
-    String json = openapiApiExplorer.apiMidFcst(date);
+    String json = openapiApiExplorer.apiMidFcst(getMidDate());
     MidLandFcstDTO dto = objectMapper.readValue(json, MidLandFcstDTO.class);
     Body.Items.Item item = dto.getResponse().getBody().getItems().getItem().get(0);
     double[] pop = {item.getRnSt3Pm(), item.getRnSt4Pm(), item.getRnSt5Pm(), item.getRnSt6Pm(),
@@ -203,7 +205,6 @@ public class WeatherService {
     }
     Optional<AirMeasurement> oM = airRepository.findLatestByDistrict(district, oneHourAgo);
     if (oM.isPresent()) {
-      System.out.println(oM.get().getCreatedAt());
       return oM.get();
     } else {
       getRealtimeCityAir();
@@ -236,7 +237,6 @@ public class WeatherService {
       List<Weather> weather = getWeather(date);
       weatherDTO = WeatherDTO.status200(weather, airMeasurement);
     } catch (Exception e) {
-      System.out.println(e);
     } finally {
       return weatherDTO;
     }

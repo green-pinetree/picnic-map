@@ -42,7 +42,6 @@ public class WeatherController {
       @RequestParam(value = "lat", defaultValue = "37.575843") Double lat)
       throws JsonProcessingException {
     LocationDTO location = locationService.findNearestLocation(lat, lng);
-    System.out.println(location);
     return location.toString();
   }
 

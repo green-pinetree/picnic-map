@@ -27,25 +27,19 @@ public class PlaceSearchResponseDTO {
     boolean isNull = true;
     List<Data> datas = new ArrayList<>();
     for (ParkDTO park : parks) {
-      System.out.println(">" + park);
       datas.add(parkData(park));
       isNull = false;
     }
-    System.out.println(">end parks");
 
     for (WalkDTO walk : walks) {
-      System.out.println(">" + walk);
       datas.add(walkData(walk));
       isNull = false;
     }
-    System.out.println(">end walks");
 
     for (CultureDTO culture : cultures) {
-      System.out.println(">" + culture);
       datas.add(cultureData(culture));
       isNull = false;
     }
-    System.out.println(">end Cultures");
     if (isNull) {
       response.setMessage("검색 결과가 없습니다.");
     }

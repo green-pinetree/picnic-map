@@ -34,14 +34,12 @@ public class WalkService {
   public List<Point> getWalkPathById(long id) {
     List<Map<String, Double>> pointList = walkRepository.getPathById(id);
     List<Point> path = new ArrayList<>();
-    System.out.println(path);
     for (Map<String, Double> dot : pointList) {
       Point point = new Point();
       point.setLng(dot.get("lng"));
       point.setLat(dot.get("lat"));
       path.add(point);
     }
-    System.out.println(path);
     return path;
   }
 

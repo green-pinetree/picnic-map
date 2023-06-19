@@ -26,22 +26,16 @@ public class PlaceListResponseDTO {
     response.setMessage("Success");
     List<Data> datas = new ArrayList<>();
     for (ParkDTO park : parks) {
-      System.out.println("1>" + park);
       datas.add(parkData(park));
     }
-    System.out.println(">end parks");
 
     for (WalkDTO walk : walks) {
-      System.out.println(">" + walk);
       datas.add(walkData(walk));
     }
-    System.out.println(">end walks");
 
     for (CultureDTO culture : cultures) {
-      System.out.println(">" + culture);
       datas.add(cultureData(culture));
     }
-    System.out.println(">end Cultures");
 
     Collections.sort(datas, Comparator.comparing(Data::getNear));
     response.setData(datas);
