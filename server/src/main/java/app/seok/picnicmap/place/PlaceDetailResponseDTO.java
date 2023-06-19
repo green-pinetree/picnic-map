@@ -84,7 +84,7 @@ public class PlaceDetailResponseDTO {
       data.setContent(walk.getContent());
     }
     data.setLng(walk.getLng());
-    data.setLat(data.getLat());
+    data.setLat(walk.getLat());
     List<String> image = new ArrayList<>();
     if (walk.getImage() != null) {
       Collections.addAll(image, walk.getImage().split("~split~"));
