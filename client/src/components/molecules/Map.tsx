@@ -90,13 +90,13 @@ export default function Map() {
     if (!center.latitude || !center.longitude) return;
     if (center.latitude === 0 || center.longitude === 0) return;
     setMarkers(markers.map((mark) => mark && mark.setMap(null)));
-    const centerLocation = new naver.maps.LatLng(center.latitude, center.longitude);
+    const centerLocation = new naver.maps.LatLng(center.latitude - 0.001, center.longitude);
     const mapOptions: naver.maps.MapOptions = {
       center: centerLocation,
       zoom: 17,
     };
     const mark = new naver.maps.Marker({
-      position: centerLocation,
+      position: new naver.maps.LatLng(center.latitude, center.longitude),
       map,
     });
     setMarkers([mark]);
