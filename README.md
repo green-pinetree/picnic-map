@@ -6,6 +6,7 @@
   
   
 서비스 링크 : https://picnic-map.polarmin.net/  
+시연 영상: https://www.youtube.com/watch?v=d7-iHvrE8f8
 
 </div>
 
