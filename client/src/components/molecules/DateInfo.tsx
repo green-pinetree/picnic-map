@@ -1,24 +1,13 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import DateDropDown from './DateDropDown';
-import { AppDispatch } from '@/store';
 import { ReducerType } from '@/store/rootReducer';
-import { UserLocation } from '@/store/userLocation';
-import { WeatherListSliceState, fetchWeatherList } from '@/store/weather';
+import { WeatherListSliceState } from '@/store/weather';
 import { SKY, AIRGRADE } from '@/constants/weather';
 import { body2 } from '@/styles/font';
 
 export default function DateInfo() {
-  const dispatch = useDispatch<AppDispatch>();
   const { current } = useSelector<ReducerType, WeatherListSliceState>((state) => state.weather);
-  const { latitude, longitude } = useSelector<ReducerType, UserLocation>(
-    (state) => state.userLocation
-  );
-  useEffect(() => {
-    if (!longitude || !latitude) return;
-    dispatch(fetchWeatherList({ longitude, latitude }));
-  }, [latitude, longitude]);
   return (
     <TodayInfo id="date-info">
       <DateDropDown />

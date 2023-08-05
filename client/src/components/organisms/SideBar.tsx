@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Header from './Header';
 import DetailBackIcon from '../atoms/DetailBackIcon';
 import DateInfo from '../molecules/DateInfo';
 import Detail from '../molecules/Detail';
+import Header from '../molecules/Header';
 import PlaceList from '../molecules/PlaceList';
 import SearchContainer from '../molecules/SearchContainer';
 import { useQueryString } from '@/hooks/useQueryString';

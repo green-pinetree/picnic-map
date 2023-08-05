@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import DateInfo from '../molecules/DateInfo';
+import DateInfo from './DateInfo';
 import { addCenter } from '@/store/centerLocation';
 import { ReducerType } from '@/store/rootReducer';
 import { initType } from '@/store/typeFilter';

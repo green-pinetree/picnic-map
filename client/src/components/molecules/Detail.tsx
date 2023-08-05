@@ -1,42 +1,30 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Loading from '../atoms/Loading';
 import { addCenter } from '@/store/centerLocation';
-import { useQueryString } from '@/hooks/useQueryString';
+import { DetailInfoSliceState } from '@/store/detailInfo';
+import { ReducerType } from '@/store/rootReducer';
 import BREAK_POINT from '@/styles/breakpoint';
 import { subtitle1, body1, subtitle2 } from '@/styles/font';
-import { Place } from '@/types/Place';
-import { httpGet } from '@/utils/http';
 
 export default function Detail() {
-  const [place, setPlace] = useState<Place>();
+  const { place, loading } = useSelector<ReducerType, DetailInfoSliceState>((state) => state.detailInfo);
   const dispatch = useDispatch();
-  const { id, type } = useQueryString();
   const [src, setSrc] = useState('/dummy-image.jpg');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchDetail = useCallback(async () => {
-    setIsLoading(true);
-    const response = await httpGet(`/api/place/detail?type=${type}&id=${id}`);
-    setPlace(response.data);
-    const { image } = response.data;
-    setSrc(image[0] || '/dummy-image.jpg');
-    const { lat, lng } = response.data;
-    dispatch(addCenter({ longitude: lng, latitude: lat }));
-    setIsLoading(false);
-  }, [id]);
 
   const handleImageError = () => {
     setSrc('/dummy-image.jpg');
   };
   useEffect(() => {
-    if (!id) return;
-    if (place && String(place.id) === id) return;
-    fetchDetail();
-  }, [id]);
+    if (!place) return;
+    const { image } = place
+    setSrc(image[0] || '/dummy-image.jpg');
+    const { lat, lng } = place
+    dispatch(addCenter({ longitude: lng, latitude: lat }));
+  }, [place]);
 
   const { name, content, detail } = place || { name: '', content: '', detail: {} };
   const { mainEquip, mainPlants, address, tel, distance, leadTime, relateSubway, homepage } =
@@ -44,7 +32,7 @@ export default function Detail() {
 
   return (
     <Wrapper>
-      {isLoading ? (
+      {loading ? (
         <LoadingContainer>
           <Loading />
         </LoadingContainer>

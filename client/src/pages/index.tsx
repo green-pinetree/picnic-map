@@ -1,40 +1,31 @@
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Loading from '@/components/atoms/Loading';
 import Detail from '@/components/molecules/Detail';
 import Filter from '@/components/molecules/Filter';
 import Map from '@/components/molecules/Map';
 import PlaceList from '@/components/molecules/PlaceList';
-import SearchContainer from '@/components/molecules/SearchContainer';
 import Drawer from '@/components/organisms/Drawer';
-import Header from '@/components/organisms/Header';
 import SideBar from '@/components/organisms/SideBar';
+import TobBar from '@/components/organisms/TobBar';
+import { useDetail } from '@/hooks/useDetail';
 import { usePlaceList } from '@/hooks/usePlaceList';
 import { useQueryString } from '@/hooks/useQueryString';
 import { useUserLocation } from '@/hooks/useUserLocation';
+import { useWeather } from '@/hooks/useWeather';
 import BREAK_POINT from '@/styles/breakpoint';
 
 export default function Home() {
   const { id, search } = useQueryString();
   const { isGetLocation } = useUserLocation();
   const { isLoading } = usePlaceList();
-  const [width, setWidth] = useState(BREAK_POINT.desktop);
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  useDetail();
+  useWeather();
+  
   return (
     <Wrapper>
-      {width > BREAK_POINT.mobile && <SideBar isLoading={isLoading || isGetLocation} />}
-      {width <= BREAK_POINT.mobile && <Header mobile />}
+      <SideBar isLoading={isLoading || isGetLocation} />
+      <TobBar />
       <Section>
-        {width <= BREAK_POINT.mobile && <SearchContainer />}
         {!search && !id && <Filter />}
         {isGetLocation ? (
           <LoadingContainer>
@@ -44,11 +35,9 @@ export default function Home() {
           <Map />
         )}
       </Section>
-      {width <= BREAK_POINT.mobile && (
-        <Drawer isDetail={!!id}>
-          {id ? <Detail /> : <PlaceList isLoading={isLoading || isGetLocation} mobile />}
-        </Drawer>
-      )}
+      <Drawer isDetail={!!id}>
+        {id ? <Detail /> : <PlaceList isLoading={isLoading || isGetLocation} mobile />}
+      </Drawer>
     </Wrapper>
   );
 }

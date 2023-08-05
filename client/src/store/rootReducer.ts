@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import centerLocation from './centerLocation';
+import detailInfo from './detailInfo';
 import mapBounds from './mapBounds';
 import placeList from './placeList';
 import typeFilter from './typeFilter';
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   typeFilter,
   centerLocation,
   mapBounds,
+  detailInfo,
 });
 
 export type ReducerType = ReturnType<typeof reducer>;
