@@ -7,7 +7,7 @@ import { SKY, AIRGRADE } from '@/constants/weather';
 import BREAK_POINT from '@/styles/breakpoint';
 import { body1, body2 } from '@/styles/font';
 import { buttonStyle } from '@/styles/mixin';
-import { DROP_DOWN } from '@/styles/zIndex';
+import { DIMMED, DROP_DOWN } from '@/styles/zIndex';
 
 export default function DateDropDown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +49,7 @@ export default function DateDropDown() {
           ))}
         </MenuList>
       )}
+      {isOpen && <Dimmed onClick={() => setIsOpen(false)} />}
     </Wrapper>
   );
 }
@@ -58,6 +59,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
+`;
+const Dimmed = styled.div`
+  position: fixed;
+  z-index: ${DIMMED};
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const Date = styled.button`
