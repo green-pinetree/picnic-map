@@ -8,4 +8,4 @@ git stash pop     # 스태시에 보관한 변경 사항을 다시 적용
 cd client
 /home/ubuntu/.npm-global/bin/pm2 kill
 /home/ubuntu/.npm-global/bin/yarn
-/home/ubuntu/.npm-global/bin/pm2 start yarn --name picnic -- start
+/home/ubuntu/.npm-global/bin/pm2 start /home/ubuntu/.npm-global/bin/yarn --name picnic -- start
