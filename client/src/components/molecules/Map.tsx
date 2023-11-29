@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from 'lodash';
 import styled from '@emotion/styled';
 import { CenterLocation } from '@/store/centerLocation';
-import { addBounds } from '@/store/mapBounds';
+import { Bounds, addBounds } from '@/store/mapBounds';
 import { PlaceList } from '@/store/placeList';
 import { ReducerType } from '@/store/rootReducer';
 import { UserLocation } from '@/store/userLocation';
@@ -23,6 +23,7 @@ export default function Map() {
   );
   const center = useSelector<ReducerType, CenterLocation>((state) => state.centerLocation);
   const placeList = useSelector<ReducerType, PlaceList>((state) => state.placeList);
+  const mapBounds = useSelector<ReducerType, Bounds>((state) => state.mapBounds);
 
   // 지도 그리기
   const drawMap = useCallback(() => {
@@ -61,20 +62,28 @@ export default function Map() {
     if (!placeList) return;
     setMarkers(markers.map((mark) => mark && mark.setMap(null)));
     setMarkers(
-      placeList.map((place) => {
-        const loc = new naver.maps.LatLng(place.lat, place.lng);
-        const mark = new naver.maps.Marker({
-          position: loc,
-          map,
-        });
-        naver.maps.Event.addListener(mark, 'click', () => {
-          router.push({
-            pathname: router.pathname,
-            query: { ...router.query, id: place.id, type: place.type.code },
+      placeList
+        .filter(
+          (target) =>
+            mapBounds.min.lat <= target.lat &&
+            mapBounds.max.lat >= target.lat &&
+            mapBounds.min.lng <= target.lng &&
+            mapBounds.max.lng >= target.lng
+        )
+        .map((place) => {
+          const loc = new naver.maps.LatLng(place.lat, place.lng);
+          const mark = new naver.maps.Marker({
+            position: loc,
+            map,
           });
-        });
-        return mark;
-      })
+          naver.maps.Event.addListener(mark, 'click', () => {
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, id: place.id, type: place.type.code },
+            });
+          });
+          return mark;
+        })
     );
   }, [placeList, map]);
 
