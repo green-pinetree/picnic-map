@@ -5,7 +5,7 @@
 [2023 서울 열린데이터광장 공공데이터 경진대회](https://mediahub.seoul.go.kr/gongmo/2000334) [수상작](https://data.seoul.go.kr/together/notice/boardView.do)입니다.
   
   
-서비스 링크 : ~~https://picnic-map.polarmin.net/~~ 배포 중단하였습니다.
+서비스 링크 : ~~https://picnic-map.polarmin.net/~~ 배포 중단하였습니다.  
 시연 영상: https://www.youtube.com/watch?v=d7-iHvrE8f8
 
 </div>
